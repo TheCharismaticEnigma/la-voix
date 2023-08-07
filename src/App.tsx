@@ -1,26 +1,23 @@
 import { useEffect } from 'react';
+import HttpService from './services/HttpService';
 import useAccessToken from './hooks/useAccessToken';
-import axios from 'axios';
+
+interface Track {
+  name: string;
+  id: string;
+  type: 'track';
+  is_playable: boolean;
+}
 
 const App = () => {
-  const { data: accessToken, isLoading, error } = useAccessToken();
+  const id = '7D7KjOOyVsPaxo7evQp6ML';
+  const { data: accessToken } = useAccessToken();
+  const trackService = new HttpService<Track>(`/tracks/${id}`, accessToken!); // telling compiler that accessToken can't be undefined.
 
   useEffect(() => {
-    const artistId = '71oGOxg5ez52Hh1Ye41A98?si=Kmp8c1ZxRTSkiqPS6N4n-A';
-    axios
-      .get(`https://api.spotify.com/v1/artists/${artistId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      });
+    const response = trackService.get();
+    console.log(response);
   }, []);
-
-  if (isLoading) return null;
-
-  if (error) return null;
 
   return <div> {accessToken} </div>;
 };

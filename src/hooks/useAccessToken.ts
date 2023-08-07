@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import staleTime from '../utils/staleTime';
 
 type VALID_TIME = 3600;
@@ -8,19 +8,6 @@ interface AccessToken {
   access_token: string;
   expires_in: VALID_TIME;
 }
-
-/*
-interface AccessTokenResponse<T> {
-  status: number;
-  statusText: string;
-  data: T;
-}
-*/
-
-// Using react query, we store the TOKEN IN THE CACHE for 1h until IT EXPIRES.
-// Then we refetch it.
-
-// Every error in Axios is an instance of Error
 
 const useAccessToken = () => {
   return useQuery({
