@@ -31,6 +31,7 @@ const ErrorPage = () => {
           justify={'space-between'}
           width={'37rem'}
           padding={'1rem 0 '}
+          borderRadius={'15px'}
         >
           <CardHeader>
             <Image src={spotifyLogo} />
