@@ -23,7 +23,7 @@ const palette = {
       400: '#a0a0a0',
       500: '#898989',
       600: '#252525',
-      700: '#26262680', // For Cards and Highlights
+      700: '#26262640', // For Cards and Highlights
       800: '#121212', // For Background
       900: '#121212',
     },

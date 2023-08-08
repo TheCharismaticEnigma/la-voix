@@ -1,5 +1,6 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
+import Wrapper from '../components/Wrapper';
 
 const Layout = () => {
   return (
@@ -16,16 +17,23 @@ const Layout = () => {
         "leftSideBar   mainView      rightSideBar"
         "nowPlayingBar nowPlayingBar nowPlayingBar"
         `}
+        padding={' 1rem 0.5rem 0  '}
       >
-        <GridItem area={'leftSideBar'}>Left Bar</GridItem>
+        <GridItem bg={'gray.700'} area={'leftSideBar'}>
+          Left Bar
+        </GridItem>
 
-        <GridItem overflow={'hidden auto'} area={'mainView'}>
+        <GridItem bg={'gray.700'} area={'mainView'} overflow={'hidden'}>
           <Outlet />
         </GridItem>
 
-        <GridItem area={'rightSideBar'}>Right Bar </GridItem>
+        <GridItem bg={'gray.700'} area={'rightSideBar'}>
+          Right Bar{' '}
+        </GridItem>
 
-        <GridItem area={'nowPlayingBar'}>Now Playing Bar</GridItem>
+        <GridItem bg={'gray.900'} area={'nowPlayingBar'}>
+          Now Playing Bar
+        </GridItem>
       </Grid>
     </Box>
   );

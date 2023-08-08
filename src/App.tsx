@@ -27,10 +27,10 @@ const App = () => {
   return (
     <Wrapper>
       <Flex
+        height={'100%'}
+        width={'100%'}
         background={'gray.700'}
         borderRadius={'inherit'}
-        height={'100%'}
-        p={'5px'}
       >
         {accessToken}
       </Flex>

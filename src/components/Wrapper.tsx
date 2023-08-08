@@ -10,10 +10,9 @@ const Wrapper = ({ children }: Props) => {
   return (
     <Box
       background={'gray.900'}
-      padding={'1rem 0.5rem'}
-      height={'100vh'}
-      borderRadius={'10px '}
-      marginRight={'3px '}
+      height={'100%'}
+      width={'100%'}
+      overflow={'hidden auto'}
     >
       {children}
     </Box>
