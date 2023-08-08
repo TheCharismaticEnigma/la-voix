@@ -10,13 +10,29 @@ import {
   Text,
   Image,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+
+import { Link, isRouteErrorResponse, useRouteError } from 'react-router-dom';
 
 import spotifyLogo from '../assets/spotifyLogo.svg';
 
 const ErrorPage = () => {
+  const error = useRouteError();
+
+  let heading = 'OOPS! Something went wrong';
+  let message = 'An Unexpected Error Occurred! Try again after some time. ';
+
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    heading = `PAGE NOT FOUND`;
+    message = `The page you are looking for doesn't exist or has been moved.`;
+  }
+
   return (
-    <Flex justifyContent={'center'} alignItems={'center'}>
+    <Flex
+      justifyContent={'center'}
+      alignItems={'center'}
+      height={'100vh'}
+      width={'100vw'}
+    >
       <Box
         style={{
           overflow: 'hidden',
@@ -40,10 +56,10 @@ const ErrorPage = () => {
           <CardBody>
             <Stack spacing={4} alignItems={'center'} gap={'3rem'}>
               <Heading textAlign={'center'} size={'3xl'}>
-                Page Not Found
+                {heading}
               </Heading>
               <Text opacity={'0.7'} textAlign={'center'} fontSize={'2rem'}>
-                The page you are looking for doesn't exist or has been moved
+                {message}
               </Text>
 
               <Link to={'/'}>

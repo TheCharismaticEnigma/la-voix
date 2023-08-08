@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import HttpService from './services/HttpService';
 import useAccessToken from './hooks/useAccessToken';
+import { Box, Flex } from '@chakra-ui/react';
+import Wrapper from './components/Wrapper';
 
 interface Track {
   name: string;
@@ -22,7 +24,20 @@ const App = () => {
     console.log(response);
   }, []);
 
-  return <div> {accessToken} </div>;
+  return (
+    <Wrapper>
+      <Flex
+        background={'gray.700'}
+        borderRadius={'inherit'}
+        height={'100%'}
+        p={'5px'}
+      >
+        {accessToken}
+      </Flex>
+    </Wrapper>
+  );
 };
 
 export default App;
+
+// For Components => gray.700

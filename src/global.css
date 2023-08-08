@@ -8,6 +8,7 @@
   /* Now 1rem = 10px instead of 16px  */
   /* font-size: 10px; */
   font-size: 10px;
+  scroll-behavior: smooth;
 }
 
 *,
@@ -31,3 +32,24 @@ a {
 }
 
 /* Apply styles on component wrappers. So won't be repetitive.  */
+
+/* Custom Scrollbar for the apps */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(38, 38, 38, 0.3);
+  transition: all 300ms ease-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(38, 38, 38);
+}
+
+::-webkit-scrollbar-track {
+}
+
+::-webkit-scrollbar-track-piece {
+}
