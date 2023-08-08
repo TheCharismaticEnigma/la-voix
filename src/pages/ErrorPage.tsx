@@ -8,8 +8,11 @@ import {
   Heading,
   Stack,
   Text,
+  Image,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+
+import spotifyLogo from '../assets/spotifyLogo.svg';
 
 const ErrorPage = () => {
   return (
@@ -18,9 +21,9 @@ const ErrorPage = () => {
         style={{
           overflow: 'hidden',
           borderRadius: '24px',
-          boxShadow: '0 2px 5px 0 rgba(255,255,255,0.2)',
+          boxShadow: '0 0.5px 5px 0 #1DB954',
         }}
-        padding={'4rem'}
+        padding={'2rem'}
       >
         <Card
           direction={'column'}
@@ -30,9 +33,7 @@ const ErrorPage = () => {
           padding={'1rem 0 '}
         >
           <CardHeader>
-            <Heading textAlign={'center'} fontSize={'10rem'}>
-              404
-            </Heading>
+            <Image src={spotifyLogo} />
           </CardHeader>
 
           <CardBody>
@@ -47,14 +48,12 @@ const ErrorPage = () => {
               <Link to={'/'}>
                 <Button
                   _hover={{
-                    background: `#262626`,
                     color: 'black',
-                    backgroundColor: '#1DB954',
                     transform: ' translateY(-5%) scale(1.05)',
                   }}
                   transition={'all 200ms ease-out'}
-                  colorScheme="yellow"
-                  borderRadius={'35px '}
+                  colorScheme="green"
+                  borderRadius={'35px'}
                   fontSize={'2rem'}
                   padding={'1.5em 1.75em '}
                 >
