@@ -38,11 +38,10 @@ const ErrorPage = () => {
           <CardBody>
             <Stack spacing={4} alignItems={'center'} gap={'3rem'}>
               <Heading textAlign={'center'} size={'3xl'}>
-                {' '}
-                Page Not Found{' '}
+                Page Not Found
               </Heading>
               <Text opacity={'0.7'} textAlign={'center'} fontSize={'2rem'}>
-                The page you are looking for doesn't exist or has been moved.
+                The page you are looking for doesn't exist or has been moved
               </Text>
 
               <Link to={'/'}>
@@ -72,10 +71,24 @@ const ErrorPage = () => {
 
 export default ErrorPage;
 
-/* Error Card Styles 
-    overflow: hidden;
-    border: 1px solid #eff0f6;
-    border-radius: 24px;
-    background-color: #fff;
-    box-shadow: 0 5px 16px 0 rgba(8, 15, 52, 0.07);
- */
+// Rethrow error from components, router will catch it and display this.
+
+/*  
+import { isRouteErrorResponse } from "react-router-dom";
+
+function ErrorBoundary() {
+  const error = useRouteError();
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>Oops!</h1>
+        <h2>{error.status}</h2>
+        <p>{error.statusText}</p>
+        {error.data?.message && <p>{error.data.message}</p>}
+      </div>
+    );
+  } else {
+    return <div>Oops</div>;
+  }
+}
+*/

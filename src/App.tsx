@@ -11,7 +11,10 @@ interface Track {
 
 const App = () => {
   const id = '7D7KjOOyVsPaxo7evQp6ML';
-  const { data: accessToken } = useAccessToken();
+  const { data: accessToken, error } = useAccessToken();
+
+  if (error) throw error; // Rethrow so that router can catch it.
+
   const trackService = new HttpService<Track>(`/tracks/${id}`, accessToken!); // telling compiler that accessToken can't be undefined.
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import axios, { AxiosHeaders, AxiosRequestConfig } from 'axios';
 
-// NOTE: If neither market or user country are provided,
+// NOTE: If neither market nor user country are provided,
 // the content is considered unavailable for the client.
 
 export interface SpotifyApiResponse<T> {
