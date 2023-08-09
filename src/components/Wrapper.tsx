@@ -8,12 +8,7 @@ interface Props {
 }
 const Wrapper = ({ children }: Props) => {
   return (
-    <Box
-      background={'gray.900'}
-      height={'100%'}
-      width={'100%'}
-      overflow={'hidden auto'}
-    >
+    <Box height={'100%'} width={'100%'} overflow={'hidden auto'}>
       {children}
     </Box>
   );

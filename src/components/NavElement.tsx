@@ -18,7 +18,7 @@ const NavElement = ({ icon, path, text }: Props) => {
           fontSize={'1.7rem'}
           _hover={{ color: 'white' }}
         >
-          {text}{' '}
+          {text}
         </Text>
       </Link>
     </Flex>

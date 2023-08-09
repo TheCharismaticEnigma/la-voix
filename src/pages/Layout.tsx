@@ -18,8 +18,9 @@ const Layout = () => {
         "nowPlayingBar nowPlayingBar nowPlayingBar"
         `}
         padding={' 1rem 0.5rem 0  '}
+        overflow={'hidden'}
       >
-        <GridItem area={'leftSideBar'}>
+        <GridItem area={'leftSideBar'} overflow={'hidden'}>
           <LeftSideBar />
         </GridItem>
 
@@ -27,9 +28,13 @@ const Layout = () => {
           <Outlet />
         </GridItem>
 
-        <GridItem area={'rightSideBar'}>Right Bar </GridItem>
+        <GridItem area={'rightSideBar'} overflow={'hidden'}>
+          Right Bar{' '}
+        </GridItem>
 
-        <GridItem area={'nowPlayingBar'}>Now Playing Bar</GridItem>
+        <GridItem area={'nowPlayingBar'} overflow={'hidden'}>
+          Now Playing Bar
+        </GridItem>
       </Grid>
     </Box>
   );
