@@ -1,11 +1,11 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-import Wrapper from '../components/Wrapper';
+import LeftSideBar from '../components/LeftSideBar';
 
 const Layout = () => {
   return (
     // 2 Rows 3 Columns.
-    <Box background={'gray.800'}>
+    <Box>
       <Grid
         minH={'100%'}
         width={'100%'}
@@ -19,21 +19,17 @@ const Layout = () => {
         `}
         padding={' 1rem 0.5rem 0  '}
       >
-        <GridItem bg={'gray.700'} area={'leftSideBar'}>
-          Left Bar
+        <GridItem area={'leftSideBar'}>
+          <LeftSideBar />
         </GridItem>
 
-        <GridItem bg={'gray.700'} area={'mainView'} overflow={'hidden'}>
+        <GridItem area={'mainView'} overflow={'hidden'}>
           <Outlet />
         </GridItem>
 
-        <GridItem bg={'gray.700'} area={'rightSideBar'}>
-          Right Bar{' '}
-        </GridItem>
+        <GridItem area={'rightSideBar'}>Right Bar </GridItem>
 
-        <GridItem bg={'gray.900'} area={'nowPlayingBar'}>
-          Now Playing Bar
-        </GridItem>
+        <GridItem area={'nowPlayingBar'}>Now Playing Bar</GridItem>
       </Grid>
     </Box>
   );

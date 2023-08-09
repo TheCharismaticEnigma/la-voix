@@ -9,6 +9,11 @@ const palette = {
   colors: {
     white: 'rgb(255,255,255)',
     black: 'rgb(0,0,0)',
+    whiteAlpha: {
+      800: '#b3b3b3',
+      900: 'white',
+    },
+
     yellow: {
       200: '#fedb01',
     },

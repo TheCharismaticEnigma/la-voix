@@ -1,8 +1,8 @@
+import { Flex } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import HttpService from './services/HttpService';
-import useAccessToken from './hooks/useAccessToken';
-import { Box, Flex } from '@chakra-ui/react';
 import Wrapper from './components/Wrapper';
+import useAccessToken from './hooks/useAccessToken';
+import HttpService from './services/HttpService';
 
 interface Track {
   name: string;
@@ -27,10 +27,11 @@ const App = () => {
   return (
     <Wrapper>
       <Flex
+        background={'gray.700'}
         height={'100%'}
         width={'100%'}
-        background={'gray.700'}
         borderRadius={'inherit'}
+        padding={'8px 12px'}
       >
         {accessToken}
       </Flex>
