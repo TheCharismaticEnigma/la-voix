@@ -3,6 +3,8 @@ import LeftSideBar from '../components/LeftSideBar';
 import MainAppContent from './MainAppContent';
 
 const Layout = () => {
+  // All the STATE OF THE APP WILL BE HERE.
+
   return (
     // 2 Rows 3 Columns.
     <Box>

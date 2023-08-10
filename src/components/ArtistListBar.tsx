@@ -9,7 +9,12 @@ const ArtistListBar = ({ artist }: Props) => {
   const { images, name, id } = artist;
 
   return (
-    <Link to={`/artist/${id}`}>
+    <Link
+      to={`/artist/${id}`}
+      onClick={() => {
+        console.log('done');
+      }}
+    >
       <Flex
         borderRadius={'10px'}
         cursor={'pointer'}
