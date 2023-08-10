@@ -1,8 +1,38 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { Box, Flex, Image, Spinner, Text } from '@chakra-ui/react';
+import useAccessToken from '../hooks/useAccessToken';
+import HttpService from '../services/HttpService';
+import { Artist } from '../entities/Artist';
+import { RelatedArtists } from '../entities/RelatedArtists';
 import Wrapper from './Wrapper';
 
 const Artists = () => {
-  const artists = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+  const [relatedArtists, setRelatedArtists] = useState<Artist[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error>();
+
+  if (error) throw error;
+
+  const token = useAccessToken();
+  const arjitSinghId = `4YRxDV8wJFPHPTeXepOstw`;
+
+  useEffect(() => {
+    const httpService = new HttpService<RelatedArtists>(
+      `/artists/${arjitSinghId}/related-artists`,
+      token
+    );
+
+    httpService
+      .get()
+      .then(({ artists }) => {
+        setIsLoading(false);
+        setRelatedArtists(artists);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setError(error);
+      });
+  }, []);
 
   return (
     <Wrapper>
@@ -11,11 +41,14 @@ const Artists = () => {
         padding={'1rem 1rem'}
         background={'gray.700'}
         borderRadius={'10px '}
+        borderTopRightRadius={'0'}
         height={'auto'}
       >
         <Flex as="ul" direction={'column'} fontSize={'1.8rem'} gap={'0.5rem'}>
-          {artists.map((artist, index) => (
-            <li key={index}>
+          {isLoading && <Spinner size={'lg'} margin={'auto '} />}
+
+          {relatedArtists?.map(({ id, name, images }) => (
+            <li key={id}>
               <Flex
                 borderRadius={'10px'}
                 cursor={'pointer'}
@@ -23,7 +56,7 @@ const Artists = () => {
                 gap={'1.5rem'}
                 alignItems={'center'}
                 _hover={{
-                  backgroundColor: '#25252560',
+                  backgroundColor: '#25252580',
                 }}
               >
                 <Box
@@ -33,10 +66,10 @@ const Artists = () => {
                   objectFit={'cover'}
                   borderRadius={'50%'}
                 >
-                  <Image border={'2px solid green '} />
+                  <Image src={images[0].url} />
                 </Box>
 
-                <Text fontWeight={'400'}>Artist Name </Text>
+                <Text fontWeight={'400'}> {name} </Text>
               </Flex>
             </li>
           ))}

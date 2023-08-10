@@ -9,8 +9,10 @@ interface AccessToken {
   expires_in: VALID_TIME;
 }
 
+let previousToken = '';
+
 const useAccessToken = () => {
-  return useQuery({
+  const { data } = useQuery({
     queryKey: ['access_token'],
     queryFn: () => {
       return axios
@@ -34,7 +36,15 @@ const useAccessToken = () => {
         });
     },
     staleTime: staleTime('1h'), // 1h
+    retry: 3,
   });
+
+  if (data) {
+    previousToken = data;
+    return data;
+  }
+
+  return previousToken;
 };
 
 export default useAccessToken;

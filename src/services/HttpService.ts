@@ -1,17 +1,21 @@
-import axios, { AxiosHeaders, AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 // NOTE: If neither market nor user country are provided,
 // the content is considered unavailable for the client.
 
+const axiosInstance = axios.create({
+  baseURL: 'https://api.spotify.com/v1',
+  params: {
+    market: 'IN',
+  },
+});
+
 export interface SpotifyApiResponse<T> {
-  status: number;
-  statusText: string;
-  headers: AxiosHeaders;
-  data: T;
+  data: T | T[];
 }
 
 class HttpService<T> {
-  #accessToken = '';
+  #accessToken;
   #endPoint;
 
   constructor(path: string, accessToken: string) {
@@ -19,25 +23,20 @@ class HttpService<T> {
     this.#accessToken = accessToken;
   }
 
-  get(requestConfig: AxiosRequestConfig = {}) {
-    axios
-      .get<SpotifyApiResponse<T>>(
-        `https://api.spotify.com/v1${this.#endPoint}`,
-        {
-          ...requestConfig,
-          params: {
-            ...requestConfig?.params,
-            market: 'IN',
-          },
-          headers: {
-            ...requestConfig?.headers,
-            Authorization: `Bearer ${this.#accessToken}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      });
+  get(requestConfig?: AxiosRequestConfig) {
+    const token = this.#accessToken;
+
+    const result = axiosInstance
+      .get<T>(this.#endPoint, {
+        ...requestConfig,
+        headers: {
+          ...requestConfig?.headers,
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => response.data);
+
+    return result;
   }
 }
 
@@ -72,7 +71,7 @@ axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-    
+       
   });
       
 */

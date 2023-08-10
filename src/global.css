@@ -36,7 +36,7 @@ a {
 /* Custom Scrollbar for the apps */
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 2px;
 }
 
 ::-webkit-scrollbar-thumb {
