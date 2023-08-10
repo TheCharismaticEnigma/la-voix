@@ -1,39 +1,13 @@
 import { Flex, Spinner } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { Artist } from '../entities/Artist';
-import { RelatedArtists } from '../entities/RelatedArtists';
-import useAccessToken from '../hooks/useAccessToken';
-import HttpService from '../services/HttpService';
 import ArtistListBar from './ArtistListBar';
 import Wrapper from './Wrapper';
+import useRelatedArtists from '../hooks/useRelatedArtists';
+import isCancelledError from '../services/isCancelledError';
 
 const Artists = () => {
-  const [relatedArtists, setRelatedArtists] = useState<Artist[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error>();
+  const { data: relatedArtists, error, isLoading } = useRelatedArtists();
 
-  if (error) throw error;
-
-  const token = useAccessToken();
-  const arjitSinghId = `4YRxDV8wJFPHPTeXepOstw`;
-
-  useEffect(() => {
-    const httpService = new HttpService<RelatedArtists>(
-      `/artists/${arjitSinghId}/related-artists`,
-      token
-    );
-
-    httpService
-      .get()
-      .then(({ artists }) => {
-        setIsLoading(false);
-        setRelatedArtists(artists);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        setError(error);
-      });
-  }, []);
+  if (error && !isCancelledError(error)) throw error; // Rethrow so that router can catch and render custom error page.
 
   return (
     <Wrapper>
