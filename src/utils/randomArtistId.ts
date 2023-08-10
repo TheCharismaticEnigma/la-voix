@@ -1,5 +1,4 @@
 const artistsId = [
-  '03SZmfKAgYRQKUwy0EoJUa',
   '4YRxDV8wJFPHPTeXepOstw',
   '4fEkbug6kZzzJ8eYX6Kbbp',
   '1wRPtKGflJrBx9BmLsSwlU',
