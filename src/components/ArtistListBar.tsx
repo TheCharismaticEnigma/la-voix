@@ -6,7 +6,6 @@ interface Props {
 }
 const ArtistListBar = ({ artist }: Props) => {
   const { images, name } = artist;
-  console.log(artist.name, artist.id);
 
   return (
     <Flex
