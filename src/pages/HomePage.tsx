@@ -1,8 +1,8 @@
 import { Flex } from '@chakra-ui/react';
-import Wrapper from './components/Wrapper';
-import useAccessToken from './hooks/useAccessToken';
+import Wrapper from '../components/Wrapper';
+import useAccessToken from '../hooks/useAccessToken';
 
-const App = () => {
+const HomePage = () => {
   const token = useAccessToken();
 
   return (
@@ -20,6 +20,6 @@ const App = () => {
   );
 };
 
-export default App;
+export default HomePage;
 
 // For Components => gray.700

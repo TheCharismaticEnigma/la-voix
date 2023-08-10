@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './pages/ErrorPage';
 import Layout from './pages/Layout';
-import App from './App';
+import ArtistDetailPage from './pages/ArtistDetailPage';
+import HomePage from './pages/HomePage';
 
 const router = createBrowserRouter([
   {
@@ -11,9 +12,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
-        element: <App />,
+        path: '/',
+        element: <HomePage />,
       },
+      { path: '/artist/:id', element: <ArtistDetailPage /> },
     ],
   },
 ]);
