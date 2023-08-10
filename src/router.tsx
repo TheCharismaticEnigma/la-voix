@@ -3,6 +3,7 @@ import ErrorPage from './pages/ErrorPage';
 import Layout from './pages/Layout';
 import ArtistDetailPage from './pages/ArtistDetailPage';
 import HomePage from './pages/HomePage';
+import QueryHomePage from './pages/QueryHomePage';
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,14 @@ const router = createBrowserRouter([
         path: '/',
         element: <HomePage />,
       },
-      { path: '/artist/:id', element: <ArtistDetailPage /> },
+      {
+        path: '/search',
+        element: <QueryHomePage />,
+      },
+      {
+        path: '/artist/:id',
+        element: <ArtistDetailPage />,
+      },
     ],
   },
 ]);

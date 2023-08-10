@@ -1,6 +1,6 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
-import { Outlet } from 'react-router-dom';
 import LeftSideBar from '../components/LeftSideBar';
+import MainAppContent from './MainAppContent';
 
 const Layout = () => {
   return (
@@ -25,7 +25,7 @@ const Layout = () => {
         </GridItem>
 
         <GridItem area={'mainView'} overflow={'hidden'}>
-          <Outlet />
+          <MainAppContent />
         </GridItem>
 
         <GridItem area={'rightSideBar'} overflow={'hidden'}>

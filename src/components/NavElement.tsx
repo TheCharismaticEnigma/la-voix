@@ -11,7 +11,10 @@ interface Props {
 const NavElement = ({ icon, path, text }: Props) => {
   return (
     <Flex gap={'2rem'} alignItems={'center'}>
-      <Icon cursor={'pointer'} as={icon} color={'white'} boxSize={'3rem'} />
+      <Link to={path}>
+        <Icon cursor={'pointer'} as={icon} color={'white'} boxSize={'3rem'} />
+      </Link>
+
       <Link to={path}>
         <Text
           color={'whiteAlpha.800'}

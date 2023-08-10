@@ -11,7 +11,7 @@ const HomePage = () => {
         background={'gray.700'}
         height={'100%'}
         width={'100%'}
-        borderRadius={'inherit'}
+        borderRadius={'10px '}
         padding={'8px 12px'}
       >
         {token}
