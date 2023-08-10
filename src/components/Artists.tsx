@@ -1,9 +1,10 @@
+import { Flex, Spinner } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Box, Flex, Image, Spinner, Text } from '@chakra-ui/react';
-import useAccessToken from '../hooks/useAccessToken';
-import HttpService from '../services/HttpService';
 import { Artist } from '../entities/Artist';
 import { RelatedArtists } from '../entities/RelatedArtists';
+import useAccessToken from '../hooks/useAccessToken';
+import HttpService from '../services/HttpService';
+import ArtistListBar from './ArtistListBar';
 import Wrapper from './Wrapper';
 
 const Artists = () => {
@@ -47,30 +48,9 @@ const Artists = () => {
         <Flex as="ul" direction={'column'} fontSize={'1.8rem'} gap={'0.5rem'}>
           {isLoading && <Spinner size={'lg'} margin={'auto '} />}
 
-          {relatedArtists?.map(({ id, name, images }) => (
-            <li key={id}>
-              <Flex
-                borderRadius={'10px'}
-                cursor={'pointer'}
-                padding={'5px'}
-                gap={'1.5rem'}
-                alignItems={'center'}
-                _hover={{
-                  backgroundColor: '#25252580',
-                }}
-              >
-                <Box
-                  height={'5rem'}
-                  width={'5rem'}
-                  overflow={'hidden'}
-                  objectFit={'cover'}
-                  borderRadius={'50%'}
-                >
-                  <Image src={images[0].url} />
-                </Box>
-
-                <Text fontWeight={'400'}> {name} </Text>
-              </Flex>
+          {relatedArtists?.map((artist) => (
+            <li key={artist.id}>
+              <ArtistListBar artist={artist} />
             </li>
           ))}
         </Flex>

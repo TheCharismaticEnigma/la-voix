@@ -34,13 +34,19 @@ class HttpService<T> {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => response.data);
+      .then((response) => {
+        // console.log(response);
+        return response.data;
+      });
 
     return result;
   }
 }
 
 export default HttpService;
+
+// .then() method always returns a promise. The returned value will be passed as
+// argument to the SUCCESS CALLBACK OF THE .then(successCallback, errorCallback) method.
 
 /* 
  Spotify Web API provides different endpoints depending on the data we want to 
