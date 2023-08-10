@@ -1,7 +1,12 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import Wrapper from '../components/Wrapper';
+import useSpotifyQueryStore from '../store';
 
 const ArtistDetailPage = () => {
+  const spotifyQuery = useSpotifyQueryStore(
+    (selector) => selector.spotifyQuery
+  );
+
   return (
     <>
       <Wrapper>
@@ -12,8 +17,7 @@ const ArtistDetailPage = () => {
           borderRadius={'10px '}
           padding={'8px 12px'}
         >
-          Most people don't cheer for themselves. They don't even believe in
-          themselves. Why would they do it for me?
+          <Text> {spotifyQuery.artistId}</Text>
         </Box>
       </Wrapper>
     </>

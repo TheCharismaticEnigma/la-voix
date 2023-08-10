@@ -1,4 +1,4 @@
-import { Flex, Spinner } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import ArtistListBar from './ArtistListBar';
 import Wrapper from './Wrapper';
 import useRelatedArtists from '../hooks/useRelatedArtists';

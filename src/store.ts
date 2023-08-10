@@ -4,12 +4,12 @@
 import { create } from 'zustand';
 
 interface SpotifyQueryObject {
-  artistId?: number;
+  artistId?: string;
 }
 
 interface SpotifyStore {
   spotifyQuery: SpotifyQueryObject;
-  setSelectedArtistId: (id: number) => void; // instead of passing it as a prop, we store it here.
+  setSelectedArtistId: (id: string) => void; // instead of passing it as a prop, we store it here.
 }
 
 const useSpotifyQueryStore = create<SpotifyStore>((set) => ({
@@ -17,8 +17,8 @@ const useSpotifyQueryStore = create<SpotifyStore>((set) => ({
   spotifyQuery: {},
 
   setSelectedArtistId: (id) =>
-    set((prevState) => ({
-      spotifyQuery: { artistId: id, ...prevState.spotifyQuery },
+    set(() => ({
+      spotifyQuery: { artistId: id },
     })),
 }));
 

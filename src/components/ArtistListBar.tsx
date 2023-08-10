@@ -1,18 +1,20 @@
 import { Flex, Box, Image, Text } from '@chakra-ui/react';
 import { Artist } from '../entities/Artist';
 import { Link } from 'react-router-dom';
+import useSpotifyQueryStore from '../store';
 
 interface Props {
   artist: Artist;
 }
 const ArtistListBar = ({ artist }: Props) => {
   const { images, name, id } = artist;
+  const { setSelectedArtistId } = useSpotifyQueryStore();
 
   return (
     <Link
       to={`/artist/${id}`}
       onClick={() => {
-        console.log('done');
+        setSelectedArtistId(id);
       }}
     >
       <Flex
