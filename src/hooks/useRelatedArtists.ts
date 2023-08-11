@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Artist } from '../entities/Artist';
 import { RelatedArtists } from '../entities/RelatedArtists';
 import HttpService from '../services/HttpService';
-import useAccessToken from './useAccessToken';
 import randomArtistId from '../utils/randomArtistId';
+import useAccessToken from './useAccessToken';
 
 // const mainArtist = 'Arjit Singh';
 // const arjitSinghId = `4YRxDV8wJFPHPTeXepOstw`;
@@ -35,7 +35,7 @@ const useRelatedArtists = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error>();
 
-  const token = useAccessToken();
+  const accessToken = useAccessToken();
   const artistId = randomArtistId();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const useRelatedArtists = () => {
 
     const httpService = new HttpService<RelatedArtists>(
       `/artists/${artistId}/related-artists`,
-      token
+      accessToken!
     );
 
     httpService

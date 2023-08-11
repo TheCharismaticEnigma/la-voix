@@ -1,5 +1,7 @@
+import { CanceledError } from 'axios';
+
 const isCancelledError = (error: Error) => {
-  return error.name === 'CanceledError';
+  return error instanceof CanceledError && error.name === 'CanceledError';
 };
 
 export default isCancelledError;

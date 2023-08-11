@@ -8,7 +8,7 @@ interface Props {
 }
 const ArtistListBar = ({ artist }: Props) => {
   const { images, name, id } = artist;
-  const { setSelectedArtistId } = useSpotifyQueryStore();
+  const { spotifyQuery, setSelectedArtistId } = useSpotifyQueryStore();
 
   return (
     <Link
@@ -26,6 +26,9 @@ const ArtistListBar = ({ artist }: Props) => {
         _hover={{
           backgroundColor: '#25252580',
         }}
+        backgroundColor={`${
+          id === spotifyQuery.artistId ? '#262626' : 'transparent'
+        }`}
       >
         <Box
           height={'5rem'}

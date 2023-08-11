@@ -9,8 +9,6 @@ interface AccessToken {
   expires_in: VALID_TIME;
 }
 
-let previousToken = '';
-
 const useAccessToken = () => {
   const { data } = useQuery({
     queryKey: ['access_token'],
@@ -39,12 +37,7 @@ const useAccessToken = () => {
     retry: 3,
   });
 
-  if (data) {
-    previousToken = data;
-    return data;
-  }
-
-  return previousToken;
+  return data;
 };
 
 export default useAccessToken;
