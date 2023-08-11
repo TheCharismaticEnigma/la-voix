@@ -4,16 +4,16 @@ import HttpService from '../services/HttpService';
 import { Track } from '../entities/Track';
 
 const useTopArtistTracks = (artistId: string, accessToken: string) => {
-  const httpService = new HttpService<Track[]>(
+  const httpService = new HttpService<Track>(
     `artists/${artistId}/top-tracks`,
     accessToken
   );
 
-  return useQuery<Track[], Error>({
+  return useQuery({
     queryKey: ['top-tracks', artistId],
     queryFn: () => {
-      return httpService.get().then((tracks) => {
-        return tracks;
+      return httpService.getAll().then((tracks) => {
+        return tracks.tracks;
       });
     },
     staleTime: staleTime('1h'),

@@ -1,49 +1,21 @@
 import { Box, Spinner, Text } from '@chakra-ui/react';
 import Wrapper from '../components/Wrapper';
-import useSpotifyQueryStore from '../store';
-import { useEffect, useState } from 'react';
-import HttpService from '../services/HttpService';
-import { Artist } from '../entities/Artist';
-import isCancelledError from '../services/isCancelledError';
 import useAccessToken from '../hooks/useAccessToken';
-import { Track } from '../entities/Track';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
+import useSpotifyQueryStore from '../store';
+import useArtist from '../hooks/useArtist';
 
 const ArtistDetailPage = () => {
   const { spotifyQuery } = useSpotifyQueryStore();
-
   const accessToken = useAccessToken();
 
-  const [artist, setArtist] = useState<Artist>({} as Artist);
-  const [error, setError] = useState<Error>();
-  const [isLoading, setIsLoading] = useState(true);
+  const {
+    data: artist,
+    isLoading,
+    error,
+  } = useArtist(spotifyQuery.artistId, accessToken!);
 
-  if (error && !isCancelledError(error)) throw error; // Rethrow for router
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const { artistId } = spotifyQuery;
-
-    const httpService = new HttpService<Artist>(
-      `/artists/${artistId}`,
-      accessToken!
-    );
-
-    httpService
-      .get({
-        signal: controller.signal,
-      })
-      .then((artist) => {
-        setArtist(artist);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error);
-        setIsLoading(false);
-      });
-
-    return () => controller.abort();
-  }, [spotifyQuery]);
+  if (error) throw error;
 
   const { data, error: trackError } = useTopArtistTracks(
     spotifyQuery.artistId,
@@ -52,7 +24,7 @@ const ArtistDetailPage = () => {
 
   console.log(data);
 
-  if (trackError) throw error;
+  if (trackError) throw trackError;
 
   return (
     <>

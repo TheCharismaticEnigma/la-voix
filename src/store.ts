@@ -16,7 +16,7 @@ interface SpotifyStore {
 const useSpotifyQueryStore = create<SpotifyStore>((set) => {
   return {
     spotifyQuery: {
-      artistId: '',
+      artistId: `4YRxDV8wJFPHPTeXepOstw`,
     },
 
     setSelectedArtistId: (id: string) =>

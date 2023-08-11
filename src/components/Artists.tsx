@@ -2,15 +2,22 @@ import { Flex } from '@chakra-ui/react';
 import ArtistListBar from './ArtistListBar';
 import Wrapper from './Wrapper';
 import useRelatedArtists from '../hooks/useRelatedArtists';
-import isCancelledError from '../services/isCancelledError';
 import { artists } from '../initialData/initialArtists';
+import randomArtistId from '../utils/randomArtistId';
+import useAccessToken from '../hooks/useAccessToken';
 
 const Artists = () => {
-  const { data: relatedArtists, error } = useRelatedArtists();
+  const artistId = randomArtistId();
+  const accessToken = useAccessToken();
 
-  if (relatedArtists.length === 0) relatedArtists.push(...artists);
+  const { data: relatedArtists, error } = useRelatedArtists(
+    artistId,
+    accessToken!
+  );
 
-  if (error && !isCancelledError(error)) throw error; // Rethrow so that router can catch and render custom error page.
+  if (error) throw error;
+
+  if (relatedArtists?.length === 0) relatedArtists.push(...artists);
 
   return (
     <Wrapper>

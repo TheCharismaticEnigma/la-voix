@@ -10,8 +10,8 @@ const axiosInstance = axios.create({
   },
 });
 
-export interface SpotifyApiResponse<T> {
-  data: T | T[];
+export interface FetchResponse<T> {
+  [key: string]: T[];
 }
 
 class HttpService<T> {
@@ -28,6 +28,25 @@ class HttpService<T> {
 
     const result = axiosInstance
       .get<T>(this.#endPoint, {
+        ...requestConfig,
+        headers: {
+          ...requestConfig?.headers,
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        // console.log(response);
+        return response.data;
+      });
+
+    return result;
+  }
+
+  getAll(requestConfig?: AxiosRequestConfig) {
+    const token = this.#accessToken;
+
+    const result = axiosInstance
+      .get<FetchResponse<T>>(this.#endPoint, {
         ...requestConfig,
         headers: {
           ...requestConfig?.headers,
