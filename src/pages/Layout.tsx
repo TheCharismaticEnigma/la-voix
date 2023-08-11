@@ -1,6 +1,8 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import LeftSideBar from '../components/LeftSideBar';
 import MainAppContent from './MainAppContent';
+import NowPlayingContent from '../components/NowPlayingContent';
+import RightSideBar from '../components/RightSideBar';
 
 const Layout = () => {
   // All the STATE OF THE APP WILL BE HERE.
@@ -31,11 +33,11 @@ const Layout = () => {
         </GridItem>
 
         <GridItem area={'rightSideBar'} overflow={'hidden'}>
-          Right Bar{' '}
+          <RightSideBar />
         </GridItem>
 
         <GridItem area={'nowPlayingBar'} overflow={'hidden'}>
-          Now Playing Bar
+          <NowPlayingContent />
         </GridItem>
       </Grid>
     </Box>
