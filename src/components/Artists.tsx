@@ -2,7 +2,6 @@ import { Flex } from '@chakra-ui/react';
 import ArtistListBar from './ArtistListBar';
 import Wrapper from './Wrapper';
 import useRelatedArtists from '../hooks/useRelatedArtists';
-import { artists } from '../initialData/initialArtists';
 import randomArtistId from '../utils/randomArtistId';
 import useAccessToken from '../hooks/useAccessToken';
 
@@ -16,8 +15,6 @@ const Artists = () => {
   );
 
   if (error) throw error;
-
-  if (relatedArtists?.length === 0) relatedArtists.push(...artists);
 
   return (
     <Wrapper>
