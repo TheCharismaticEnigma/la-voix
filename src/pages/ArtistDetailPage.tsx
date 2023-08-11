@@ -6,11 +6,11 @@ import HttpService from '../services/HttpService';
 import { Artist } from '../entities/Artist';
 import isCancelledError from '../services/isCancelledError';
 import useAccessToken from '../hooks/useAccessToken';
+import { Track } from '../entities/Track';
+import useTopArtistTracks from '../hooks/useTopArtistTracks';
 
 const ArtistDetailPage = () => {
-  const spotifyQuery = useSpotifyQueryStore(
-    (selector) => selector.spotifyQuery
-  ); // component only dependent on the spotifyQuery object. Renrenders on when this property from store changes,
+  const { spotifyQuery } = useSpotifyQueryStore();
 
   const accessToken = useAccessToken();
 
@@ -21,12 +21,13 @@ const ArtistDetailPage = () => {
   if (error && !isCancelledError(error)) throw error; // Rethrow for router
 
   useEffect(() => {
+    const controller = new AbortController();
     const { artistId } = spotifyQuery;
+
     const httpService = new HttpService<Artist>(
       `/artists/${artistId}`,
       accessToken!
     );
-    const controller = new AbortController();
 
     httpService
       .get({
@@ -42,7 +43,16 @@ const ArtistDetailPage = () => {
       });
 
     return () => controller.abort();
-  }, [artist]);
+  }, [spotifyQuery]);
+
+  const { data, error: trackError } = useTopArtistTracks(
+    spotifyQuery.artistId,
+    accessToken!
+  );
+
+  console.log(data);
+
+  if (trackError) throw error;
 
   return (
     <>
@@ -62,7 +72,8 @@ const ArtistDetailPage = () => {
           padding={'8px 12px'}
         >
           <Text>{spotifyQuery.artistId}</Text>
-          <Text>{artist.name}</Text>
+          <Text>{artist?.name}</Text>
+          <Text>{artist?.followers?.total}</Text>
         </Box>
       </Wrapper>
     </>

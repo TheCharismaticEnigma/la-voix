@@ -21,7 +21,6 @@ const useSpotifyQueryStore = create<SpotifyStore>((set) => {
 
     setSelectedArtistId: (id: string) =>
       set((prevStore) => {
-        console.log(prevStore.spotifyQuery);
         return {
           // new store.
           spotifyQuery: { ...prevStore.spotifyQuery, artistId: id },
