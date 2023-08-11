@@ -15,7 +15,7 @@ export interface SpotifyApiResponse<T> {
 }
 
 class HttpService<T> {
-  #accessToken = '';
+  #accessToken;
   #endPoint;
 
   constructor(path: string, accessToken: string) {
