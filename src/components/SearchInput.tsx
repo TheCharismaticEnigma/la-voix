@@ -21,6 +21,7 @@ const SearchInput = () => {
               backgroundColor: '#262626',
             }}
             type="text"
+            spellCheck={false}
             autoCorrect="off"
             autoComplete="off"
             borderRadius={'2.5rem '}
