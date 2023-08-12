@@ -1,4 +1,14 @@
-import { Box, Spinner, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Spinner,
+  Text,
+  Image,
+  Stack,
+  Heading,
+  Grid,
+  GridItem,
+} from '@chakra-ui/react';
 import Wrapper from '../components/Wrapper';
 import useAccessToken from '../hooks/useAccessToken';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
@@ -23,8 +33,11 @@ const ArtistDetailPage = () => {
   );
 
   console.log(data);
+  console.log(artist?.images);
 
   if (trackError) throw trackError;
+
+  const defaultDimension = '320px';
 
   return (
     <>
@@ -36,18 +49,64 @@ const ArtistDetailPage = () => {
             margin={'50%'}
           />
         )}
-        <Box
+        <Flex
           background={'gray.700'}
           minH={'100%'}
           height={'fit-content'}
           borderRadius={'10px '}
-          padding={'8px 12px'}
+          direction={'column'}
+          gap={'2rem'}
+          alignItems={'center'}
+          padding={'8px'}
         >
-          <Text>{spotifyQuery.artistId}</Text>
-          <Text>{artist?.name}</Text>
-          <Text>{artist?.followers?.total}</Text>
-          <Text>{artist?.popularity}</Text>
-        </Box>
+          <Grid
+            width={'100%'}
+            gap={'1rem'}
+            gridTemplateRows={'repeat(1, max(fit-content, 320px))'}
+            gridTemplateColumns={'320px 1fr'}
+          >
+            <GridItem>
+              <Box
+                borderRadius={'10px'}
+                width={artist?.images[1].width || defaultDimension}
+                height={artist?.images[1].height || defaultDimension}
+                overflow={'hidden'}
+                boxShadow={'0px 0px 5px #262626 '}
+              >
+                <Image
+                  width={'100%'}
+                  height={'100%'}
+                  objectFit={'cover'}
+                  borderRadius={'inherit'}
+                  src={artist?.images[0].url}
+                />
+              </Box>
+            </GridItem>
+
+            <GridItem>
+              <Stack
+                fontSize={'2rem '}
+                background={'gray.700'}
+                borderRadius={'10px'}
+                padding={'8px'}
+                gap={'3rem '}
+              >
+                <Heading
+                  wordBreak={'break-word'}
+                  textAlign={'center'}
+                  fontSize={'5.5rem'}
+                >
+                  {artist?.name}
+                </Heading>
+
+                <Stack>
+                  <Text> {artist?.followers?.total}</Text>
+                  <Text> {artist?.popularity}</Text>
+                </Stack>
+              </Stack>
+            </GridItem>
+          </Grid>
+        </Flex>
       </Wrapper>
     </>
   );
