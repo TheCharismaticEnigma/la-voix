@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import HomePage from './HomePage';
 import SearchInput from '../components/SearchInput';
 

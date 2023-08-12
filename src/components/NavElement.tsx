@@ -19,7 +19,8 @@ const NavElement = ({ icon, path, text }: Props) => {
         <Text
           color={'whiteAlpha.800'}
           fontSize={'1.7rem'}
-          _hover={{ color: 'white' }}
+          transition={'all 100ms ease-out'}
+          _hover={{ color: 'white', transform: 'scale(1.1)' }}
         >
           {text}
         </Text>
