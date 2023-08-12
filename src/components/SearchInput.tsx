@@ -15,6 +15,7 @@ const SearchInput = () => {
           />
           <Input
             variant={'filled'}
+            border={'1px solid transparent'}
             _focus={{
               border: '1px solid white',
               backgroundColor: '#262626',
