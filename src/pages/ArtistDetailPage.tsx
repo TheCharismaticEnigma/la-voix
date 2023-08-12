@@ -46,6 +46,7 @@ const ArtistDetailPage = () => {
           <Text>{spotifyQuery.artistId}</Text>
           <Text>{artist?.name}</Text>
           <Text>{artist?.followers?.total}</Text>
+          <Text>{artist?.popularity}</Text>
         </Box>
       </Wrapper>
     </>
