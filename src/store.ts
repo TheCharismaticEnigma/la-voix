@@ -29,7 +29,7 @@ const useSpotifyQueryStore = create<SpotifyStore>((set) => {
         };
       }),
 
-    setCurrentTrack: (id: string) =>
+    setSelectedTrackId: (id: string) =>
       set((prevStore) => {
         return {
           spotifyQuery: { ...prevStore.spotifyQuery, trackId: id },
