@@ -8,11 +8,13 @@ const DetailBadge = ({ badgeText }: Props) => {
   return (
     <Badge
       variant="subtle"
-      colorScheme="green"
+      color={'black'}
+      background={'#1ED760'}
       width={'fit-content'}
       padding={'0.5rem 1rem'}
       borderRadius={'5px'}
-      fontSize={'2rem'}
+      fontSize={'1.5rem'}
+      wordBreak={'break-word'}
     >
       {badgeText}
     </Badge>

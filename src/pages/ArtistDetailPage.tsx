@@ -1,19 +1,23 @@
 import {
+  Badge,
   Box,
+  Divider,
   Flex,
-  Spinner,
-  Text,
-  Image,
-  Stack,
-  Heading,
   Grid,
   GridItem,
+  Heading,
+  Image,
+  Spinner,
+  Stack,
 } from '@chakra-ui/react';
+import DetailContainer from '../components/DetailContainer';
 import Wrapper from '../components/Wrapper';
 import useAccessToken from '../hooks/useAccessToken';
+import useArtist from '../hooks/useArtist';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
 import useSpotifyQueryStore from '../store';
-import useArtist from '../hooks/useArtist';
+import spotifyLogo from '../assets/spotifyLogo.svg';
+import ArtistPopularTrack from '../components/ArtistPopularTrack';
 
 const ArtistDetailPage = () => {
   const { spotifyQuery } = useSpotifyQueryStore();
@@ -27,13 +31,10 @@ const ArtistDetailPage = () => {
 
   if (error) throw error;
 
-  const { data, error: trackError } = useTopArtistTracks(
+  const { data: topTracks, error: trackError } = useTopArtistTracks(
     spotifyQuery.artistId,
     accessToken!
   );
-
-  console.log(data);
-  console.log(artist?.images);
 
   if (trackError) throw trackError;
 
@@ -61,7 +62,7 @@ const ArtistDetailPage = () => {
         >
           <Grid
             width={'100%'}
-            gap={'1rem'}
+            gap={'1.5rem'}
             gridTemplateRows={'repeat(1, max(fit-content, 320px))'}
             gridTemplateColumns={'320px 1fr'}
           >
@@ -84,28 +85,84 @@ const ArtistDetailPage = () => {
             </GridItem>
 
             <GridItem>
-              <Stack
+              <Flex
+                direction={'column'}
                 fontSize={'2rem '}
-                background={'gray.700'}
                 borderRadius={'10px'}
                 padding={'8px'}
-                gap={'3rem '}
+                gap={'2rem '}
+                justifyContent={'space-between'}
               >
-                <Heading
-                  wordBreak={'break-word'}
-                  textAlign={'center'}
-                  fontSize={'5.5rem'}
-                >
+                <Heading fontSize={'5.2rem'} fontFamily={'system'}>
                   {artist?.name}
                 </Heading>
 
-                <Stack>
-                  <Text> {artist?.followers?.total}</Text>
-                  <Text> {artist?.popularity}</Text>
+                <Stack gap={'0.5rem'}>
+                  <DetailContainer
+                    value={`Popularity - ${artist?.popularity} ` || '50'}
+                  />
+
+                  <DetailContainer
+                    value={
+                      `Followers - ${artist?.followers.total} ` || '121212'
+                    }
+                  />
+
+                  <DetailContainer
+                    value={` ${artist?.genres.slice(-2).join(', ')}` || '[]'}
+                  />
                 </Stack>
-              </Stack>
+
+                <Flex gap={'1rem'} alignItems={'center'}>
+                  <Box
+                    width={'4rem'}
+                    height={'4rem'}
+                    borderRadius={'50%'}
+                    cursor={'pointer'}
+                    transition={'all 200ms'}
+                    _hover={{
+                      transform: 'translateY(-10%) ',
+                    }}
+                  >
+                    <Image src={spotifyLogo} />
+                  </Box>
+                  <Badge
+                    padding={'0.25em 0.5em'}
+                    fontSize={'1.2rem'}
+                    colorScheme="green"
+                  >
+                    Play All Songs
+                  </Badge>
+                </Flex>
+              </Flex>
             </GridItem>
           </Grid>
+
+          <Flex
+            width={'100%'}
+            background={'inherit'}
+            padding={'inherit'}
+            borderRadius={'inherit'}
+            direction="column"
+            gap={'2rem'}
+          >
+            <Divider />
+
+            <Flex
+              as="ul"
+              direction={'column'}
+              gap={'2rem'}
+              alignItems={'center'}
+            >
+              {topTracks?.map((track, index) => (
+                <Box as="li" key={index} width={'100%'}>
+                  <ArtistPopularTrack track={track} serialNumber={index + 1} />
+                </Box>
+              ))}
+            </Flex>
+
+            <Divider />
+          </Flex>
         </Flex>
       </Wrapper>
     </>

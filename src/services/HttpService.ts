@@ -64,6 +64,10 @@ class HttpService<T> {
 
 export default HttpService;
 
+// When returning single data from response, reference only the schema of the data in generic brackets.
+// When returning an array or something, put the response schema (object encompassing the data)
+// in the generic brackets.
+
 // .then() method always returns a promise. The returned value will be passed as
 // argument to the SUCCESS CALLBACK OF THE .then(successCallback, errorCallback) method.
 
