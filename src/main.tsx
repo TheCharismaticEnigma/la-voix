@@ -8,8 +8,16 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { chakraTheme } from './utils/chakraCustomTheme.ts';
 import { RouterProvider } from 'react-router-dom';
 import router from './router.tsx';
+import staleTime from './utils/staleTime.ts';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // default: true
+      cacheTime: staleTime('0.5h'),
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
