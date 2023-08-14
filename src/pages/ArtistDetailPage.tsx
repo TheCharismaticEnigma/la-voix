@@ -86,6 +86,7 @@ const ArtistDetailPage = () => {
 
             <GridItem>
               <Flex
+                height={'100%'}
                 direction={'column'}
                 fontSize={'2rem '}
                 borderRadius={'10px'}
@@ -93,7 +94,11 @@ const ArtistDetailPage = () => {
                 gap={'2rem '}
                 justifyContent={'space-between'}
               >
-                <Heading fontSize={'5.2rem'} fontFamily={'system'}>
+                <Heading
+                  textShadow={'0px 0px 10px green '}
+                  fontSize={'5.2rem'}
+                  fontFamily={'system'}
+                >
                   {artist?.name}
                 </Heading>
 
