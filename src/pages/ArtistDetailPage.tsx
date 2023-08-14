@@ -27,7 +27,7 @@ const ArtistDetailPage = () => {
     data: artist,
     isLoading,
     error,
-  } = useArtist(spotifyQuery.artistId, accessToken!);
+  } = useArtist(spotifyQuery.artistId!, accessToken!);
 
   if (error) throw error;
 
@@ -157,7 +157,7 @@ const ArtistDetailPage = () => {
             <Flex
               as="ul"
               direction={'column'}
-              gap={'2rem'}
+              gap={'1rem'}
               alignItems={'center'}
             >
               {topTracks?.map((track, index) => (

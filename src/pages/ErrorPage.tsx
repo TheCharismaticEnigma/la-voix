@@ -55,7 +55,7 @@ const ErrorPage = () => {
 
           <CardBody>
             <Stack spacing={4} alignItems={'center'} gap={'3rem'}>
-              <Heading textAlign={'center'} size={'3xl'}>
+              <Heading textAlign={'center'} size={'3xl'} fontFamily={'system'}>
                 {heading}
               </Heading>
               <Text opacity={'0.7'} textAlign={'center'} fontSize={'2rem'}>
