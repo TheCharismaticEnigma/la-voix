@@ -7,9 +7,7 @@ interface Props {
 const DetailBadge = ({ badgeText }: Props) => {
   return (
     <Badge
-      variant="subtle"
-      color={'black'}
-      background={'#1ED760'}
+      colorScheme="whatsapp"
       width={'fit-content'}
       padding={'0.5rem 1rem'}
       borderRadius={'5px'}

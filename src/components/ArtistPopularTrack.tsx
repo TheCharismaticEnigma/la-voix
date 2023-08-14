@@ -21,8 +21,14 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
         backgroundColor: 'gray.600',
       }}
     >
-      <Text fontSize={'1.9rem'} width={'3rem'} textAlign={'center'}>
+      <Text
+        color={'whiteAlpha.800'}
+        fontSize={'1.9rem'}
+        width={'3rem'}
+        textAlign={'center'}
+      >
         {serialNumber}
+        {'.'}
       </Text>
 
       <Text
@@ -38,7 +44,12 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
         {track.name}
       </Text>
 
-      <Text width={'5rem'} fontSize={'1.5rem'} textAlign={'center'}>
+      <Text
+        color={'whiteAlpha.800'}
+        width={'5rem'}
+        fontSize={'1.5rem'}
+        textAlign={'center'}
+      >
         {`${ms(track.duration_ms).slice(0, -1)} : 00 `}
       </Text>
     </Flex>

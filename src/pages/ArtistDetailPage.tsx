@@ -10,14 +10,14 @@ import {
   Spinner,
   Stack,
 } from '@chakra-ui/react';
+import spotifyLogo from '../assets/spotifyLogo.svg';
+import ArtistPopularTrack from '../components/ArtistPopularTrack';
 import DetailContainer from '../components/DetailContainer';
 import Wrapper from '../components/Wrapper';
 import useAccessToken from '../hooks/useAccessToken';
 import useArtist from '../hooks/useArtist';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
 import useSpotifyQueryStore from '../store';
-import spotifyLogo from '../assets/spotifyLogo.svg';
-import ArtistPopularTrack from '../components/ArtistPopularTrack';
 
 const ArtistDetailPage = () => {
   const { spotifyQuery } = useSpotifyQueryStore();
@@ -126,10 +126,11 @@ const ArtistDetailPage = () => {
                   >
                     <Image src={spotifyLogo} />
                   </Box>
+
                   <Badge
                     padding={'0.25em 0.5em'}
                     fontSize={'1.2rem'}
-                    colorScheme="green"
+                    colorScheme="whatsapp"
                   >
                     Play All Songs
                   </Badge>
