@@ -1,6 +1,7 @@
 import { Flex, Text } from '@chakra-ui/react';
 import ms from 'ms';
 import { Track } from '../entities/Track';
+import useSpotifyQueryStore from '../store';
 
 interface Props {
   track: Track;
@@ -8,6 +9,8 @@ interface Props {
 }
 
 const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
+  const { setSelectedTrackId } = useSpotifyQueryStore();
+
   return (
     <Flex
       padding={'8px 12px '}
@@ -32,6 +35,10 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
       </Text>
 
       <Text
+        onClick={() => {
+          //   console.log(track.name, '=>', track.id);
+          setSelectedTrackId(track.id);
+        }}
         fontFamily={'system'}
         fontSize={'2.2rem'}
         variant={'outline'}
