@@ -47,7 +47,7 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
         width="max(50%, fit-content)"
         _hover={{
           textDecoration: 'underline',
-          color: '#1ED760',
+          textShadow: '0 0 4px #1ED760 ',
         }}
       >
         {track.name}

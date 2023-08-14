@@ -14,11 +14,9 @@ const RightSideBar = () => {
     data: album,
     error: albumError,
     isLoading,
-  } = useAlbum(spotifyQuery.albumId, token!);
+  } = useAlbum(spotifyQuery.albumId!, token!);
 
   if (albumError) throw albumError;
-
-  console.log(album);
 
   return (
     <Wrapper>

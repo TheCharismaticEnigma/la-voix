@@ -1,5 +1,5 @@
 import {
-  Badge,
+  Text,
   Box,
   Divider,
   Flex,
@@ -132,13 +132,9 @@ const ArtistDetailPage = () => {
                     <Image src={spotifyLogo} />
                   </Box>
 
-                  <Badge
-                    padding={'0.25em 0.5em'}
-                    fontSize={'1.2rem'}
-                    colorScheme="whatsapp"
-                  >
+                  <Text textShadow={' 0 0 4px #1ED760 '} fontSize={'1.5rem'}>
                     Play All Songs
-                  </Badge>
+                  </Text>
                 </Flex>
               </Flex>
             </GridItem>

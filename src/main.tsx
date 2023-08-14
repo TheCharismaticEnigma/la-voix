@@ -14,10 +14,13 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false, // default: true
-      cacheTime: staleTime('0.5h'),
+      cacheTime: staleTime('1h'),
     },
   },
 });
+
+// StaleTime => time after which data is considered STALE, and thus will be refetched.
+// CacheTime => time after which data is garbage collected.
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

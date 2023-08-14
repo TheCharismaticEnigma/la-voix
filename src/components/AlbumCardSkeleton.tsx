@@ -1,4 +1,4 @@
-import { Card, CardBody, Skeleton } from '@chakra-ui/react';
+import { Card, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 
 const AlbumCardSkeleton = () => {
   return (
@@ -10,18 +10,8 @@ const AlbumCardSkeleton = () => {
         height={'25rem'}
         gap={'1.5rem'}
       >
-        <Skeleton height={'20px'} />
-        <Skeleton height={'20px'} />
-        <Skeleton height={'20px'} />
-        <Skeleton height={'20px'} />
-        <Skeleton height={'20px'} />
-        <Skeleton height={'20px'} />
-        <Skeleton height={'20px'} />
-
-        <CardBody width={'100%'} flexDirection={'column'} gap={'1rem'}>
-          <Skeleton />
-          <Skeleton />
-        </CardBody>
+        <SkeletonCircle size="6rem" />
+        <SkeletonText mt="4" noOfLines={10} spacing="4" skeletonHeight="2" />
       </Card>
     </>
   );
