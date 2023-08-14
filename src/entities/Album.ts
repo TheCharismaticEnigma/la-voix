@@ -10,7 +10,7 @@ export interface Album {
     spotify: string;
   };
   href: string;
-  id: number;
+  id: string;
   images: Image[];
   name: string;
   release_date: string;

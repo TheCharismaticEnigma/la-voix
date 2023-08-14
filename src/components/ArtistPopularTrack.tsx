@@ -9,7 +9,8 @@ interface Props {
 }
 
 const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
-  const { setSelectedTrackId } = useSpotifyQueryStore();
+  const setSelectedTrackId = useSpotifyQueryStore((s) => s.setSelectedTrackId);
+  const setSelctedAlbumId = useSpotifyQueryStore((s) => s.setSelectedAlbumId);
 
   return (
     <Flex
@@ -38,7 +39,10 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
         onClick={() => {
           //   console.log(track.name, '=>', track.id);
           setSelectedTrackId(track.id);
+          setSelctedAlbumId(track.album.id);
+          console.log(track);
         }}
+        textAlign={'center'}
         fontFamily={'system'}
         fontSize={'2.2rem'}
         variant={'outline'}

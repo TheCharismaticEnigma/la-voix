@@ -24,6 +24,11 @@ const router = createBrowserRouter([
         path: '/artist/:id',
         element: <ArtistDetailPage />,
       },
+
+      // {
+      //   path: '/album/:id',
+      //   element: <AlbumDetailPage />,
+      // },
     ],
   },
 ]);
