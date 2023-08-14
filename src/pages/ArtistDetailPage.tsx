@@ -27,12 +27,12 @@ const ArtistDetailPage = () => {
     data: artist,
     isLoading,
     error,
-  } = useArtist(spotifyQuery.artistId!, accessToken!);
+  } = useArtist(spotifyQuery.artistId, accessToken!);
 
   if (error) throw error;
 
   const { data: topTracks, error: trackError } = useTopArtistTracks(
-    spotifyQuery.artistId!,
+    spotifyQuery.artistId,
     accessToken!
   );
 

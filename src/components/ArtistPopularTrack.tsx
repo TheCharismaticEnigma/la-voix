@@ -2,7 +2,6 @@ import { Flex, Text } from '@chakra-ui/react';
 import ms from 'ms';
 import { Track } from '../entities/Track';
 import useSpotifyQueryStore from '../store';
-
 interface Props {
   track: Track;
   serialNumber: number;

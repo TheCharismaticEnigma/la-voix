@@ -4,11 +4,17 @@
 // Server State : Hooks, React Query. Client State: Zustand
 
 import { create } from 'zustand';
+import initialIds from './initialData/initialIds';
 
+const {
+  artistId: defaultArtistId,
+  trackId: defaultTrackId,
+  albumId: defaultAlbumId,
+} = initialIds();
 interface SpotifyQueryObject {
-  artistId?: string;
-  trackId?: string;
-  albumId?: string;
+  artistId: string;
+  trackId: string;
+  albumId: string;
 }
 
 interface SpotifyStore {
@@ -20,7 +26,11 @@ interface SpotifyStore {
 
 const useSpotifyQueryStore = create<SpotifyStore>((set) => {
   return {
-    spotifyQuery: {},
+    spotifyQuery: {
+      artistId: defaultArtistId,
+      trackId: defaultTrackId,
+      albumId: defaultAlbumId,
+    },
 
     setSelectedArtistId: (id: string) =>
       set((prevStore) => {

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import HttpService from '../services/HttpService';
 import { Album } from '../entities/Album';
 import staleTime from '../utils/staleTime';
+import album from '../initialData/initialAlbum';
 
 const useAlbum = (albumId: string, accessToken: string) => {
   const httpService = new HttpService<Album>(`/albums/${albumId}`, accessToken);
@@ -15,6 +16,7 @@ const useAlbum = (albumId: string, accessToken: string) => {
     },
     staleTime: staleTime('1h'),
     retry: 3,
+    initialData: album,
   });
 };
 

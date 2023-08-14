@@ -25,10 +25,10 @@ export interface Album {
   tracks: {
     href: string;
     limit: number;
-    next: string;
-    offset: string;
-    previous: string;
-    total: string;
+    next: number | null;
+    offset: number;
+    previous: number | null;
+    total: number;
     items: Track[];
   };
 }
