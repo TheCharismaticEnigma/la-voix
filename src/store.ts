@@ -6,7 +6,7 @@
 import { create } from 'zustand';
 
 interface SpotifyQueryObject {
-  artistId: string;
+  artistId?: string;
   trackId?: string;
   albumId?: string;
 }
@@ -20,9 +20,7 @@ interface SpotifyStore {
 
 const useSpotifyQueryStore = create<SpotifyStore>((set) => {
   return {
-    spotifyQuery: {
-      artistId: `03SZmfKAgYRQKUwy0EoJUa`,
-    },
+    spotifyQuery: {},
 
     setSelectedArtistId: (id: string) =>
       set((prevStore) => {

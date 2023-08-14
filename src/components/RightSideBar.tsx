@@ -1,9 +1,14 @@
+import { Flex } from '@chakra-ui/react';
+import useAccessToken from '../hooks/useAccessToken';
+import useAlbum from '../hooks/useAlbum';
 import useSpotifyQueryStore from '../store';
 import Wrapper from './Wrapper';
-import { Flex } from '@chakra-ui/react';
 
 const RightSideBar = () => {
-  const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
+  const token = useAccessToken();
+  const { spotifyQuery } = useSpotifyQueryStore();
+
+  const { data: album } = useAlbum(spotifyQuery.albumId!, token!);
 
   return (
     <Wrapper>
@@ -22,17 +27,7 @@ const RightSideBar = () => {
           width={'100%'}
           padding={'5px 10px'}
         >
-          {spotifyQuery.trackId}
-        </Flex>
-
-        <Flex
-          border={'0.5px solid tomato'}
-          background={'gray.700'}
-          borderRadius={'10px'}
-          width={'100%'}
-          padding={'5px 10px'}
-        >
-          {spotifyQuery.albumId}
+          Gracias a todos.
         </Flex>
       </Flex>
     </Wrapper>

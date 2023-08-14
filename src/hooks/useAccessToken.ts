@@ -33,7 +33,7 @@ const useAccessToken = () => {
           return data.access_token;
         });
     },
-    staleTime: staleTime('1h'), // 1h
+    staleTime: staleTime('0.5h'), // half hour
     retry: 3,
   });
 

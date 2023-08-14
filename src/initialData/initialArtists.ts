@@ -3,39 +3,6 @@ import { Artist } from '../entities/Artist';
 const artists: Artist[] = [
   {
     external_urls: {
-      spotify: 'https://open.spotify.com/artist/0sSxphmGskGCKlwB9xa6WU',
-    },
-    followers: {
-      href: null,
-      total: 8772789,
-    },
-    genres: ['filmi', 'modern bollywood'],
-    href: 'https://api.spotify.com/v1/artists/0sSxphmGskGCKlwB9xa6WU',
-    id: '0sSxphmGskGCKlwB9xa6WU',
-    images: [
-      {
-        height: 640,
-        url: 'https://i.scdn.co/image/ab6761610000e5eb2cfc402fa29cd2949023a8bf',
-        width: 640,
-      },
-      {
-        height: 320,
-        url: 'https://i.scdn.co/image/ab676161000051742cfc402fa29cd2949023a8bf',
-        width: 320,
-      },
-      {
-        height: 160,
-        url: 'https://i.scdn.co/image/ab6761610000f1782cfc402fa29cd2949023a8bf',
-        width: 160,
-      },
-    ],
-    name: 'Himesh Reshammiya',
-    popularity: 64,
-    type: 'artist',
-    uri: 'spotify:artist:0sSxphmGskGCKlwB9xa6WU',
-  },
-  {
-    external_urls: {
       spotify: 'https://open.spotify.com/artist/03SZmfKAgYRQKUwy0EoJUa',
     },
     followers: {
@@ -666,6 +633,39 @@ const artists: Artist[] = [
     popularity: 65,
     type: 'artist',
     uri: 'spotify:artist:3tHD07u1ON4uHxmnT9rwqZ',
+  },
+  {
+    external_urls: {
+      spotify: 'https://open.spotify.com/artist/0sSxphmGskGCKlwB9xa6WU',
+    },
+    followers: {
+      href: null,
+      total: 8772789,
+    },
+    genres: ['filmi', 'modern bollywood'],
+    href: 'https://api.spotify.com/v1/artists/0sSxphmGskGCKlwB9xa6WU',
+    id: '0sSxphmGskGCKlwB9xa6WU',
+    images: [
+      {
+        height: 640,
+        url: 'https://i.scdn.co/image/ab6761610000e5eb2cfc402fa29cd2949023a8bf',
+        width: 640,
+      },
+      {
+        height: 320,
+        url: 'https://i.scdn.co/image/ab676161000051742cfc402fa29cd2949023a8bf',
+        width: 320,
+      },
+      {
+        height: 160,
+        url: 'https://i.scdn.co/image/ab6761610000f1782cfc402fa29cd2949023a8bf',
+        width: 160,
+      },
+    ],
+    name: 'Himesh Reshammiya',
+    popularity: 64,
+    type: 'artist',
+    uri: 'spotify:artist:0sSxphmGskGCKlwB9xa6WU',
   },
 ];
 

@@ -39,7 +39,7 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
           //   console.log(track.name, '=>', track.id);
           setSelectedTrackId(track.id);
           setSelectedAlbumId(track.album.id);
-          console.log(track);
+          //   console.log(track);
         }}
         textAlign={'center'}
         fontFamily={'system'}
