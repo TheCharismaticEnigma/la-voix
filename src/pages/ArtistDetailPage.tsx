@@ -21,7 +21,9 @@ import useSpotifyQueryStore from '../store';
 
 const ArtistDetailPage = () => {
   const { spotifyQuery } = useSpotifyQueryStore();
-  const accessToken = useAccessToken();
+  const { data: accessToken, error: tokenError } = useAccessToken();
+
+  if (tokenError) throw tokenError;
 
   const {
     data: artist,

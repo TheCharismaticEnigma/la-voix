@@ -10,7 +10,7 @@ interface AccessToken {
 }
 
 const useAccessToken = () => {
-  const { data } = useQuery({
+  return useQuery({
     queryKey: ['access_token'],
     queryFn: () => {
       return axios
@@ -34,10 +34,9 @@ const useAccessToken = () => {
         });
     },
     staleTime: staleTime('0.5h'), // half hour
+    cacheTime: staleTime('0.5h'),
     retry: 3,
   });
-
-  return data;
 };
 
 export default useAccessToken;

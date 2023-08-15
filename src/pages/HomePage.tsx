@@ -3,7 +3,10 @@ import Wrapper from '../components/Wrapper';
 import useAccessToken from '../hooks/useAccessToken';
 
 const HomePage = () => {
-  const token = useAccessToken();
+  const { data: token, error, isLoading } = useAccessToken();
+
+  if (isLoading) return null;
+  if (error) throw error;
 
   return (
     <Wrapper>

@@ -7,14 +7,11 @@ import useAccessToken from '../hooks/useAccessToken';
 
 const Artists = () => {
   const artistId = randomArtistId();
-  const accessToken = useAccessToken();
+  const { data: accessToken, error: tokenError } = useAccessToken();
 
-  const { data: relatedArtists, error } = useRelatedArtists(
-    artistId,
-    accessToken!
-  );
+  if (tokenError) throw tokenError;
 
-  if (error) throw error;
+  const { data: relatedArtists } = useRelatedArtists(artistId, accessToken!);
 
   return (
     <Wrapper>

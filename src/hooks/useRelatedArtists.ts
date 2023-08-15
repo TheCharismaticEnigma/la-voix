@@ -63,7 +63,7 @@ const useRelatedArtists = (artistId: string, accessToken: string) => {
     },
     staleTime: staleTime('1h'),
     retry: 3,
-    initialData: artists,
+    placeholderData: artists,
   });
 };
 

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import HttpService from '../services/HttpService';
 import { Album } from '../entities/Album';
+import staleTime from '../utils/staleTime';
 import album from '../initialData/initialAlbum';
 
 const useAlbum = (albumId: string, accessToken: string) => {
@@ -14,6 +15,8 @@ const useAlbum = (albumId: string, accessToken: string) => {
       });
     },
     retry: 3,
+    staleTime: staleTime('1h'), // time after which data is considered STALE
+    placeholderData: album,
   });
 };
 

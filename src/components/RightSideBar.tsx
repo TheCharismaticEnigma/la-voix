@@ -7,16 +7,12 @@ import Wrapper from './Wrapper';
 import AlbumCardSkeleton from './AlbumCardSkeleton';
 
 const RightSideBar = () => {
-  const token = useAccessToken();
+  const { data: token, error: tokenError } = useAccessToken();
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
 
-  const {
-    data: album,
-    error: albumError,
-    isLoading,
-  } = useAlbum(spotifyQuery.albumId!, token!);
+  if (tokenError) throw tokenError;
 
-  if (albumError) throw albumError;
+  const { data: album, isLoading } = useAlbum(spotifyQuery.albumId!, token!);
 
   return (
     <Wrapper>
