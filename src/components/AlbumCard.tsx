@@ -43,14 +43,6 @@ const AlbumCard = ({ album }: Props) => {
         >
           {album?.name}
         </Text>
-
-        <Text
-          color={'whiteAlpha.600'}
-          fontSize={'2rem '}
-          _hover={{ color: 'white', textDecoration: 'underline' }}
-        >
-          {album?.artists[0].name}
-        </Text>
       </Flex>
     </Flex>
   );
