@@ -25,20 +25,17 @@ const ArtistDetailPage = () => {
 
   if (tokenError) throw tokenError;
 
-  const {
-    data: artist,
-    isLoading,
-    error,
-  } = useArtist(spotifyQuery.artistId, accessToken!);
-
-  if (error) throw error;
-
-  const { data: topTracks, error: trackError } = useTopArtistTracks(
+  const { data: artist, isLoading } = useArtist(
     spotifyQuery.artistId,
     accessToken!
   );
 
-  if (trackError) throw trackError;
+  const { data: topTracks } = useTopArtistTracks(
+    spotifyQuery.artistId,
+    accessToken!
+  );
+
+  // Instead of throwing errors, have some placeholder data.
 
   const defaultDimension = '320px';
 

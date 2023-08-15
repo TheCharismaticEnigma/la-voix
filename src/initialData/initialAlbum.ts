@@ -1,5 +1,4 @@
 import { Album } from '../entities/Album';
-import { Artist } from '../entities/Artist';
 
 const album: Album = {
   album_type: 'album',
@@ -14,7 +13,7 @@ const album: Album = {
       type: 'artist',
       uri: 'spotify:artist:6ohaQzKaXrobAL8paLSaxq',
     },
-  ] as Artist[],
+  ],
   copyrights: [
     {
       text: '2008 YRF Music',
