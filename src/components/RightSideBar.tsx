@@ -17,7 +17,6 @@ const RightSideBar = () => {
   if (tokenError) throw tokenError;
 
   const { data: album } = useAlbum(spotifyQuery.albumId!, token!);
-  console.log(album?.artists);
 
   return (
     <Wrapper>
@@ -47,14 +46,13 @@ const RightSideBar = () => {
           <Flex flexWrap={'wrap'} gap={'1.5rem'}>
             {album?.artists.map(({ id, name }) => {
               return (
-                <Link to={`/artist/${id}`}>
+                <Link key={id} to={`/artist/${id}`}>
                   <Text
                     onClick={() => {
                       setSelectedArtistId(id);
                     }}
                     cursor={'pointer'}
                     fontSize={'2rem'}
-                    key={id}
                     _hover={{ color: 'white', textDecoration: 'underline' }}
                   >
                     {name}
