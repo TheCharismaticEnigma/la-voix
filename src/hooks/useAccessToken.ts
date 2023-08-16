@@ -34,7 +34,7 @@ const useAccessToken = () => {
         });
     },
     staleTime: staleTime('0.5h'),
-    cacheTime: staleTime('0.5h'),
+    cacheTime: staleTime('0.5h'), // time after which it'll be garbage collected.
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,

@@ -6,11 +6,7 @@
 import { create } from 'zustand';
 import initialIds from './initialData/initialIds';
 
-const {
-  artistId: defaultArtistId,
-  trackId: defaultTrackId,
-  albumId: defaultAlbumId,
-} = initialIds();
+const { artistId, trackId, albumId } = initialIds();
 interface SpotifyQueryObject {
   artistId: string;
   trackId: string;
@@ -27,9 +23,9 @@ interface SpotifyStore {
 const useSpotifyQueryStore = create<SpotifyStore>((set) => {
   return {
     spotifyQuery: {
-      artistId: defaultArtistId,
-      trackId: defaultTrackId,
-      albumId: defaultAlbumId,
+      artistId,
+      trackId,
+      albumId,
     },
 
     setSelectedArtistId: (id: string) =>

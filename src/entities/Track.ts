@@ -12,6 +12,8 @@ export interface SimplifiedArtist {
 }
 
 export interface SimplifiedAlbum {
+  album_group?: string;
+
   album_type: 'album' | 'single' | 'compilation';
 
   artists: SimplifiedArtist[];

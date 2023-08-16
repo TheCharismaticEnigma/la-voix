@@ -3,9 +3,12 @@ import LeftSideBar from '../components/LeftSideBar';
 import MainAppContent from './MainAppContent';
 import NowPlayingContent from '../components/NowPlayingContent';
 import RightSideBar from '../components/RightSideBar';
+import useCachedToken from '../hooks/useCachedToken';
 
 const Layout = () => {
   // All the STATE OF THE APP WILL BE HERE.
+
+  useCachedToken();
 
   return (
     // 2 Rows 3 Columns.

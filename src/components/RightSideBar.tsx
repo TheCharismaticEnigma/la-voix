@@ -22,16 +22,13 @@ const RightSideBar = () => {
     error,
     fetchNextPage,
     hasNextPage,
-  } = useArtistAlbums(spotifyQuery.artistId);
+  } = useArtistAlbums(spotifyQuery.artistId || '');
 
   if (error) throw error;
 
-  const allAlbums =
-    allAlbumPages?.pages.reduce((currentAlbums, { items }) => {
-      return [...currentAlbums, ...items];
-    }, [] as Album[]) || [];
-
-  console.log(allAlbums);
+  const allAlbums = allAlbumPages?.pages.reduce((currentAlbums, { items }) => {
+    return [...currentAlbums, ...items];
+  }, [] as Album[]);
 
   return (
     <Wrapper>
@@ -109,7 +106,7 @@ const RightSideBar = () => {
               loader={<AlbumCardSkeleton />}
               endMessage={<Divider />}
             >
-              <Flex direction={'column'} gap={'1rem'}>
+              <Flex direction={'column'} height={'fit-content'} gap={'1rem'}>
                 {allAlbums?.map((album) => (
                   <AlbumCard key={album.id} album={album} />
                 ))}

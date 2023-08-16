@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import staleTime from '../utils/staleTime';
 
 // NOTE: If neither market nor user country are provided,
 // the content is considered unavailable for the client.
@@ -25,18 +24,12 @@ export interface SpotifyAllAlbumsResponse<T> {
   items: T[];
 }
 
-type VALID_TIME = 3600;
-
-interface AccessToken {
-  access_token: string;
-  expires_in: VALID_TIME;
-}
-
 // As soon as the document is loaded, fetch the access token.
 // document (DomContentLoaded) | window (load).
 // Implement HTTP Caching in order to cache the access token for 1 hour.
 // page session lasts while tab/ browser is open, and survives over page reloads/restores.
 
+/*
 function getAccessToken() {
   return axios
     .post<AccessToken>(
@@ -58,27 +51,16 @@ function getAccessToken() {
       return data.access_token;
     });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  if (!sessionStorage.getItem('token')) {
-    getAccessToken().then((token) => {
-      sessionStorage.setItem('token', token);
-    });
-  }
-
-  setInterval(() => {
-    getAccessToken().then((token) => {
-      sessionStorage.setItem('token', token);
-    });
-  }, staleTime('0.8h'));
-});
+*/
 
 class HttpService<T> {
-  #accessToken = sessionStorage.getItem('token');
+  #accessToken;
   #endPoint;
+  #tokenId = 'token';
 
   constructor(path: string) {
     this.#endPoint = path;
+    this.#accessToken = localStorage.getItem(this.#tokenId);
   }
 
   get(requestConfig?: AxiosRequestConfig) {
