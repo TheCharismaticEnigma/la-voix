@@ -50,6 +50,7 @@ const ArtistDetailPage = () => {
           padding={'8px'}
         >
           <Grid
+            borderRadius={'inherit'}
             width={'100%'}
             gap={'1.5rem'}
             gridTemplateRows={'repeat(1, max(fit-content, 320px))'}

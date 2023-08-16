@@ -4,6 +4,7 @@ import Layout from './pages/Layout';
 import ArtistDetailPage from './pages/ArtistDetailPage';
 import HomePage from './pages/HomePage';
 import QueryHomePage from './pages/QueryHomePage';
+import AlbumDetailPage from './pages/AlbumDetailPage';
 
 const router = createBrowserRouter([
   {
@@ -25,10 +26,10 @@ const router = createBrowserRouter([
         element: <ArtistDetailPage />,
       },
 
-      // {
-      //   path: '/album/:id',
-      //   element: <AlbumDetailPage />,
-      // },
+      {
+        path: '/album/:id',
+        element: <AlbumDetailPage />,
+      },
     ],
   },
 ]);
