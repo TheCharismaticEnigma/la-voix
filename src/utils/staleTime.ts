@@ -1,8 +1,6 @@
 import ms from 'ms';
 
-const staleTime = (time?: string) => {
-  if (!time) return;
-
+const staleTime = (time: string) => {
   return ms(time);
 };
 

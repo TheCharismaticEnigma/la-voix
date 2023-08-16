@@ -26,9 +26,10 @@ const RightSideBar = () => {
 
   if (error) throw error;
 
-  const allAlbums = allAlbumPages?.pages.reduce((currentAlbums, { items }) => {
-    return [...currentAlbums, ...items];
-  }, [] as Album[]);
+  const allAlbums =
+    allAlbumPages?.pages.reduce((currentAlbums, { items }) => {
+      return [...currentAlbums, ...items];
+    }, [] as Album[]) || [];
 
   return (
     <Wrapper>
