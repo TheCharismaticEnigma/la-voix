@@ -8,7 +8,9 @@ import useCachedToken from '../hooks/useCachedToken';
 const Layout = () => {
   // All the STATE OF THE APP WILL BE HERE.
 
-  useCachedToken();
+  const { error } = useCachedToken();
+
+  if (error && error.name !== 'CanceledError') throw error; // caught by router
 
   return (
     // 2 Rows 3 Columns.

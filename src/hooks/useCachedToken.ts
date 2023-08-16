@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { useEffect } from 'react';
+import axios, { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
 import staleTime from '../utils/staleTime';
 
 type VALID_TIME = 3600;
@@ -15,6 +15,8 @@ const tokenKey = 'token';
 const sessionStartTimeKey = 'sessionStartTime';
 
 const useCachedToken = () => {
+  const [error, setError] = useState<Error>();
+
   const controller = new AbortController();
 
   // Key is valid for 1 hour. So we refetch and restore it in the local storage every half hour.
@@ -47,13 +49,16 @@ const useCachedToken = () => {
           localStorage.setItem(tokenKey, data.access_token);
           localStorage.setItem(sessionStartTimeKey, `${currentTime}`);
           return data.access_token;
+        })
+        .catch((error: AxiosError) => {
+          setError(error);
         });
     }
 
     return () => controller.abort();
   }, []);
 
-  return;
+  return { error };
 };
 
 export default useCachedToken;
