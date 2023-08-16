@@ -4,6 +4,7 @@ const AlbumCardSkeleton = () => {
   return (
     <>
       <Card
+        mt={'1rem'}
         padding={'8px 12px'}
         borderRadius={'10'}
         width={'100%'}

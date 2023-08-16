@@ -48,10 +48,9 @@ export default useRelatedArtists;
 
 */
 
-const useRelatedArtists = (artistId: string, accessToken: string) => {
+const useRelatedArtists = (artistId: string) => {
   const httpService = new HttpService<Artist>(
-    `/artists/${artistId}/related-artists`,
-    accessToken
+    `/artists/${artistId}/related-artists`
   );
 
   return useQuery({

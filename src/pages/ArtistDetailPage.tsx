@@ -14,26 +14,16 @@ import spotifyLogo from '../assets/spotifyLogo.svg';
 import ArtistPopularTrack from '../components/ArtistPopularTrack';
 import DetailContainer from '../components/DetailContainer';
 import Wrapper from '../components/Wrapper';
-import useAccessToken from '../hooks/useAccessToken';
 import useArtist from '../hooks/useArtist';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
 import useSpotifyQueryStore from '../store';
 
 const ArtistDetailPage = () => {
   const { spotifyQuery } = useSpotifyQueryStore();
-  const { data: accessToken, error: tokenError } = useAccessToken();
 
-  if (tokenError) throw tokenError;
+  const { data: artist, isLoading } = useArtist(spotifyQuery.artistId);
 
-  const { data: artist, isLoading } = useArtist(
-    spotifyQuery.artistId,
-    accessToken!
-  );
-
-  const { data: topTracks } = useTopArtistTracks(
-    spotifyQuery.artistId,
-    accessToken!
-  );
+  const { data: topTracks } = useTopArtistTracks(spotifyQuery.artistId);
 
   // Instead of throwing errors, have some placeholder data.
 

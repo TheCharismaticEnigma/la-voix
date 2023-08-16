@@ -14,6 +14,7 @@ import {
 import { Link, isRouteErrorResponse, useRouteError } from 'react-router-dom';
 
 import spotifyLogo from '../assets/spotifyLogo.svg';
+import { AxiosError } from 'axios';
 
 const ErrorPage = () => {
   const error = useRouteError();
@@ -24,6 +25,11 @@ const ErrorPage = () => {
   if (isRouteErrorResponse(error) && error.status === 404) {
     heading = `PAGE NOT FOUND`;
     message = `The page you are looking for doesn't exist or has been moved.`;
+  }
+
+  if (error instanceof AxiosError && error.message === 'Network Error') {
+    heading = `Network Error`;
+    message = `Please check your internet connection or try again later.`;
   }
 
   return (

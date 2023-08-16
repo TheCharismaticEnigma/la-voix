@@ -33,9 +33,13 @@ const useAccessToken = () => {
           return data.access_token;
         });
     },
-    staleTime: staleTime('0.5h'), // half hour
+    staleTime: staleTime('0.5h'),
     cacheTime: staleTime('0.5h'),
-    retry: 3,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchIntervalInBackground: true,
+    refetchInterval: staleTime('0.5h'),
   });
 };
 

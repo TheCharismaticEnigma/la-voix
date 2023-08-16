@@ -4,11 +4,8 @@ import HttpService from '../services/HttpService';
 import { Artist } from '../entities/Artist';
 import initialArtist from '../initialData/initialArtist';
 
-const useArtist = (artistId: string, accessToken: string) => {
-  const httpService = new HttpService<Artist>(
-    `/artists/${artistId}`,
-    accessToken
-  );
+const useArtist = (artistId: string) => {
+  const httpService = new HttpService<Artist>(`/artists/${artistId}`);
 
   return useQuery<Artist, Error>({
     queryKey: ['artistDetails', artistId],

@@ -4,11 +4,8 @@ import HttpService from '../services/HttpService';
 import { Track } from '../entities/Track';
 import topTracks from '../initialData/initialArtistTopTracks';
 
-const useTopArtistTracks = (artistId: string, accessToken: string) => {
-  const httpService = new HttpService<Track>(
-    `artists/${artistId}/top-tracks`,
-    accessToken
-  );
+const useTopArtistTracks = (artistId: string) => {
+  const httpService = new HttpService<Track>(`artists/${artistId}/top-tracks`);
 
   return useQuery({
     queryKey: ['top-tracks', artistId],

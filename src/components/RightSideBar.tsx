@@ -1,22 +1,37 @@
-import { Divider, Flex, Text, Heading } from '@chakra-ui/react';
-import useAccessToken from '../hooks/useAccessToken';
+import { Divider, Flex, Text, Heading, Stack } from '@chakra-ui/react';
 import useAlbum from '../hooks/useAlbum';
 import useSpotifyQueryStore from '../store';
 import AlbumCard from './AlbumCard';
 import Wrapper from './Wrapper';
 import { Link } from 'react-router-dom';
+import useArtistAlbums from '../hooks/useArtistAlbums';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Album } from '../entities/Album';
+import AlbumCardSkeleton from './AlbumCardSkeleton';
 
 const RightSideBar = () => {
-  const { data: token, error: tokenError } = useAccessToken();
-
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
   const setSelectedArtistId = useSpotifyQueryStore(
     (s) => s.setSelectedArtistId
   );
 
-  if (tokenError) throw tokenError;
+  const { data: album } = useAlbum(spotifyQuery.albumId!);
 
-  const { data: album } = useAlbum(spotifyQuery.albumId!, token!);
+  const {
+    data: allAlbumPages,
+    error,
+    fetchNextPage,
+    hasNextPage,
+  } = useArtistAlbums(spotifyQuery.artistId);
+
+  if (error) throw error;
+
+  const allAlbums =
+    allAlbumPages?.pages.reduce((currentAlbums, { items }) => {
+      return [...currentAlbums, ...items];
+    }, [] as Album[]) || [];
+
+  console.log(allAlbums);
 
   return (
     <Wrapper>
@@ -24,7 +39,7 @@ const RightSideBar = () => {
         paddingRight={'5px '}
         borderRadius={'10px '}
         borderTopRightRadius={'0'}
-        minH={'1020%'}
+        minH={'100%'}
         direction={'column'}
         gap={'2rem'}
       >
@@ -62,6 +77,45 @@ const RightSideBar = () => {
               );
             })}
           </Flex>
+        </Flex>
+
+        <Flex
+          direction={'column'}
+          borderRadius={'10px'}
+          width={'100%'}
+          gap={'1rem'}
+        >
+          <Stack
+            background={'gray.700'}
+            borderRadius={'inherit'}
+            padding={'8px 10px'}
+            spacing={3}
+          >
+            <Heading fontFamily={'system'} size={'xl'} color={'whiteAlpha.600'}>
+              Other Albums
+            </Heading>
+            <Divider />
+          </Stack>
+
+          {allAlbums?.length > 0 && (
+            <InfiniteScroll
+              dataLength={allAlbums?.length ?? 0} //This is important field to render the next data
+              next={() => {
+                // dataLength takes the value of total components fetched so far.
+                fetchNextPage();
+              }}
+              hasMore={hasNextPage ? hasNextPage : false}
+              scrollThreshold={0.8}
+              loader={<AlbumCardSkeleton />}
+              endMessage={<Divider />}
+            >
+              <Flex direction={'column'} gap={'1rem'}>
+                {allAlbums?.map((album) => (
+                  <AlbumCard key={album.id} album={album} />
+                ))}
+              </Flex>
+            </InfiniteScroll>
+          )}
         </Flex>
       </Flex>
     </Wrapper>

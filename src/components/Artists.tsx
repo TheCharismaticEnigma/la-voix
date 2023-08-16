@@ -3,15 +3,11 @@ import ArtistListBar from './ArtistListBar';
 import Wrapper from './Wrapper';
 import useRelatedArtists from '../hooks/useRelatedArtists';
 import randomArtistId from '../utils/randomArtistId';
-import useAccessToken from '../hooks/useAccessToken';
 
 const Artists = () => {
   const artistId = randomArtistId();
-  const { data: accessToken, error: tokenError } = useAccessToken();
 
-  if (tokenError) throw tokenError;
-
-  const { data: relatedArtists } = useRelatedArtists(artistId, accessToken!);
+  const { data: relatedArtists } = useRelatedArtists(artistId);
 
   return (
     <Wrapper>

@@ -3,11 +3,8 @@ import HttpService from '../services/HttpService';
 import { Album } from '../entities/Album';
 import staleTime from '../utils/staleTime';
 
-const useAlbumTracks = (albumId: string, accessToken: string) => {
-  const httpService = new HttpService<Album>(
-    `/albums/${albumId}/tracks`,
-    accessToken
-  );
+const useAlbumTracks = (albumId: string) => {
+  const httpService = new HttpService<Album>(`/albums/${albumId}/tracks`);
 
   return useQuery({
     queryKey: ['albumTracks', albumId], // anytime albumId changes, queryFn is called.

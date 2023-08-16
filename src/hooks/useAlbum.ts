@@ -4,8 +4,8 @@ import { Album } from '../entities/Album';
 import staleTime from '../utils/staleTime';
 import album from '../initialData/initialAlbum';
 
-const useAlbum = (albumId: string, accessToken: string) => {
-  const httpService = new HttpService<Album>(`/albums/${albumId}`, accessToken);
+const useAlbum = (albumId: string) => {
+  const httpService = new HttpService<Album>(`/albums/${albumId}`);
 
   return useQuery({
     queryKey: ['album', albumId], // anytime albumId changes, queryFn is called.
@@ -16,7 +16,7 @@ const useAlbum = (albumId: string, accessToken: string) => {
     },
     retry: 3,
     staleTime: staleTime('1h'), // time after which data is considered STALE
-    placeholderData: album,
+    placeholderData: album, // like initial data but not cached.
   });
 };
 
