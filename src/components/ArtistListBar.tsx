@@ -37,7 +37,7 @@ const ArtistListBar = ({ artist }: Props) => {
           objectFit={'cover'}
           borderRadius={'50%'}
         >
-          <Image src={images[0].url} />
+          {images && <Image src={images[0].url} />}
         </Box>
         <Text fontWeight={'400'}> {name} </Text>
       </Flex>

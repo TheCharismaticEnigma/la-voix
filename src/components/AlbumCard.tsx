@@ -1,14 +1,22 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { Album } from '../entities/Album';
 import { Link } from 'react-router-dom';
+import useSpotifyQueryStore from '../store';
 
 interface Props {
   album: Album;
 }
 
 const AlbumCard = ({ album }: Props) => {
+  const { setSelectedAlbumId } = useSpotifyQueryStore();
+
   return (
-    <Link to={`/album/${album.id}`}>
+    <Link
+      to={`/album/${album.id}`}
+      onClick={() => {
+        setSelectedAlbumId(album.id);
+      }}
+    >
       <Flex
         boxShadow={' 0 0 5px 0 #2a2a2a'}
         background={'gray.700'}

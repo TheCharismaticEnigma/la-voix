@@ -1,12 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 import Wrapper from '../components/Wrapper';
-import useAccessToken from '../hooks/useAccessToken';
 
 const HomePage = () => {
-  const { data: token, error, isLoading } = useAccessToken();
-
-  if (isLoading) return null;
-  if (error) throw error;
+  const token = localStorage.getItem('token');
 
   return (
     <Wrapper>

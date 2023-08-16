@@ -7,8 +7,8 @@ export interface Copyrights {
 }
 
 export interface ExternalId {
-  amgid: string; //  'YRMCD90050',
-  upc: string; // '0849486008052',
+  amgid?: string; //  'YRMCD90050',
+  upc?: string; // '0849486008052',
 }
 
 export interface SimplifiedTrack {

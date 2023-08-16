@@ -14,7 +14,7 @@ const useTopArtistTracks = (artistId: string) => {
         return tracks.tracks;
       });
     },
-    staleTime: staleTime('1h'),
+    staleTime: staleTime('24h'),
     retry: 3,
     placeholderData: topTracks,
   });

@@ -10,7 +10,10 @@ const Layout = () => {
 
   const { error } = useCachedToken();
 
-  if (error && error.name !== 'CanceledError') throw error; // caught by router
+  if (error) {
+    window.location.reload();
+    throw error;
+  }
 
   return (
     // 2 Rows 3 Columns.

@@ -9,6 +9,7 @@ export interface SimplifiedArtist {
   name: string; //  'Various Artists',
   type: 'artist';
   uri: string; // 'spotify:artist:0LyfQWJT6nXafLPZqxe9Of',
+  images?: Image[];
 }
 
 export interface SimplifiedAlbum {

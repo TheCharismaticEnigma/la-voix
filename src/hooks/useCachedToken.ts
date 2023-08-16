@@ -9,7 +9,7 @@ interface AccessToken {
   expires_in: VALID_TIME;
 }
 
-const validityDuration = staleTime('0.8h');
+const validityDuration = staleTime('0.8h') / 60000; // 1 minute
 
 const tokenKey = 'token';
 const sessionStartTimeKey = 'sessionStartTime';
@@ -27,7 +27,10 @@ const useCachedToken = () => {
   // if (startTime isn't logged or key becomes invalid)
 
   useEffect(() => {
-    if (!startTime || currentTime - +startTime >= validityDuration) {
+    if (
+      !startTime ||
+      Math.floor((currentTime - +startTime) / 60000) >= validityDuration
+    ) {
       axios
         .post<AccessToken>(
           'https://accounts.spotify.com/api/token',
@@ -48,10 +51,11 @@ const useCachedToken = () => {
         .then(({ data }) => {
           localStorage.setItem(tokenKey, data.access_token);
           localStorage.setItem(sessionStartTimeKey, `${currentTime}`);
+          console.log(localStorage.getItem(tokenKey));
           return data.access_token;
         })
         .catch((error: AxiosError) => {
-          setError(error);
+          if (error && error.name !== 'CanceledError') setError(error);
         });
     }
 

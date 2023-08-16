@@ -39,7 +39,7 @@ const useArtistAlbums = (artistId: string) => {
       return lastPage.next === null ? undefined : allPages.length + 1;
     },
 
-    staleTime: staleTime('1h'),
+    staleTime: staleTime('24h'),
     retry: 3,
   });
 };

@@ -15,7 +15,7 @@ const useAlbum = (albumId: string) => {
       });
     },
     retry: 3,
-    staleTime: staleTime('1h'), // time after which data is considered STALE
+    staleTime: staleTime('24h'), // time after which data is considered STALE
     placeholderData: album, // like initial data but not cached.
   });
 };

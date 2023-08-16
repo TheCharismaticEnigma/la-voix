@@ -13,7 +13,7 @@ const useAlbumTracks = (albumId: string) => {
         return album.items;
       });
     },
-    staleTime: staleTime('1h'),
+    staleTime: staleTime('24h'),
     retry: 3,
   });
 };
