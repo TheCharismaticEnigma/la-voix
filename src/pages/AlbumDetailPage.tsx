@@ -1,6 +1,5 @@
 import {
   Box,
-  Divider,
   Flex,
   Grid,
   GridItem,
@@ -10,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import AlbumDetailBadge from '../components/AlbumDetailBadge';
-import ArtistPopularTrack from '../components/ArtistPopularTrack';
+import TrackList from '../components/TrackList';
 import Wrapper from '../components/Wrapper';
 import useAlbum from '../hooks/useAlbum';
 import useCachedToken from '../hooks/useCachedToken';
@@ -120,24 +119,7 @@ const AlbumDetailPage = () => {
           </GridItem>
         </Grid>
 
-        <Flex
-          width={'100% '}
-          as="ul"
-          direction={'column'}
-          gap={'1rem'}
-          alignItems={'center'}
-          borderRadius={'inherit'}
-        >
-          <Divider />
-
-          {album.tracks.items?.map((track, index) => (
-            <Box as="li" key={index} width={'100%'}>
-              <ArtistPopularTrack track={track} serialNumber={index + 1} />
-            </Box>
-          ))}
-
-          <Divider />
-        </Flex>
+        <TrackList tracks={album.tracks.items} />
       </Flex>
     </Wrapper>
   );

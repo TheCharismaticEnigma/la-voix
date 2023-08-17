@@ -1,7 +1,5 @@
 import {
-  Text,
   Box,
-  Divider,
   Flex,
   Grid,
   GridItem,
@@ -9,15 +7,16 @@ import {
   Image,
   Spinner,
   Stack,
+  Text,
 } from '@chakra-ui/react';
 import spotifyLogo from '../assets/spotifyLogo.svg';
-import ArtistPopularTrack from '../components/ArtistPopularTrack';
 import DetailContainer from '../components/DetailContainer';
+import TrackList from '../components/TrackList';
 import Wrapper from '../components/Wrapper';
 import useArtist from '../hooks/useArtist';
+import useCachedToken from '../hooks/useCachedToken';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
 import useSpotifyQueryStore from '../store';
-import useCachedToken from '../hooks/useCachedToken';
 
 const ArtistDetailPage = () => {
   const { error: tokenError } = useCachedToken();
@@ -44,7 +43,7 @@ const ArtistDetailPage = () => {
           />
         )}
         <Flex
-          background={'gray.700'}
+          // background={'gray.700'}
           minH={'100%'}
           height={'fit-content'}
           borderRadius={'10px '}
@@ -134,31 +133,7 @@ const ArtistDetailPage = () => {
             </GridItem>
           </Grid>
 
-          <Flex
-            width={'100%'}
-            background={'inherit'}
-            padding={'inherit'}
-            borderRadius={'inherit'}
-            direction="column"
-            gap={'2rem'}
-          >
-            <Divider />
-
-            <Flex
-              as="ul"
-              direction={'column'}
-              gap={'1rem'}
-              alignItems={'center'}
-            >
-              {topTracks?.map((track, index) => (
-                <Box as="li" key={index} width={'100%'}>
-                  <ArtistPopularTrack track={track} serialNumber={index + 1} />
-                </Box>
-              ))}
-            </Flex>
-
-            <Divider />
-          </Flex>
+          {topTracks && <TrackList tracks={topTracks} />}
         </Flex>
       </Wrapper>
     </>

@@ -8,11 +8,18 @@ interface Props {
   serialNumber: number;
 }
 
-const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
+const TrackListItem = ({ track, serialNumber }: Props) => {
   const { setSelectedAlbumId, setSelectedTrackId } = useSpotifyQueryStore();
 
   return (
     <Flex
+      onClick={() => {
+        //   console.log(track.name, '=>', track.id);
+        setSelectedTrackId(track.id);
+
+        if (track.album) setSelectedAlbumId(track.album.id);
+        //   console.log(track);
+      }}
       padding={'8px 12px '}
       height={'5.5rem'}
       width={'100%'}
@@ -21,27 +28,18 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
       borderRadius={'10px'}
       cursor={'pointer'}
       _hover={{
-        backgroundColor: 'gray.600',
+        backgroundColor: 'rgba(255,255,255,0.3)',
+        backdropFilter: 'blur(5px)',
+        color: 'black',
+        // backgroundColor: 'gray.600',
       }}
     >
-      <Text
-        color={'whiteAlpha.800'}
-        fontSize={'1.9rem'}
-        width={'3rem'}
-        textAlign={'center'}
-      >
+      <Text fontSize={'1.9rem'} width={'3rem'} textAlign={'center'}>
         {serialNumber}
         {'.'}
       </Text>
 
       <Text
-        onClick={() => {
-          //   console.log(track.name, '=>', track.id);
-          setSelectedTrackId(track.id);
-
-          if (track.album) setSelectedAlbumId(track.album.id);
-          //   console.log(track);
-        }}
         textAlign={'center'}
         fontFamily={'system'}
         fontSize={'2.2rem'}
@@ -49,7 +47,9 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
         width="max(50%, fit-content)"
         _hover={{
           textDecoration: 'underline',
-          textShadow: '0 0 4px #1ED760 ',
+          textShadow: '0 0 4px inherit ',
+          //   textShadow: '0 0 4px #1ED760 ',
+          color: 'black ',
         }}
       >
         {track.name}
@@ -67,6 +67,6 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
   );
 };
 
-export default ArtistPopularTrack;
+export default TrackListItem;
 
 // Bank account is looking slim.
