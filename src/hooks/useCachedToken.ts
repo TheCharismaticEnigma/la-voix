@@ -8,23 +8,30 @@ interface AccessToken {
   expires_in: VALID_TIME;
 }
 
-const tokenIsExpired = (startTime: number | undefined) => {
-  return startTime && new Date().getTime() - startTime > 3500 * 1000; // 1h = 3600 * 1000 ms
-};
+const START_TIME_KEY = 'startTime';
+const TOKEN_KEY = 'token';
 
-// const TOKEN_EXPIRY_TIME = 3500 * 1000;
+const tokenIsExpired = () => {
+  const sessionStartTime = localStorage.getItem(START_TIME_KEY);
+  return (
+    sessionStartTime && new Date().getTime() - +sessionStartTime > 3500 * 1000
+  ); // 1h = 3600 * 1000 ms
+};
 
 const useCachedToken = () => {
   const [error, setError] = useState<AxiosError>();
-  const [startTime, setSessionStartTime] = useState<number>();
+
+  const tokenExists = localStorage.getItem(TOKEN_KEY) !== null;
 
   // current Time in ms - sessionStartTime in ms > Expiry Time
-
   useEffect(() => {
     const controller = new AbortController();
 
-    if (tokenIsExpired(startTime) || !startTime) {
-      setSessionStartTime(new Date().getTime());
+    if (
+      (tokenExists && tokenIsExpired()) ||
+      !localStorage.getItem(START_TIME_KEY)
+    ) {
+      localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
 
       axios
         .post<AccessToken>(
@@ -44,7 +51,7 @@ const useCachedToken = () => {
           }
         )
         .then(({ data }) => {
-          localStorage.setItem('token', data.access_token);
+          localStorage.setItem(TOKEN_KEY, data.access_token);
           return data.access_token;
         })
         .catch((error: AxiosError) => {
