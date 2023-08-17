@@ -21,7 +21,7 @@ const TrackList = ({ tracks }: TrackListProps) => {
       direction="column"
       gap={'2rem'}
       background={
-        'linear-gradient(120.8deg, rgba(177,57,57,1) 4% , rgba(38,38,38,1) 64%)'
+        'linear-gradient(120.8deg, rgba(205,49,49,1) 0%, rgba(38,38,38,1) 67%)'
       }
     >
       <Divider background={'inherit'} />

@@ -29,8 +29,9 @@ const TrackListItem = ({ track, serialNumber }: Props) => {
       cursor={'pointer'}
       _hover={{
         backgroundColor: 'rgba(255,255,255,0.3)',
-        backdropFilter: 'blur(5px)',
+        backdropFilter: 'blur(55px)',
         color: 'black',
+
         // backgroundColor: 'gray.600',
       }}
     >
