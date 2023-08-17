@@ -2,8 +2,9 @@ import { Flex, Text } from '@chakra-ui/react';
 import ms from 'ms';
 import { Track } from '../entities/Track';
 import useSpotifyQueryStore from '../store';
+import { SimplifiedTrack } from '../entities/Album';
 interface Props {
-  track: Track;
+  track: Track | SimplifiedTrack;
   serialNumber: number;
 }
 
@@ -37,7 +38,8 @@ const ArtistPopularTrack = ({ track, serialNumber }: Props) => {
         onClick={() => {
           //   console.log(track.name, '=>', track.id);
           setSelectedTrackId(track.id);
-          setSelectedAlbumId(track.album.id);
+
+          if (track.album) setSelectedAlbumId(track.album.id);
           //   console.log(track);
         }}
         textAlign={'center'}

@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { useEffect, useState } from 'react';
-import staleTime from '../utils/staleTime';
+import { useState, useEffect } from 'react';
 
 type VALID_TIME = 3600;
 
@@ -9,28 +8,24 @@ interface AccessToken {
   expires_in: VALID_TIME;
 }
 
-const validityDuration = staleTime('0.8h') / 60000; // 1 minute
+const tokenIsExpired = (startTime: number | undefined) => {
+  return startTime && new Date().getTime() - startTime > 3500 * 1000; // 1h = 3600 * 1000 ms
+};
 
-const tokenKey = 'token';
-const sessionStartTimeKey = 'sessionStartTime';
+// const TOKEN_EXPIRY_TIME = 3500 * 1000;
 
 const useCachedToken = () => {
-  const [error, setError] = useState<Error>();
+  const [error, setError] = useState<AxiosError>();
+  const [startTime, setSessionStartTime] = useState<number>();
 
-  const controller = new AbortController();
-
-  // Key is valid for 1 hour. So we refetch and restore it in the local storage every half hour.
-  const currentTime = new Date().getTime();
-  const startTime = localStorage.getItem(sessionStartTimeKey);
-
-  // if (startTime is null or it is current time is 45min + startTime)
-  // if (startTime isn't logged or key becomes invalid)
+  // current Time in ms - sessionStartTime in ms > Expiry Time
 
   useEffect(() => {
-    if (
-      !startTime ||
-      Math.floor((currentTime - +startTime) / 60000) >= validityDuration
-    ) {
+    const controller = new AbortController();
+
+    if (tokenIsExpired(startTime) || !startTime) {
+      setSessionStartTime(new Date().getTime());
+
       axios
         .post<AccessToken>(
           'https://accounts.spotify.com/api/token',
@@ -49,13 +44,13 @@ const useCachedToken = () => {
           }
         )
         .then(({ data }) => {
-          localStorage.setItem(tokenKey, data.access_token);
-          localStorage.setItem(sessionStartTimeKey, `${currentTime}`);
-          console.log(localStorage.getItem(tokenKey));
+          localStorage.setItem('token', data.access_token);
           return data.access_token;
         })
         .catch((error: AxiosError) => {
-          if (error && error.name !== 'CanceledError') setError(error);
+          if (error && error.name !== 'CanceledError') {
+            setError(error);
+          }
         });
     }
 
@@ -66,3 +61,5 @@ const useCachedToken = () => {
 };
 
 export default useCachedToken;
+
+// (ONLY IF NEEDED) Fetch and Cache the access_token in local storage

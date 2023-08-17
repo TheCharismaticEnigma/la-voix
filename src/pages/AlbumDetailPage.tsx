@@ -1,25 +1,30 @@
 import {
-  Image,
   Box,
+  Divider,
   Flex,
   Grid,
   GridItem,
   Heading,
+  Image,
   Text,
-  Stack,
-  Badge,
-  HStack,
-  VStack,
 } from '@chakra-ui/react';
-import Wrapper from '../components/Wrapper';
-import DetailContainer from '../components/DetailContainer';
-import spotifyLogo from '../assets/spotifyLogo.svg';
-import useAlbum from '../hooks/useAlbum';
-import useSpotifyQueryStore from '../store';
+import { Link } from 'react-router-dom';
 import AlbumDetailBadge from '../components/AlbumDetailBadge';
+import ArtistPopularTrack from '../components/ArtistPopularTrack';
+import Wrapper from '../components/Wrapper';
+import useAlbum from '../hooks/useAlbum';
+import useCachedToken from '../hooks/useCachedToken';
+import useSpotifyQueryStore from '../store';
 
 const AlbumDetailPage = () => {
+  const { error } = useCachedToken();
+  if (error) throw error;
+
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
+  const setSelectedArtistId = useSpotifyQueryStore(
+    (s) => s.setSelectedArtistId
+  );
+
   const { data: album } = useAlbum(spotifyQuery.albumId);
   console.log('ALBUM', album);
 
@@ -36,7 +41,7 @@ const AlbumDetailPage = () => {
         height={'fit-content'}
         borderRadius={'10px '}
         direction={'column'}
-        gap={'2rem'}
+        gap={'2.5rem'}
         alignItems={'center'}
         padding={'8px'}
       >
@@ -96,75 +101,43 @@ const AlbumDetailPage = () => {
               </Flex>
 
               <Flex wrap={'wrap'} gap={2}>
-                {album.artists.map((artist) => (
-                  <Text
-                    key={artist.id}
-                    cursor={'pointer'}
-                    color={'whiteAlpha.700'}
-                    fontSize={'1.8rem'}
-                    _hover={{ textDecoration: 'underline', color: 'white' }}
-                  >
-                    {artist.name}
-                    {', '}
-                  </Text>
+                {album.artists.map(({ id, name }) => (
+                  <Link to={`/artist/${id}`} key={id}>
+                    <Text
+                      onClick={() => setSelectedArtistId(id)}
+                      cursor={'pointer'}
+                      color={'whiteAlpha.700'}
+                      fontSize={'1.8rem'}
+                      _hover={{ textDecoration: 'underline', color: 'white' }}
+                    >
+                      {name}
+                      {', '}
+                    </Text>
+                  </Link>
                 ))}
               </Flex>
             </Flex>
           </GridItem>
-
-          {/* <GridItem>
-            <Flex
-              height={'100%'}
-              direction={'column'}
-              fontSize={'2rem '}
-              borderRadius={'10px'}
-              padding={'8px'}
-              gap={'2rem '}
-              justifyContent={'space-between'}
-            >
-              <Heading
-                textShadow={'0px 0px 10px green '}
-                fontSize={'5.2rem'}
-                fontFamily={'system'}
-              >
-                {artist?.name}
-              </Heading>
-
-              <Stack gap={'0.5rem'}>
-                <DetailContainer
-                  value={`Popularity - ${artist?.popularity} ` || '50'}
-                />
-
-                <DetailContainer
-                  value={`Followers - ${artist?.followers.total} ` || '121212'}
-                />
-
-                <DetailContainer
-                  value={` ${artist?.genres.slice(-2).join(', ')}` || '[]'}
-                />
-              </Stack>
-
-              <Flex gap={'1rem'} alignItems={'center'}>
-                <Box
-                  width={'4rem'}
-                  height={'4rem'}
-                  borderRadius={'50%'}
-                  cursor={'pointer'}
-                  transition={'all 200ms'}
-                  _hover={{
-                    transform: 'translateY(-10%) ',
-                  }}
-                >
-                  <Image src={spotifyLogo} />
-                </Box>
-
-                <Text textShadow={' 0 0 4px #1ED760 '} fontSize={'1.5rem'}>
-                  Play All Songs
-                </Text>
-              </Flex>
-            </Flex>
-                  </GridItem> */}
         </Grid>
+
+        <Flex
+          width={'100% '}
+          as="ul"
+          direction={'column'}
+          gap={'1rem'}
+          alignItems={'center'}
+          borderRadius={'inherit'}
+        >
+          <Divider />
+
+          {album.tracks.items?.map((track, index) => (
+            <Box as="li" key={index} width={'100%'}>
+              <ArtistPopularTrack track={track} serialNumber={index + 1} />
+            </Box>
+          ))}
+
+          <Divider />
+        </Flex>
       </Flex>
     </Wrapper>
   );

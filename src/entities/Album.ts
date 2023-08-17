@@ -1,5 +1,5 @@
 import { Image } from './Image';
-import { SimplifiedArtist } from './Track';
+import { SimplifiedAlbum, SimplifiedArtist } from './Track';
 
 export interface Copyrights {
   text: string; // '2008 YRF Music';
@@ -12,6 +12,7 @@ export interface ExternalId {
 }
 
 export interface SimplifiedTrack {
+  album?: SimplifiedAlbum;
   artists: SimplifiedArtist[];
   disc_number: number; //  1;
   duration_ms: number; // 281573;

@@ -10,10 +10,7 @@ const Layout = () => {
 
   const { error } = useCachedToken();
 
-  if (error) {
-    window.location.reload();
-    throw error;
-  }
+  if (error) throw error;
 
   return (
     // 2 Rows 3 Columns.

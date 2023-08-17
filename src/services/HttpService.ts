@@ -61,6 +61,14 @@ class HttpService<T> {
   constructor(path: string) {
     this.#endPoint = path;
     this.#accessToken = localStorage.getItem(this.#tokenId);
+
+    if (!this.#accessToken) {
+      console.log('done');
+      window.location.hash = '';
+      setInterval(() => {
+        window.location.reload();
+      }, 1000);
+    }
   }
 
   get(requestConfig?: AxiosRequestConfig) {

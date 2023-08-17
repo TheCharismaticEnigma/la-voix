@@ -17,8 +17,12 @@ import Wrapper from '../components/Wrapper';
 import useArtist from '../hooks/useArtist';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
 import useSpotifyQueryStore from '../store';
+import useCachedToken from '../hooks/useCachedToken';
 
 const ArtistDetailPage = () => {
+  const { error: tokenError } = useCachedToken();
+  if (tokenError) throw tokenError;
+
   const { spotifyQuery } = useSpotifyQueryStore();
 
   const { data: artist, isLoading } = useArtist(spotifyQuery.artistId);
