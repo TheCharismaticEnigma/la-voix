@@ -48,7 +48,7 @@ const ArtistDetailPage = () => {
           height={'fit-content'}
           borderRadius={'10px '}
           direction={'column'}
-          gap={'2rem'}
+          gap={'1rem'}
           alignItems={'center'}
           padding={'8px'}
         >
