@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
+import { TOKEN_KEY } from '../utils/credentials';
 
 // NOTE: If neither market nor user country are provided,
 // the content is considered unavailable for the client.
@@ -82,15 +83,15 @@ export function handleExpiredTokenError() {
 */
 
 export function handleExpiredTokenError() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('startTime');
+  localStorage.removeItem('token'); // TOKEN_KEY
+  localStorage.removeItem('startTime'); // START_TIME_KEY
   window.location.reload();
 }
 
 class HttpService<T> {
   #accessToken;
   #endPoint;
-  #tokenId = 'token';
+  #tokenId = TOKEN_KEY;
 
   constructor(path: string) {
     this.#endPoint = path;

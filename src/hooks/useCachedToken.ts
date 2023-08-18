@@ -1,6 +1,11 @@
 import axios, { AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
-import { CLIENT_ID, CLIENT_SECRET } from '../utils/credentials';
+import {
+  CLIENT_ID,
+  CLIENT_SECRET,
+  START_TIME_KEY,
+  TOKEN_KEY,
+} from '../utils/credentials';
 
 export type VALID_TIME = 3600;
 
@@ -8,9 +13,6 @@ export interface AccessToken {
   access_token: string;
   expires_in: VALID_TIME;
 }
-
-const START_TIME_KEY = 'startTime';
-const TOKEN_KEY = 'token';
 
 const tokenIsExpired = () => {
   const sessionStartTime = localStorage.getItem(START_TIME_KEY);
