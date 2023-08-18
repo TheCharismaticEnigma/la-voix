@@ -5,6 +5,7 @@ import ArtistDetailPage from './pages/ArtistDetailPage';
 import HomePage from './pages/HomePage';
 import QueryHomePage from './pages/QueryHomePage';
 import AlbumDetailPage from './pages/AlbumDetailPage';
+import Queue from './pages/Queue';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
       {
         path: '/album/:id',
         element: <AlbumDetailPage />,
+      },
+
+      {
+        path: '/queue',
+        element: <Queue />,
       },
     ],
   },

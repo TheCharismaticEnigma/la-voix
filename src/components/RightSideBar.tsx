@@ -19,12 +19,9 @@ const RightSideBar = () => {
 
   const {
     data: allAlbumPages,
-    error,
     fetchNextPage,
     hasNextPage,
   } = useArtistAlbums(spotifyQuery.artistId || '');
-
-  if (error) throw error;
 
   const allAlbums =
     allAlbumPages?.pages.reduce((currentAlbums, { items }) => {

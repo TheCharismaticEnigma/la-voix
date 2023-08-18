@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 
-type VALID_TIME = 3600;
+export type VALID_TIME = 3600;
 
-interface AccessToken {
+export interface AccessToken {
   access_token: string;
   expires_in: VALID_TIME;
 }

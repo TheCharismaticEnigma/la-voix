@@ -53,7 +53,7 @@ const useRelatedArtists = (artistId: string) => {
     `/artists/${artistId}/related-artists`
   );
 
-  return useQuery({
+  return useQuery<Artist[], Error>({
     queryKey: ['related-artists', artistId], // everytime id changes, it refetches data.
     queryFn: () => {
       return httpService.getAll().then((artists) => {

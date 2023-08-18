@@ -7,7 +7,7 @@ import album from '../initialData/initialAlbum';
 const useAlbum = (albumId: string) => {
   const httpService = new HttpService<Album>(`/albums/${albumId}`);
 
-  return useQuery({
+  return useQuery<Album, Error>({
     queryKey: ['album', albumId], // anytime albumId changes, queryFn is called.
     queryFn: () => {
       return httpService.get().then((album) => {

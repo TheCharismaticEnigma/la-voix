@@ -53,6 +53,34 @@ function getAccessToken() {
 }
 */
 
+/*
+export function handleExpiredTokenError() {
+  axios
+    .post<AccessToken>(
+      'https://accounts.spotify.com/api/token',
+      {
+        // HTTP Body
+        grant_type: 'client_credentials',
+        client_id: '11d32aea63554cd2aeee7d3c935949d7',
+        client_secret: '05f11e570dfa4fc39999c9bcf77717e3',
+      },
+      {
+        // axios Config object.
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    )
+    .then(({ data }) => {
+      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('startTime', `${new Date().getTime()}`);
+      window.location.reload();
+    });
+
+  return;
+}
+*/
+
 class HttpService<T> {
   #accessToken;
   #endPoint;
@@ -61,14 +89,6 @@ class HttpService<T> {
   constructor(path: string) {
     this.#endPoint = path;
     this.#accessToken = localStorage.getItem(this.#tokenId);
-
-    if (!this.#accessToken) {
-      console.log('done');
-      window.location.hash = '';
-      setInterval(() => {
-        window.location.reload();
-      }, 1000);
-    }
   }
 
   get(requestConfig?: AxiosRequestConfig) {
@@ -103,7 +123,6 @@ class HttpService<T> {
       })
       .then((response) => {
         // console.log(response);
-
         return response.data;
       });
 

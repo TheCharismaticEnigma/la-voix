@@ -25,7 +25,6 @@ const AlbumDetailPage = () => {
   );
 
   const { data: album } = useAlbum(spotifyQuery.albumId);
-  console.log('ALBUM', album);
 
   if (!album) return null;
 

@@ -7,7 +7,7 @@ import topTracks from '../initialData/initialArtistTopTracks';
 const useTopArtistTracks = (artistId: string) => {
   const httpService = new HttpService<Track>(`artists/${artistId}/top-tracks`);
 
-  return useQuery({
+  return useQuery<Track[], Error>({
     queryKey: ['top-tracks', artistId],
     queryFn: () => {
       return httpService.getAll().then((tracks) => {
