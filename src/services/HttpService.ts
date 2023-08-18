@@ -81,6 +81,12 @@ export function handleExpiredTokenError() {
 }
 */
 
+export function handleExpiredTokenError() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('startTime');
+  window.location.reload();
+}
+
 class HttpService<T> {
   #accessToken;
   #endPoint;
