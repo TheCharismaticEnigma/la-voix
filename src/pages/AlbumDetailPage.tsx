@@ -6,6 +6,7 @@ import {
   Heading,
   Image,
   Text,
+  VStack,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import AlbumDetailBadge from '../components/AlbumDetailBadge';
@@ -14,6 +15,7 @@ import Wrapper from '../components/Wrapper';
 import useAlbum from '../hooks/useAlbum';
 import useCachedToken from '../hooks/useCachedToken';
 import useSpotifyQueryStore from '../store';
+import PlayAllContainer from '../components/PlayAllContainer';
 
 const AlbumDetailPage = () => {
   const { error } = useCachedToken();
@@ -71,7 +73,7 @@ const AlbumDetailPage = () => {
             <Flex
               padding={'4px 12px '}
               direction={'column'}
-              gap={'1rem'}
+              gap={'2rem'}
               justifyContent={'space-evenly'}
               width={'100%'}
               height={'100%'}
@@ -88,25 +90,30 @@ const AlbumDetailPage = () => {
                 {album.name}
               </Heading>
 
-              <Flex direction={'column'} justifyContent={'left'} gap={'2'}>
-                <AlbumDetailBadge
-                  text={`Release Date : ${album.release_date}`}
-                />
-                <AlbumDetailBadge text={`Popularity : ${album.popularity}`} />
-                <AlbumDetailBadge
-                  text={`Total Tracks : ${album.total_tracks}`}
-                />
+              <Flex gap={'2'} justifyContent={'space-between'}>
+                <VStack alignItems={'left'}>
+                  <AlbumDetailBadge
+                    text={`Release Date : ${album.release_date}`}
+                  />
+                  <AlbumDetailBadge text={`Popularity : ${album.popularity}`} />
+                  <AlbumDetailBadge
+                    text={`Total Tracks : ${album.total_tracks}`}
+                  />
+                </VStack>
+                <PlayAllContainer />
               </Flex>
 
-              <Flex wrap={'wrap'} gap={2}>
-                {album.artists.map(({ id, name }) => (
+              <Flex gap={3} flexWrap={'wrap'}>
+                {album.artists.map(({ name, id }) => (
                   <Link to={`/artist/${id}`} key={id}>
                     <Text
-                      onClick={() => setSelectedArtistId(id)}
+                      onClick={() => {
+                        setSelectedArtistId(id);
+                      }}
+                      fontSize={'2rem'}
                       cursor={'pointer'}
                       color={'whiteAlpha.700'}
-                      fontSize={'1.8rem'}
-                      _hover={{ textDecoration: 'underline', color: 'white' }}
+                      _hover={{ color: 'white', textDecoration: 'underline' }}
                     >
                       {name}
                       {', '}

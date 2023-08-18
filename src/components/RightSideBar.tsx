@@ -8,8 +8,11 @@ import useArtistAlbums from '../hooks/useArtistAlbums';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Album } from '../entities/Album';
 import AlbumCardSkeleton from './AlbumCardSkeleton';
+import useCachedToken from '../hooks/useCachedToken';
 
 const RightSideBar = () => {
+  const { error } = useCachedToken();
+
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
   const setSelectedArtistId = useSpotifyQueryStore(
     (s) => s.setSelectedArtistId

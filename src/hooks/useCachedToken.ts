@@ -29,7 +29,8 @@ const useCachedToken = () => {
 
     if (
       (tokenExists && tokenIsExpired()) ||
-      !localStorage.getItem(START_TIME_KEY)
+      !localStorage.getItem(START_TIME_KEY) ||
+      !tokenExists
     ) {
       localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
 

@@ -10,7 +10,7 @@ const Layout = () => {
 
   const { error } = useCachedToken();
 
-  if (error && error.status === 401) throw error;
+  if (error) throw error;
 
   return (
     // 2 Rows 3 Columns.

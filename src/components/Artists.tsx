@@ -3,8 +3,12 @@ import ArtistListBar from './ArtistListBar';
 import Wrapper from './Wrapper';
 import useRelatedArtists from '../hooks/useRelatedArtists';
 import randomArtistId from '../utils/randomArtistId';
+import useCachedToken from '../hooks/useCachedToken';
 
 const Artists = () => {
+  const { error } = useCachedToken();
+  if (error) throw error;
+
   const artistId = randomArtistId();
 
   const { data: relatedArtists } = useRelatedArtists(artistId);

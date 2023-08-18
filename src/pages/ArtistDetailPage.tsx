@@ -7,10 +7,9 @@ import {
   Image,
   Spinner,
   Stack,
-  Text,
 } from '@chakra-ui/react';
-import spotifyLogo from '../assets/spotifyLogo.svg';
 import DetailContainer from '../components/DetailContainer';
+import PlayAllContainer from '../components/PlayAllContainer';
 import TrackList from '../components/TrackList';
 import Wrapper from '../components/Wrapper';
 import useArtist from '../hooks/useArtist';
@@ -20,6 +19,7 @@ import useSpotifyQueryStore from '../store';
 
 const ArtistDetailPage = () => {
   const { error: tokenError } = useCachedToken();
+
   if (tokenError) throw tokenError;
 
   const { spotifyQuery } = useSpotifyQueryStore();
@@ -111,24 +111,7 @@ const ArtistDetailPage = () => {
                   />
                 </Stack>
 
-                <Flex gap={'1rem'} alignItems={'center'}>
-                  <Box
-                    width={'4rem'}
-                    height={'4rem'}
-                    borderRadius={'50%'}
-                    cursor={'pointer'}
-                    transition={'all 200ms'}
-                    _hover={{
-                      transform: 'translateY(-10%) ',
-                    }}
-                  >
-                    <Image src={spotifyLogo} />
-                  </Box>
-
-                  <Text textShadow={' 0 0 4px #1ED760 '} fontSize={'1.5rem'}>
-                    Play All Songs
-                  </Text>
-                </Flex>
+                <PlayAllContainer />
               </Flex>
             </GridItem>
           </Grid>
