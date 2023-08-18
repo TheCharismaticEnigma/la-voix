@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
+import { CLIENT_ID, CLIENT_SECRET } from '../utils/credentials';
 
 export type VALID_TIME = 3600;
 
@@ -40,8 +41,8 @@ const useCachedToken = () => {
           {
             // HTTP Body
             grant_type: 'client_credentials',
-            client_id: '11d32aea63554cd2aeee7d3c935949d7',
-            client_secret: '05f11e570dfa4fc39999c9bcf77717e3',
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
           },
           {
             // axios Config object.
@@ -71,3 +72,4 @@ const useCachedToken = () => {
 export default useCachedToken;
 
 // (ONLY IF NEEDED) Fetch and Cache the access_token in local storage
+// When token expires, we remove it from the local storage and thus ask to refetch.
