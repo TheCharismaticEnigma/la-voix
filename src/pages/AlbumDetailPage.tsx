@@ -16,6 +16,7 @@ import useAlbum from '../hooks/useAlbum';
 import useCachedToken from '../hooks/useCachedToken';
 import useSpotifyQueryStore from '../store';
 import PlayAllContainer from '../components/PlayAllContainer';
+import { handleExpiredTokenError } from '../services/HttpService';
 
 const AlbumDetailPage = () => {
   const { error } = useCachedToken();
@@ -26,7 +27,9 @@ const AlbumDetailPage = () => {
     (s) => s.setSelectedArtistId
   );
 
-  const { data: album } = useAlbum(spotifyQuery.albumId);
+  const { data: album, error: albumError } = useAlbum(spotifyQuery.albumId);
+
+  if (albumError) handleExpiredTokenError(albumError);
 
   if (!album) return null;
 

@@ -4,14 +4,17 @@ import Wrapper from './Wrapper';
 import useRelatedArtists from '../hooks/useRelatedArtists';
 import randomArtistId from '../utils/randomArtistId';
 import useCachedToken from '../hooks/useCachedToken';
+import { handleExpiredTokenError } from '../services/HttpService';
 
 const Artists = () => {
-  const { error } = useCachedToken();
-  if (error) throw error;
+  const { error: tokenError } = useCachedToken();
+  if (tokenError) throw tokenError;
 
   const artistId = randomArtistId();
 
-  const { data: relatedArtists } = useRelatedArtists(artistId);
+  const { data: relatedArtists, error } = useRelatedArtists(artistId);
+
+  if (error) handleExpiredTokenError(error);
 
   return (
     <Wrapper>

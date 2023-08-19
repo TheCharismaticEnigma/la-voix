@@ -1,7 +1,8 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import useCachedToken from '../hooks/useCachedToken';
-import useSpotifyQueryStore from '../store';
 import useTrack from '../hooks/useTrack';
+import useSpotifyQueryStore from '../store';
+import { handleExpiredTokenError } from '../services/HttpService';
 
 const NowPlayingContent = () => {
   const { error } = useCachedToken();
@@ -9,7 +10,10 @@ const NowPlayingContent = () => {
 
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
 
-  const { data: track } = useTrack(spotifyQuery.trackId);
+  const { data: track, error: trackError } = useTrack(spotifyQuery.trackId);
+
+  if (trackError) handleExpiredTokenError(trackError);
+  // console.log(track);
 
   return (
     <Flex
@@ -19,8 +23,12 @@ const NowPlayingContent = () => {
       gap={'2rem'}
       fontSize={'1.5rem'}
     >
-      <Text>{track?.name}</Text>
-      <Text>{track?.id}</Text>
+      {/* <Text>{track?.name}</Text>
+          <Text>{track?.id}</Text> */}
+
+      <audio src={`${track?.preview_url}`} typeof="audio/mpeg" controls>
+        This track isn't available at the moment.
+      </audio>
     </Flex>
   );
 };

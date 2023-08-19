@@ -16,6 +16,7 @@ import useArtist from '../hooks/useArtist';
 import useCachedToken from '../hooks/useCachedToken';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
 import useSpotifyQueryStore from '../store';
+import { handleExpiredTokenError } from '../services/HttpService';
 
 const ArtistDetailPage = () => {
   const { error: tokenError } = useCachedToken();
@@ -24,9 +25,17 @@ const ArtistDetailPage = () => {
 
   const { spotifyQuery } = useSpotifyQueryStore();
 
-  const { data: artist, isLoading } = useArtist(spotifyQuery.artistId);
+  const {
+    data: artist,
+    isLoading,
+    error: artistError,
+  } = useArtist(spotifyQuery.artistId);
+  if (artistError) handleExpiredTokenError(artistError);
 
-  const { data: topTracks } = useTopArtistTracks(spotifyQuery.artistId);
+  const { data: topTracks, error: topArtistTracksError } = useTopArtistTracks(
+    spotifyQuery.artistId
+  );
+  if (topArtistTracksError) handleExpiredTokenError(topArtistTracksError);
 
   // Instead of throwing errors, have some placeholder data.
 

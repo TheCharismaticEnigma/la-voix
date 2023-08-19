@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, isAxiosError } from 'axios';
 import { TOKEN_KEY } from '../utils/credentials';
 
 // NOTE: If neither market nor user country are provided,
@@ -82,10 +82,12 @@ export function handleExpiredTokenError() {
 }
 */
 
-export function handleExpiredTokenError() {
-  localStorage.removeItem('token'); // TOKEN_KEY
-  localStorage.removeItem('startTime'); // START_TIME_KEY
-  window.location.reload();
+export function handleExpiredTokenError(error: Error | AxiosError | unknown) {
+  if (isAxiosError(error) && error.status === 401) {
+    localStorage.removeItem('token'); // TOKEN_KEY
+    localStorage.removeItem('startTime'); // START_TIME_KEY
+    window.location.reload();
+  } else throw error;
 }
 
 class HttpService<T> {
