@@ -6,10 +6,16 @@ import HomePage from './pages/HomePage';
 import QueryHomePage from './pages/QueryHomePage';
 import AlbumDetailPage from './pages/AlbumDetailPage';
 import Queue from './pages/Queue';
+import LoginPage from './pages/LoginPage';
 
 const router = createBrowserRouter([
   {
-    //
+    path: '/login',
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+
+  {
     path: '/',
     element: <Layout />,
     errorElement: <ErrorPage />,
