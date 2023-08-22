@@ -2,18 +2,18 @@
 
 import { Artist } from '../entities/Artist';
 
-function getUniqueArtists(artists: Artist[]) {
-  const uniqueArtists: Artist[] = [];
+function getUniqueArtists(artist: Artist, artists: Artist[]) {
+  const targetIndex = artists.findIndex(
+    (relatedArtist) => relatedArtist.id === artist.id
+  );
 
-  for (const artist of artists) {
-    const index = uniqueArtists.findIndex(
-      (uniqueArtist) => uniqueArtist.id === artist.id
-    );
-
-    if (index === -1) uniqueArtists.push(artist);
+  if (targetIndex > -1) {
+    const selectedArtist = artists.splice(targetIndex, 1)[0];
+    artists.unshift(selectedArtist);
+    return artists;
   }
 
-  return artists;
+  return [artist, ...artists];
 }
 
 export default getUniqueArtists;

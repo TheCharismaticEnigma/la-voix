@@ -14,9 +14,9 @@ const Artists = () => {
 
   const { data: selectedArtist } = useArtist(artistId);
 
-  const allArtists: Artist[] = [];
-  if (selectedArtist) allArtists.push(selectedArtist);
-  if (relatedArtists) allArtists.push(...relatedArtists);
+  let artists: Artist[] = [];
+  if (selectedArtist && relatedArtists)
+    artists = [...getUniqueArtists(selectedArtist, relatedArtists)];
 
   return (
     <Wrapper>
@@ -29,7 +29,7 @@ const Artists = () => {
         height={'auto'}
       >
         <Flex as="ul" direction={'column'} fontSize={'1.8rem'} gap={'0.5rem'}>
-          {getUniqueArtists(allArtists)?.map((artist) => (
+          {artists?.map((artist) => (
             <li key={artist.name}>
               <ArtistListBar artist={artist} />
             </li>
