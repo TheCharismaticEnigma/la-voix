@@ -1,5 +1,11 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { START_TIME_KEY, ACCESS_TOKEN_KEY } from '../utils/credentials';
+import {
+  START_TIME_KEY,
+  ACCESS_TOKEN_KEY,
+  CLIENT_ID,
+  REFRESH_TOKEN_KEY,
+} from '../utils/credentials';
+import { AccessToken } from '../hooks/useCachedToken';
 
 // NOTE: If neither market nor user country are provided,
 // the content is considered unavailable for the client.
@@ -56,6 +62,46 @@ export const tokenIsExpired = () => {
   ); // 1h = 3600 * 1000 ms
 };
 
+// let alreadySent = false;
+const refreshToken = () => {
+  const refresh_token = localStorage.getItem(REFRESH_TOKEN_KEY);
+
+  const httpData = {
+    grant_type: 'refresh_token',
+    refresh_token: refresh_token,
+    client_id: CLIENT_ID,
+  };
+
+  const requestConfig: AxiosRequestConfig = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+
+  axios
+    .post<AccessToken>(
+      'https://accounts.spotify.com/api/token',
+      httpData,
+      requestConfig
+    )
+    .then(({ data }) => {
+      // alreadySent = false;
+      localStorage.setItem(ACCESS_TOKEN_KEY, data.access_token);
+      localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
+      console.log('ACCESS TOKEN CHANGED');
+    })
+    .catch((error) => {
+      console.log('ACCESS TOKEN REFETCH FAILURE:', error);
+    });
+};
+
+// Runs after a certain duration of time until the judgement day.
+document.addEventListener('DOMContentLoaded', () => {
+  setInterval(() => {
+    refreshToken();
+  }, 3500000);
+});
+
 class HttpService<T> {
   #accessToken;
   #endPoint;
@@ -64,6 +110,11 @@ class HttpService<T> {
   constructor(path: string) {
     this.#endPoint = path;
     this.#accessToken = localStorage.getItem(this.#tokenId);
+
+    // if (tokenIsExpired() && !alreadySent) {
+    //   alreadySent = true;
+    //   refreshToken();
+    // }
   }
 
   get(requestConfig?: AxiosRequestConfig) {
