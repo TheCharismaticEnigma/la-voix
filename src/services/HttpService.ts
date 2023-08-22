@@ -1,5 +1,5 @@
-import axios, { AxiosError, AxiosRequestConfig, isAxiosError } from 'axios';
-import { TOKEN_KEY } from '../utils/credentials';
+import axios, { AxiosRequestConfig } from 'axios';
+import { START_TIME_KEY, ACCESS_TOKEN_KEY } from '../utils/credentials';
 
 // NOTE: If neither market nor user country are provided,
 // the content is considered unavailable for the client.
@@ -25,11 +25,6 @@ export interface SpotifyAllAlbumsResponse<T> {
   items: T[];
 }
 
-// As soon as the document is loaded, fetch the access token.
-// document (DomContentLoaded) | window (load).
-// Implement HTTP Caching in order to cache the access token for 1 hour.
-// page session lasts while tab/ browser is open, and survives over page reloads/restores.
-
 /*
 function getAccessToken() {
   return axios
@@ -54,46 +49,17 @@ function getAccessToken() {
 }
 */
 
-/*
-export function handleExpiredTokenError() {
-  axios
-    .post<AccessToken>(
-      'https://accounts.spotify.com/api/token',
-      {
-        // HTTP Body
-        grant_type: 'client_credentials',
-        client_id: '11d32aea63554cd2aeee7d3c935949d7',
-        client_secret: '05f11e570dfa4fc39999c9bcf77717e3',
-      },
-      {
-        // axios Config object.
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      }
-    )
-    .then(({ data }) => {
-      localStorage.setItem('token', data.access_token);
-      localStorage.setItem('startTime', `${new Date().getTime()}`);
-      window.location.reload();
-    });
-
-  return;
-}
-*/
-
-export function handleExpiredTokenError(error: Error | AxiosError | unknown) {
-  if (isAxiosError(error) && error.status === 401) {
-    localStorage.removeItem('token'); // TOKEN_KEY
-    localStorage.removeItem('startTime'); // START_TIME_KEY
-    window.location.reload();
-  } else throw error;
-}
+export const tokenIsExpired = () => {
+  const sessionStartTime = localStorage.getItem(START_TIME_KEY);
+  return (
+    sessionStartTime && new Date().getTime() - +sessionStartTime > 3500 * 1000
+  ); // 1h = 3600 * 1000 ms
+};
 
 class HttpService<T> {
   #accessToken;
   #endPoint;
-  #tokenId = TOKEN_KEY;
+  #tokenId = ACCESS_TOKEN_KEY;
 
   constructor(path: string) {
     this.#endPoint = path;

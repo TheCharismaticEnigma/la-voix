@@ -1,19 +1,11 @@
 import { Flex } from '@chakra-ui/react';
-import useCachedToken from '../hooks/useCachedToken';
 import useTrack from '../hooks/useTrack';
 import useSpotifyQueryStore from '../store';
-import { handleExpiredTokenError } from '../services/HttpService';
 
 const NowPlayingContent = () => {
-  const { error } = useCachedToken();
-  if (error) throw error;
-
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
 
-  const { data: track, error: trackError } = useTrack(spotifyQuery.trackId);
-
-  if (trackError) handleExpiredTokenError(trackError);
-  // console.log(track);
+  const { data: track } = useTrack(spotifyQuery.trackId);
 
   return (
     <Flex

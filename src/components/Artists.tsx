@@ -1,20 +1,22 @@
 import { Flex } from '@chakra-ui/react';
+import { Artist } from '../entities/Artist';
+import useArtist from '../hooks/useArtist';
+import useRelatedArtists from '../hooks/useRelatedArtists';
+import useSpotifyQueryStore from '../store';
+import getUniqueArtists from '../utils/getUniqueArtists';
 import ArtistListBar from './ArtistListBar';
 import Wrapper from './Wrapper';
-import useRelatedArtists from '../hooks/useRelatedArtists';
-import randomArtistId from '../utils/randomArtistId';
-import useCachedToken from '../hooks/useCachedToken';
-import { handleExpiredTokenError } from '../services/HttpService';
 
 const Artists = () => {
-  const { error: tokenError } = useCachedToken();
-  if (tokenError) throw tokenError;
+  const { artistId } = useSpotifyQueryStore((s) => s.spotifyQuery);
 
-  const artistId = randomArtistId();
+  const { data: relatedArtists } = useRelatedArtists(artistId);
 
-  const { data: relatedArtists, error } = useRelatedArtists(artistId);
+  const { data: selectedArtist } = useArtist(artistId);
 
-  if (error) handleExpiredTokenError(error);
+  const allArtists: Artist[] = [];
+  if (selectedArtist) allArtists.push(selectedArtist);
+  if (relatedArtists) allArtists.push(...relatedArtists);
 
   return (
     <Wrapper>
@@ -27,8 +29,8 @@ const Artists = () => {
         height={'auto'}
       >
         <Flex as="ul" direction={'column'} fontSize={'1.8rem'} gap={'0.5rem'}>
-          {relatedArtists?.map((artist) => (
-            <li key={artist.id}>
+          {getUniqueArtists(allArtists)?.map((artist) => (
+            <li key={artist.name}>
               <ArtistListBar artist={artist} />
             </li>
           ))}

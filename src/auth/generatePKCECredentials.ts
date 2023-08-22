@@ -23,8 +23,6 @@ export default generatePKCECredentials;
 
 const redirectUri = 'http://localhost:5173';
 const state = generateRandomString(16);
-const scope =
-  'user-read-private user-read-email user-read-currently-playing user-read-playback-state user-modify-playback-state ';
 
 localStorage.setItem('code_verifier', code_verifier);
 

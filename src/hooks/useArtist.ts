@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import staleTime from '../utils/staleTime';
 import HttpService from '../services/HttpService';
 import { Artist } from '../entities/Artist';
-import initialArtist from '../initialData/initialArtist';
 
 const useArtist = (artistId: string) => {
   const httpService = new HttpService<Artist>(`/artists/${artistId}`);
@@ -16,7 +15,6 @@ const useArtist = (artistId: string) => {
     },
     staleTime: staleTime('24h'),
     retry: 3,
-    placeholderData: initialArtist,
   });
 };
 

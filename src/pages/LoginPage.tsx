@@ -6,16 +6,18 @@ import { generateRandomString } from '../auth/generateRandomString';
 const LoginPage = () => {
   const redirectUri = 'http://localhost:5173/';
 
-  // Every component RENDERS twice (strict mode) but verifier is allowed once.
-
   useEffect(() => {
-    if (localStorage.getItem('code_verifier') === null) {
+    if (
+      !localStorage.getItem('logged_in') &&
+      !localStorage.getItem('code_verifier')
+    ) {
       const scope =
         'user-read-private user-read-email user-read-currently-playing user-read-playback-state user-modify-playback-state ';
 
       const state = generateRandomString(16);
 
       generatePKCECredentials().then(({ code_verifier, code_challenge }) => {
+        localStorage.setItem('logged_in', 'true');
         localStorage.setItem('code_verifier', code_verifier);
 
         const args = new URLSearchParams({

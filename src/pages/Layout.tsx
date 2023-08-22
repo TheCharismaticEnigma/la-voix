@@ -1,49 +1,34 @@
 import { Box, Grid, GridItem } from '@chakra-ui/react';
 import LeftSideBar from '../components/LeftSideBar';
-import MainAppContent from './MainAppContent';
 import NowPlayingContent from '../components/NowPlayingContent';
 import RightSideBar from '../components/RightSideBar';
-import useCachedToken from '../hooks/useCachedToken';
-// import { useNavigate } from 'react-router-dom';
-// import { useEffect } from 'react';
-// import { CLIENT_ID } from '../utils/credentials';
-// import axios, { AxiosError } from 'axios';
-
-/*
-type VALID_TIME = 3600;
-interface AccessToken {
-  access_token: string;
-  expires_in: VALID_TIME;
-  refresh_token: string;
-}
-*/
+import MainAppContent from './MainAppContent';
+import { AccessToken } from '@spotify/web-api-ts-sdk';
+import axios, { AxiosRequestConfig } from 'axios';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { CLIENT_ID, START_TIME_KEY } from '../utils/credentials';
 
 const Layout = () => {
-  // All the STATE OF THE APP WILL BE HERE.
+  const redirectUri = 'http://localhost:5173/';
 
-  /*
-  const navigate = useNavigate();
+  const [searchParams] = useSearchParams(); // [setSearchParams]
 
   useEffect(() => {
-    if (localStorage.getItem('loggedIn') === null) {
-      localStorage.setItem('loggedIn', 'true');
-      navigate('/login'); // window.location.replace() ;
+    if (!localStorage.getItem('logged_in')) {
+      window.location.assign('/login');
     }
+  }, []);
 
-    const controller = new AbortController();
-
+  useEffect(() => {
     if (
-      localStorage.getItem('loggedIn') &&
-      !localStorage.getItem('access_token')
+      localStorage.getItem('code_verifier') &&
+      localStorage.getItem('access_token') === null
     ) {
-      const redirectUri = 'http://localhost:5173/';
-
-      const urlParams = new URLSearchParams(window.location.search);
-
-      const code = urlParams.get('code');
+      const code = searchParams.get('code');
       const codeVerifier = localStorage.getItem('code_verifier');
 
-      const requestBody = {
+      const httpBody = {
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: redirectUri,
@@ -51,39 +36,41 @@ const Layout = () => {
         code_verifier: codeVerifier,
       };
 
+      const requestConfig: AxiosRequestConfig = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      };
+
       axios
         .post<AccessToken>(
           'https://accounts.spotify.com/api/token',
-          requestBody,
-          {
-            // axios Config object.
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            signal: controller.signal,
-          }
+          httpBody,
+          requestConfig
         )
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token);
           localStorage.setItem('refresh_token', data.refresh_token);
+          localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
         })
-        .catch((error: AxiosError) => {
-          if (error && error.name !== 'CanceledError') {
-            console.log('ERROR', error);
-          }
+        .catch((error) => {
+          if (error.name !== 'CanceledError') console.log(error);
         });
     }
-
-    return () => {
-      controller.abort();
-      console.log('ABORTED');
-    };
   }, []);
-  */
 
-  const { error } = useCachedToken();
-
-  if (error) throw error;
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access_token');
+    if (accessToken) {
+      axios
+        .get('https://api.spotify.com/v1/me', {
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+        })
+        .then((res) => console.log(res));
+    }
+  }, []);
 
   return (
     // 2 Rows 3 Columns.

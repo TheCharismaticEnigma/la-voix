@@ -13,23 +13,16 @@ import AlbumDetailBadge from '../components/AlbumDetailBadge';
 import TrackList from '../components/TrackList';
 import Wrapper from '../components/Wrapper';
 import useAlbum from '../hooks/useAlbum';
-import useCachedToken from '../hooks/useCachedToken';
 import useSpotifyQueryStore from '../store';
 import PlayAllContainer from '../components/PlayAllContainer';
-import { handleExpiredTokenError } from '../services/HttpService';
 
 const AlbumDetailPage = () => {
-  const { error } = useCachedToken();
-  if (error) throw error;
-
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
   const setSelectedArtistId = useSpotifyQueryStore(
     (s) => s.setSelectedArtistId
   );
 
-  const { data: album, error: albumError } = useAlbum(spotifyQuery.albumId);
-
-  if (albumError) handleExpiredTokenError(albumError);
+  const { data: album } = useAlbum(spotifyQuery.albumId);
 
   if (!album) return null;
 

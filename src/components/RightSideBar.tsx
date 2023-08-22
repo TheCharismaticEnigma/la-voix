@@ -1,37 +1,27 @@
-import { Divider, Flex, Text, Heading, Stack } from '@chakra-ui/react';
+import { Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Link } from 'react-router-dom';
+import { Album } from '../entities/Album';
 import useAlbum from '../hooks/useAlbum';
+import useArtistAlbums from '../hooks/useArtistAlbums';
 import useSpotifyQueryStore from '../store';
 import AlbumCard from './AlbumCard';
-import Wrapper from './Wrapper';
-import { Link } from 'react-router-dom';
-import useArtistAlbums from '../hooks/useArtistAlbums';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { Album } from '../entities/Album';
 import AlbumCardSkeleton from './AlbumCardSkeleton';
-import useCachedToken from '../hooks/useCachedToken';
-import { handleExpiredTokenError } from '../services/HttpService';
+import Wrapper from './Wrapper';
 
 const RightSideBar = () => {
-  const { error } = useCachedToken();
-  if (error) throw error;
-
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
   const setSelectedArtistId = useSpotifyQueryStore(
     (s) => s.setSelectedArtistId
   );
 
-  const { data: album, error: albumError } = useAlbum(spotifyQuery.albumId!);
-
-  if (albumError) handleExpiredTokenError(albumError);
+  const { data: album } = useAlbum(spotifyQuery.albumId!);
 
   const {
     data: allAlbumPages,
     fetchNextPage,
     hasNextPage,
-    error: artistAlbumsError,
   } = useArtistAlbums(spotifyQuery.artistId || '');
-
-  if (artistAlbumsError) handleExpiredTokenError(artistAlbumsError);
 
   const allAlbums =
     allAlbumPages?.pages.reduce((currentAlbums, { items }) => {

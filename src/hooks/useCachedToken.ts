@@ -1,10 +1,10 @@
 import axios, { AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 import {
+  ACCESS_TOKEN_KEY,
   CLIENT_ID,
   CLIENT_SECRET,
   START_TIME_KEY,
-  TOKEN_KEY,
 } from '../utils/credentials';
 
 export type VALID_TIME = 3600;
@@ -24,7 +24,7 @@ const tokenIsExpired = () => {
 const useCachedToken = () => {
   const [error, setError] = useState<AxiosError>();
 
-  const tokenExists = localStorage.getItem(TOKEN_KEY) !== null;
+  const tokenExists = localStorage.getItem(ACCESS_TOKEN_KEY) !== null;
 
   // current Time in ms - sessionStartTime in ms > Expiry Time
   useEffect(() => {
@@ -35,8 +35,6 @@ const useCachedToken = () => {
       !localStorage.getItem(START_TIME_KEY) ||
       !tokenExists
     ) {
-      localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
-
       axios
         .post<AccessToken>(
           'https://accounts.spotify.com/api/token',
@@ -55,7 +53,9 @@ const useCachedToken = () => {
           }
         )
         .then(({ data }) => {
-          localStorage.setItem(TOKEN_KEY, data.access_token);
+          localStorage.setItem(ACCESS_TOKEN_KEY, data.access_token);
+          localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
+
           return data.access_token;
         })
         .catch((error: AxiosError) => {
