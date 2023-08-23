@@ -88,6 +88,7 @@ const refreshToken = () => {
       // alreadySent = false;
       localStorage.setItem(ACCESS_TOKEN_KEY, data.access_token);
       localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
+      console.log(data);
       console.log('ACCESS TOKEN CHANGED');
     })
     .catch((error) => {

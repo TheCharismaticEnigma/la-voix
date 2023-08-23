@@ -1,19 +1,24 @@
 import { Box, Flex, FormControl, Icon, Input } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { FcSearch } from 'react-icons/fc';
-import OptionTag from './OptionTag';
+import OptionTagContainer from './OptionTagContainer';
+import useSpotifyQueryStore from '../store';
 
 const SearchInput = () => {
+  const setSearchQuery = useSpotifyQueryStore((s) => s.setSearchQuery);
+
   // Wrap with form + onSubmit => onClick + onKeyPress
-  const inputTags = ['artist', 'album', 'track', 'playlist', 'show'];
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <Flex direction={'column'} gap={'0.5rem'}>
       <Box padding={'8px 12px'} background={'gray.700'} borderRadius={'10px'}>
         <FormControl
-          onSubmit={() => {
-            console.log('Submitted');
+          onSubmit={(event) => {
+            event.preventDefault();
+            const { current } = inputRef;
+            if (current && current.value.trim().length > 0)
+              setSearchQuery(current.value);
           }}
         >
           <form>
@@ -47,16 +52,7 @@ const SearchInput = () => {
         </FormControl>
       </Box>
 
-      <Flex
-        padding={'4px 12px '}
-        borderRadius={'1rem'}
-        gap={'1rem '}
-        justifyContent={'center'}
-      >
-        {inputTags.map((tag, index) => (
-          <OptionTag key={index} text={tag} value={tag} />
-        ))}
-      </Flex>
+      <OptionTagContainer />
     </Flex>
   );
 };

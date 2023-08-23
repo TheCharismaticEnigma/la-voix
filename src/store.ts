@@ -7,10 +7,13 @@ import { create } from 'zustand';
 import initialIds from './initialData/initialIds';
 
 const { artistId, trackId, albumId } = initialIds();
+
 interface SpotifyQueryObject {
   artistId: string;
   trackId: string;
   albumId: string;
+  searchQuery?: string;
+  searchQueryTag?: string;
 }
 
 interface SpotifyStore {
@@ -18,6 +21,8 @@ interface SpotifyStore {
   setSelectedArtistId: (id: string) => void; // instead of passing it as a prop, we store it here.
   setSelectedTrackId: (id: string) => void;
   setSelectedAlbumId: (id: string) => void;
+  setSearchQuery: (query: string) => void;
+  setSearchQueryTag: (tag: string) => void;
 }
 
 const useSpotifyQueryStore = create<SpotifyStore>((set) => {
@@ -47,6 +52,26 @@ const useSpotifyQueryStore = create<SpotifyStore>((set) => {
       set((prevStore) => {
         return {
           spotifyQuery: { ...prevStore.spotifyQuery, albumId: id },
+        };
+      }),
+
+    setSearchQuery: (query: string) =>
+      set((prevStore) => {
+        const searchTag = prevStore.spotifyQuery?.searchQueryTag || 'track'; // REQUIRED
+
+        return {
+          spotifyQuery: {
+            ...prevStore.spotifyQuery,
+            searchQuery: query,
+            searchQueryTag: searchTag,
+          },
+        };
+      }),
+
+    setSearchQueryTag: (tag: string) =>
+      set((prevStore) => {
+        return {
+          spotifyQuery: { ...prevStore.spotifyQuery, searchQueryTag: tag },
         };
       }),
   };
