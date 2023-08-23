@@ -22,7 +22,7 @@ const AlbumCard = ({ album }: Props) => {
         background={'gray.700'}
         borderRadius={'10px'}
         width={'100%'}
-        padding={'8px 10px'}
+        padding={'8px 12px'}
         direction={'column'}
         gap={'1rem'}
         cursor={'pointer'}

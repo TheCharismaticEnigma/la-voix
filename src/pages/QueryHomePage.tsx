@@ -3,6 +3,8 @@ import HomePage from './HomePage';
 import SearchInput from '../components/SearchInput';
 
 const QueryHomePage = () => {
+  // State for the query home page.
+
   return (
     <Flex
       direction={'column'}

@@ -5,7 +5,7 @@ import {
   CLIENT_ID,
   REFRESH_TOKEN_KEY,
 } from '../utils/credentials';
-import { AccessToken } from '../hooks/useCachedToken';
+import { AccessToken } from '@spotify/web-api-ts-sdk';
 
 // NOTE: If neither market nor user country are provided,
 // the content is considered unavailable for the client.
@@ -21,7 +21,7 @@ export interface FetchResponse<T> {
   [key: string]: T[];
 }
 
-export interface SpotifyAllAlbumsResponse<T> {
+export interface SpotifyItemsResponse<T> {
   href: string;
   offset: number;
   limit: number;
@@ -87,8 +87,8 @@ const refreshToken = () => {
     .then(({ data }) => {
       // alreadySent = false;
       localStorage.setItem(ACCESS_TOKEN_KEY, data.access_token);
+      localStorage.setItem(REFRESH_TOKEN_KEY, data.refresh_token);
       localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
-      console.log(data);
       console.log('ACCESS TOKEN CHANGED');
     })
     .catch((error) => {
@@ -160,7 +160,25 @@ class HttpService<T> {
     const token = this.#accessToken;
 
     const result = axiosInstance
-      .get<SpotifyAllAlbumsResponse<T>>(this.#endPoint, {
+      .get<SpotifyItemsResponse<T>>(this.#endPoint, {
+        ...requestConfig,
+        headers: {
+          ...requestConfig?.headers,
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        return response.data;
+      });
+
+    return result;
+  }
+
+  getSearchQueries(requestConfig?: AxiosRequestConfig) {
+    const token = this.#accessToken;
+
+    const result = axiosInstance
+      .get<SpotifyItemsResponse<T>>(this.#endPoint, {
         ...requestConfig,
         headers: {
           ...requestConfig?.headers,

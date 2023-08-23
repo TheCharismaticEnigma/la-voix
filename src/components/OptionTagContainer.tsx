@@ -1,8 +1,9 @@
 import { Flex } from '@chakra-ui/react';
 import OptionTag from './OptionTag';
+import { inputTags } from '../utils/inputTags';
 
 const OptionTagContainer = () => {
-  const inputTags = ['artist', 'album', 'track', 'playlist', 'show'];
+  //   const inputTags = ['artist', 'album', 'track', 'playlist', 'show'];
 
   return (
     <Flex
