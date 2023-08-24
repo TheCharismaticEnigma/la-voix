@@ -18,7 +18,6 @@ const Layout = () => {
   useEffect(() => {
     if (!localStorage.getItem('logged_in')) {
       window.location.assign('/login');
-      console.log(localStorage.getItem('logged_in'));
     }
   }, []);
 

@@ -12,7 +12,7 @@ const AlbumCard = ({ album }: Props) => {
 
   return (
     <Link
-      to={`/album/${album.id}`}
+      to={`/album/${album?.id}`}
       onClick={() => {
         setSelectedAlbumId(album.id);
       }}

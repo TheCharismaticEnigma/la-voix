@@ -1,25 +1,11 @@
 import { Grid, GridItem } from '@chakra-ui/react';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import Wrapper from '../components/Wrapper';
-import { SpotifyItemsResponse } from '../services/HttpService';
-import useSpotifyQueryStore from '../store';
-
 import { Album, Artist, Playlist, Show, Track } from '@spotify/web-api-ts-sdk';
 import QueryCard from '../components/QueryCard';
+import useSearchResults from '../hooks/useSearchResults';
+import useSpotifyQueryStore from '../store';
 
 export type SpotifyData = Album | Artist | Playlist | Show | Track;
-interface SearchQueryData {
-  /*
-  albums?: SpotifyItemsResponse<Album>;
-  tracks?: SpotifyItemsResponse<Track>;
-  playlists?: SpotifyItemsResponse<Playlist>;
-  artists?: SpotifyItemsResponse<Artist>;
-  shows?: SpotifyItemsResponse<Show>;
-  */
-
-  [queryTag: string]: SpotifyItemsResponse<SpotifyData>;
-}
 
 const HomePage = () => {
   const { searchQuery, searchQueryTag } = useSpotifyQueryStore(
@@ -29,33 +15,7 @@ const HomePage = () => {
   const query = searchQuery || 'Closer';
   const queryTag = searchQueryTag || 'track';
 
-  const { data } = useInfiniteQuery({
-    queryKey: ['searchQuery', query, queryTag],
-    queryFn: ({ pageParam = 1 }) => {
-      return axios
-        .get<SearchQueryData>('https://api.spotify.com/v1/search', {
-          params: {
-            q: query,
-            type: queryTag,
-            market: 'IN',
-            offset: (pageParam - 1) * 50,
-            limit: 50,
-            include_external: 'audio',
-          },
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        })
-        .then((res) => {
-          return res;
-        });
-    },
-
-    getNextPageParam: (lastPage, allPages) => {
-      const results = lastPage.data[`${queryTag}s`];
-      return results.next === null ? undefined : allPages.length + 1;
-    },
-  });
+  const { data } = useSearchResults(query, queryTag);
 
   const results: SpotifyData[] =
     data?.pages.reduce((previousData, currentPage) => {
