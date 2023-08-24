@@ -3,7 +3,8 @@ import { generateRandomString } from '../auth/generateRandomString';
 import { CLIENT_ID } from './credentials';
 
 const loginWithSpotify = () => {
-  const redirectUri = 'https://la-voix.vercel.app/';
+  //   const redirectUri = 'https://la-voix.vercel.app/';
+  const redirectUri = 'http://localhost:5173/';
 
   const scope =
     'user-read-private user-read-email user-read-currently-playing user-read-playback-state user-modify-playback-state ';

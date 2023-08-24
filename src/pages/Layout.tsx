@@ -11,13 +11,14 @@ import { CLIENT_ID } from '../utils/credentials';
 import { refreshToken } from '../services/HttpService';
 
 const Layout = () => {
-  // const redirectUri = 'http://localhost:5173/';
-  const redirectUri = 'https://la-voix.vercel.app/';
+  const redirectUri = 'http://localhost:5173/';
+  // const redirectUri = 'https://la-voix.vercel.app/';
   const [searchParams] = useSearchParams(); // [setSearchParams]
 
   useEffect(() => {
     if (!localStorage.getItem('logged_in')) {
       window.location.assign('/login');
+      console.log(localStorage.getItem('logged_in'));
     }
   }, []);
 

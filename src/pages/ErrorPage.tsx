@@ -20,7 +20,8 @@ const ErrorPage = () => {
   const error = useRouteError();
 
   let heading = 'OOPS! Something went wrong';
-  let message = 'An Unexpected Error Occurred! Try again after some time. ';
+  let message =
+    'An Unexpected Error Occurred! PLEASE GO HOME OR RELOAD THE PAGE. ';
 
   if (isRouteErrorResponse(error) && error.status === 404) {
     heading = `PAGE NOT FOUND`;

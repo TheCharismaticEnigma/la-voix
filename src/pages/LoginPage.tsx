@@ -13,6 +13,7 @@ import {
 import { Link } from 'react-router-dom';
 import spotifyLogo from '../assets/spotifyLogo.svg';
 import loginWithSpotify from '../utils/loginWithSpotify';
+import background from '../assets/background.png';
 
 const LoginPage = () => {
   // const redirectUri = 'http://localhost:5173/';
@@ -59,33 +60,38 @@ const LoginPage = () => {
       alignItems={'center'}
       height={'100vh'}
       width={'100vw'}
+      backgroundImage={background}
+      backgroundSize={'cover'}
     >
       <Box
         style={{
           overflow: 'hidden',
           borderRadius: '24px',
-          boxShadow: '0 0.5px 5px 0 #1DB954',
+          boxShadow: '0 0.5px 5px 0 black',
         }}
         padding={'2rem'}
+        background={'inherit'}
       >
         <Card
+          border={'1px solid transparent'}
           direction={'column'}
           alignItems={'center'}
           justify={'space-between'}
           width={'37rem'}
           padding={'1rem 0 '}
           borderRadius={'15px'}
+          backdropFilter={'blur(1rem)'}
         >
           <CardHeader>
             <Image src={spotifyLogo} />
           </CardHeader>
 
-          <CardBody>
+          <CardBody color={'black'}>
             <Stack spacing={4} alignItems={'center'} gap={'3rem'}>
-              <Heading textAlign={'center'} size={'3xl'} fontFamily={'system'}>
+              <Heading textAlign={'center'} size={'4xl'} fontFamily={'system'}>
                 LOGIN USING SPOTIFY
               </Heading>
-              <Text opacity={'0.7'} textAlign={'center'} fontSize={'2rem'}>
+              <Text fontWeight={'500'} textAlign={'center'} fontSize={'2rem'}>
                 WE DO NOT ACCESS OR SAVE YOUR PERSONAL DATA.
               </Text>
 
@@ -93,6 +99,7 @@ const LoginPage = () => {
                 to={'/'}
                 onClick={() => {
                   loginWithSpotify();
+                  console.log(localStorage.getItem('logged_in'));
                 }}
               >
                 <Button
