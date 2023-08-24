@@ -7,11 +7,11 @@ import { AccessToken } from '@spotify/web-api-ts-sdk';
 import axios, { AxiosRequestConfig } from 'axios';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { CLIENT_ID, START_TIME_KEY } from '../utils/credentials';
+import { CLIENT_ID } from '../utils/credentials';
+import { refreshToken } from '../services/HttpService';
 
 const Layout = () => {
   const redirectUri = 'http://localhost:5173/';
-
   const [searchParams] = useSearchParams(); // [setSearchParams]
 
   useEffect(() => {
@@ -51,11 +51,14 @@ const Layout = () => {
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token);
           localStorage.setItem('refresh_token', data.refresh_token);
-          localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
         })
         .catch((error) => {
           if (error.name !== 'CanceledError') console.log(error);
         });
+
+      setInterval(() => {
+        refreshToken();
+      }, 3000000); // 50 minutes in ms
     }
   }, []);
 
@@ -83,8 +86,8 @@ const Layout = () => {
         gridTemplateRows={'1fr 7.5rem'}
         gridTemplateColumns={'27rem 1fr 27rem '}
         templateAreas={`
-        "leftSideBar   mainView      rightSideBar"
-        "nowPlayingBar nowPlayingBar nowPlayingBar"
+          "leftSideBar   mainView      rightSideBar"
+          "nowPlayingBar nowPlayingBar nowPlayingBar"
         `}
         padding={' 1rem 0.5rem 0  '}
         overflow={'hidden'}
@@ -93,7 +96,7 @@ const Layout = () => {
           <LeftSideBar />
         </GridItem>
 
-        <GridItem area={'mainView'} overflow={'hidden'}>
+        <GridItem width={'100%'} area={'mainView'} overflow={'hidden'}>
           <MainAppContent />
         </GridItem>
 

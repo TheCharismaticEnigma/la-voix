@@ -1,13 +1,14 @@
-import { Flex, Text } from '@chakra-ui/react';
-import Wrapper from '../components/Wrapper';
-import useSpotifyQueryStore from '../store';
+import { Grid, GridItem } from '@chakra-ui/react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { SpotifyItemsResponse } from '../services/HttpService';
 import axios from 'axios';
+import Wrapper from '../components/Wrapper';
+import { SpotifyItemsResponse } from '../services/HttpService';
+import useSpotifyQueryStore from '../store';
 
 import { Album, Artist, Playlist, Show, Track } from '@spotify/web-api-ts-sdk';
+import QueryCard from '../components/QueryCard';
 
-type SpotifyData = Album | Artist | Playlist | Show | Track;
+export type SpotifyData = Album | Artist | Playlist | Show | Track;
 interface SearchQueryData {
   /*
   albums?: SpotifyItemsResponse<Album>;
@@ -25,14 +26,17 @@ const HomePage = () => {
     (s) => s.spotifyQuery
   );
 
+  const query = searchQuery || 'Closer';
+  const queryTag = searchQueryTag || 'track';
+
   const { data } = useInfiniteQuery({
-    queryKey: ['searchQuery', searchQuery, searchQueryTag],
+    queryKey: ['searchQuery', query, queryTag],
     queryFn: ({ pageParam = 1 }) => {
       return axios
         .get<SearchQueryData>('https://api.spotify.com/v1/search', {
           params: {
-            q: searchQuery || 'Closer',
-            type: searchQueryTag,
+            q: query,
+            type: queryTag,
             market: 'IN',
             offset: (pageParam - 1) * 50,
             limit: 50,
@@ -48,44 +52,46 @@ const HomePage = () => {
     },
 
     getNextPageParam: (lastPage, allPages) => {
-      const results = lastPage.data[`${searchQueryTag}s`];
+      const results = lastPage.data[`${queryTag}s`];
       return results.next === null ? undefined : allPages.length + 1;
     },
   });
 
-  console.log(data);
-
   const results: SpotifyData[] =
     data?.pages.reduce((previousData, currentPage) => {
-      const currentData = currentPage.data[`${searchQueryTag}s`].items;
+      const currentData = currentPage.data[`${queryTag}s`].items;
       return [...previousData, ...currentData];
     }, [] as SpotifyData[]) || [];
 
+  // console.log(results);
+
   return (
     <Wrapper>
-      <Flex
-        background={'gray.700'}
-        minH={'100%'}
-        width={'100%'}
-        borderRadius={'10px '}
-        padding={'8px 12px'}
-        direction={'column'}
-        gap={'1rem '}
+      <Grid
+        as={'ul'}
+        padding={'8px '}
+        gridTemplateColumns={{
+          md: 'repeat(2,1fr)',
+          lg: 'repeat(3,1fr)',
+          xl: 'repeat(4,1fr)',
+        }}
+        rowGap={8}
+        columnGap={6}
       >
         {results.map((result) => (
-          <Flex
-            width={'100%'}
-            fontSize={'2rem'}
-            gap={'1rem'}
-            direction={'column'}
+          // Check if object implements an interface w/ TYPE PREDICATE.
+          <GridItem
             key={result.id}
-            placeItems={'center'}
+            as={'li'}
+            minH={'30rem'}
+            width={'100%'}
+            borderRadius={'10px'}
+            background={'gray.700'}
           >
-            <Text>{result.name}</Text>
-            <Text>{result.type}</Text>
-          </Flex>
+            <QueryCard data={result} tag={queryTag} />
+          </GridItem>
         ))}
-      </Flex>
+      </Grid>
     </Wrapper>
   );
 };

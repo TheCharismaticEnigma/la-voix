@@ -5,6 +5,12 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 };
 
+const breakpoints = {
+  md: '900px',
+  lg: '1100px',
+  xl: '1400px',
+};
+
 const palette = {
   colors: {
     white: 'rgb(255,255,255)',
@@ -41,4 +47,5 @@ export const chakraTheme = extendTheme({
   fonts: {
     body: 'system-ui, sans-serif',
   },
+  breakpoints,
 });

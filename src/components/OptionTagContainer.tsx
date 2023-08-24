@@ -11,6 +11,8 @@ const OptionTagContainer = () => {
       borderRadius={'1rem'}
       gap={'1rem '}
       justifyContent={'center'}
+      flexWrap={'wrap'}
+      justifyItems={'center'}
     >
       {inputTags.map((tag, index) => (
         <OptionTag key={index} text={tag} value={tag} />

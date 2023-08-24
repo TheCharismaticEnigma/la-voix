@@ -63,7 +63,7 @@ export const tokenIsExpired = () => {
 };
 
 // let alreadySent = false;
-const refreshToken = () => {
+export const refreshToken = () => {
   const refresh_token = localStorage.getItem(REFRESH_TOKEN_KEY);
 
   const httpData = {
@@ -88,7 +88,6 @@ const refreshToken = () => {
       // alreadySent = false;
       localStorage.setItem(ACCESS_TOKEN_KEY, data.access_token);
       localStorage.setItem(REFRESH_TOKEN_KEY, data.refresh_token);
-      localStorage.setItem(START_TIME_KEY, `${new Date().getTime()}`);
       console.log('ACCESS TOKEN CHANGED');
     })
     .catch((error) => {
@@ -97,11 +96,6 @@ const refreshToken = () => {
 };
 
 // Runs after a certain duration of time until the judgement day.
-document.addEventListener('DOMContentLoaded', () => {
-  setInterval(() => {
-    refreshToken();
-  }, 3500000);
-});
 
 class HttpService<T> {
   #accessToken;

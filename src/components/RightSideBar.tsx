@@ -10,10 +10,12 @@ import AlbumCardSkeleton from './AlbumCardSkeleton';
 import Wrapper from './Wrapper';
 
 const RightSideBar = () => {
-  const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
-  const setSelectedArtistId = useSpotifyQueryStore(
-    (s) => s.setSelectedArtistId
-  );
+  // const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
+  // const setSelectedArtistId = useSpotifyQueryStore(
+  //   (s) => s.setSelectedArtistId
+  // );
+
+  const { spotifyQuery, setSelectedArtistId } = useSpotifyQueryStore();
 
   const { data: album } = useAlbum(spotifyQuery.albumId!);
 
