@@ -35,8 +35,10 @@ const NowPlayingContent = () => {
             />
           </Box>
           <Flex direction="column" justifyContent={'center'}>
-            <Text fontSize={'1.6rem '}>{track?.name}</Text>
-            <Text fontSize={'1.6rem'}>{track?.artists[0].name}</Text>
+            <Text fontWeight={'600'} fontSize={'1.6rem '}>
+              {track?.name}
+            </Text>
+            <Text fontSize={'1.4rem'}>{track?.artists[0].name}</Text>
           </Flex>
         </Flex>
       </GridItem>

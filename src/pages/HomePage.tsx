@@ -76,7 +76,8 @@ const HomePage = () => {
           xl: 'repeat(4,1fr)',
         }}
         rowGap={8}
-        columnGap={6}
+        columnGap={5}
+        background={'gray.700'}
       >
         {results.map((result) => (
           // Check if object implements an interface w/ TYPE PREDICATE.
