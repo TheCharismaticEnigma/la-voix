@@ -1,12 +1,24 @@
-import generatePKCECredentials from '../auth/generatePKCECredentials';
-import { useEffect } from 'react';
-import { CLIENT_ID } from '../utils/credentials';
-import { generateRandomString } from '../auth/generateRandomString';
+import {
+  Image,
+  Text,
+  Flex,
+  Card,
+  CardHeader,
+  CardBody,
+  Stack,
+  Heading,
+  Button,
+  Box,
+} from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import spotifyLogo from '../assets/spotifyLogo.svg';
+import loginWithSpotify from '../utils/loginWithSpotify';
 
 const LoginPage = () => {
   // const redirectUri = 'http://localhost:5173/';
-  const redirectUri = 'https://la-voix.vercel.app/';
+  // const redirectUri = 'https://la-voix.vercel.app/';
 
+  /*
   useEffect(() => {
     if (
       !localStorage.getItem('logged_in') &&
@@ -39,8 +51,70 @@ const LoginPage = () => {
       });
     }
   }, []);
+  */
 
-  return <div>.</div>;
+  return (
+    <Flex
+      justifyContent={'center'}
+      alignItems={'center'}
+      height={'100vh'}
+      width={'100vw'}
+    >
+      <Box
+        style={{
+          overflow: 'hidden',
+          borderRadius: '24px',
+          boxShadow: '0 0.5px 5px 0 #1DB954',
+        }}
+        padding={'2rem'}
+      >
+        <Card
+          direction={'column'}
+          alignItems={'center'}
+          justify={'space-between'}
+          width={'37rem'}
+          padding={'1rem 0 '}
+          borderRadius={'15px'}
+        >
+          <CardHeader>
+            <Image src={spotifyLogo} />
+          </CardHeader>
+
+          <CardBody>
+            <Stack spacing={4} alignItems={'center'} gap={'3rem'}>
+              <Heading textAlign={'center'} size={'3xl'} fontFamily={'system'}>
+                LOGIN USING SPOTIFY
+              </Heading>
+              <Text opacity={'0.7'} textAlign={'center'} fontSize={'2rem'}>
+                WE DO NOT ACCESS OR SAVE YOUR PERSONAL DATA.
+              </Text>
+
+              <Link
+                to={'/'}
+                onClick={() => {
+                  loginWithSpotify();
+                }}
+              >
+                <Button
+                  _hover={{
+                    color: 'black',
+                    transform: ' translateY(-5%) scale(1.05)',
+                  }}
+                  transition={'all 200ms ease-out'}
+                  colorScheme="green"
+                  borderRadius={'35px'}
+                  fontSize={'2rem'}
+                  padding={'1.5em 1.75em '}
+                >
+                  LOGIN
+                </Button>
+              </Link>
+            </Stack>
+          </CardBody>
+        </Card>
+      </Box>
+    </Flex>
+  );
 };
 
 export default LoginPage;
