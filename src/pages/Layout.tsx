@@ -62,6 +62,7 @@ const Layout = () => {
     }
   }, []);
 
+  /*
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
@@ -74,6 +75,7 @@ const Layout = () => {
         .then((res) => console.log(res));
     }
   }, []);
+  */
 
   return (
     // 2 Rows 3 Columns.
