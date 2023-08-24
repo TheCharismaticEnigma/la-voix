@@ -4,7 +4,8 @@ import { CLIENT_ID } from '../utils/credentials';
 import { generateRandomString } from '../auth/generateRandomString';
 
 const LoginPage = () => {
-  const redirectUri = 'http://localhost:5173/';
+  // const redirectUri = 'http://localhost:5173/';
+  const redirectUri = 'https://la-voix.vercel.app/';
 
   useEffect(() => {
     if (
