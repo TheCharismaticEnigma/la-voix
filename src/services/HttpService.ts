@@ -62,7 +62,6 @@ export const tokenIsExpired = () => {
   ); // 1h = 3600 * 1000 ms
 };
 
-// let alreadySent = false;
 export const refreshToken = () => {
   const refresh_token = localStorage.getItem(REFRESH_TOKEN_KEY);
 
@@ -95,8 +94,6 @@ export const refreshToken = () => {
     });
 };
 
-// Runs after a certain duration of time until the judgement day.
-
 class HttpService<T> {
   #accessToken;
   #endPoint;
@@ -105,11 +102,6 @@ class HttpService<T> {
   constructor(path: string) {
     this.#endPoint = path;
     this.#accessToken = localStorage.getItem(this.#tokenId);
-
-    // if (tokenIsExpired() && !alreadySent) {
-    //   alreadySent = true;
-    //   refreshToken();
-    // }
   }
 
   get(requestConfig?: AxiosRequestConfig) {

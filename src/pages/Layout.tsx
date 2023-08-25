@@ -11,56 +11,48 @@ import { CLIENT_ID } from '../utils/credentials';
 import { refreshToken } from '../services/HttpService';
 
 const Layout = () => {
+  if (!localStorage.getItem('logged_in')) window.location.assign('/login');
+
   const redirectUri = 'http://localhost:5173/';
   // const redirectUri = 'https://la-voix.vercel.app/';
+
   const [searchParams] = useSearchParams(); // [setSearchParams]
 
   useEffect(() => {
-    if (!localStorage.getItem('logged_in')) {
-      window.location.assign('/login');
-    }
-  }, []);
+    const code = searchParams.get('code');
+    const codeVerifier = localStorage.getItem('code_verifier');
 
-  useEffect(() => {
-    if (
-      localStorage.getItem('code_verifier') &&
-      localStorage.getItem('access_token') === null
-    ) {
-      const code = searchParams.get('code');
-      const codeVerifier = localStorage.getItem('code_verifier');
+    const httpBody = {
+      grant_type: 'authorization_code',
+      code: code,
+      redirect_uri: redirectUri,
+      client_id: CLIENT_ID,
+      code_verifier: codeVerifier,
+    };
 
-      const httpBody = {
-        grant_type: 'authorization_code',
-        code: code,
-        redirect_uri: redirectUri,
-        client_id: CLIENT_ID,
-        code_verifier: codeVerifier,
-      };
+    const requestConfig: AxiosRequestConfig = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
 
-      const requestConfig: AxiosRequestConfig = {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      };
+    axios
+      .post<AccessToken>(
+        'https://accounts.spotify.com/api/token',
+        httpBody,
+        requestConfig
+      )
+      .then(({ data }) => {
+        localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('refresh_token', data.refresh_token);
+      })
+      .catch((error) => {
+        if (error.name !== 'CanceledError') console.log(error);
+      });
 
-      axios
-        .post<AccessToken>(
-          'https://accounts.spotify.com/api/token',
-          httpBody,
-          requestConfig
-        )
-        .then(({ data }) => {
-          localStorage.setItem('access_token', data.access_token);
-          localStorage.setItem('refresh_token', data.refresh_token);
-        })
-        .catch((error) => {
-          if (error.name !== 'CanceledError') console.log(error);
-        });
-
-      setInterval(() => {
-        refreshToken();
-      }, 3000000); // 50 minutes in ms
-    }
+    setInterval(() => {
+      refreshToken();
+    }, 3000000); // 50 minutes in ms
   }, []);
 
   /*

@@ -99,7 +99,6 @@ const LoginPage = () => {
                 to={'/'}
                 onClick={() => {
                   loginWithSpotify();
-                  console.log(localStorage.getItem('logged_in'));
                 }}
               >
                 <Button
