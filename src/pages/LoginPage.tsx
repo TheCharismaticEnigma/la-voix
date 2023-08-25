@@ -60,8 +60,11 @@ const LoginPage = () => {
       alignItems={'center'}
       height={'100vh'}
       width={'100vw'}
-      backgroundImage={background}
+      // backgroundImage={background}
       backgroundSize={'cover'}
+      background={
+        'linear-gradient(120.8deg, rgba(205,49,49,1) 0%, rgba(98,98,98,1) 67%)'
+      }
     >
       <Box
         style={{
@@ -71,16 +74,16 @@ const LoginPage = () => {
         }}
         padding={'2rem'}
         background={'inherit'}
+        border={'1px solid inherit  '}
       >
         <Card
-          border={'1px solid transparent'}
+          border={'2px solid transparent'}
           direction={'column'}
           alignItems={'center'}
           justify={'space-between'}
           width={'37rem'}
           padding={'1rem 0 '}
           borderRadius={'15px'}
-          backdropFilter={'blur(1rem)'}
         >
           <CardHeader>
             <Image src={spotifyLogo} />
