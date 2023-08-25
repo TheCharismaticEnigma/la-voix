@@ -1,19 +1,18 @@
 import {
-  Image,
-  Text,
-  Flex,
-  Card,
-  CardHeader,
-  CardBody,
-  Stack,
-  Heading,
-  Button,
   Box,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import spotifyLogo from '../assets/spotifyLogo.svg';
 import loginWithSpotify from '../utils/loginWithSpotify';
-import background from '../assets/background.png';
 
 const LoginPage = () => {
   // const redirectUri = 'http://localhost:5173/';
