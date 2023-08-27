@@ -11,13 +11,7 @@ setInterval(() => {
 }, 3000000); // 50 minutes in ms
 
 const useAccessToken = () => {
-  if (
-    !localStorage.getItem('logged_in') ||
-    (localStorage.getItem('logged_in') && !localStorage.getItem('access_token'))
-  ) {
-    localStorage.removeItem('logged_in');
-    window.location.assign('/login');
-  }
+  if (!localStorage.getItem('logged_in')) window.location.assign('/login');
 
   // const redirectUri = 'http://localhost:5173/';
   // const redirectUri = 'https://la-voix.vercel.app/';

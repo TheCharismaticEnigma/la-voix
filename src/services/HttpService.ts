@@ -107,6 +107,7 @@ class HttpService<T> {
 
   get(requestConfig?: AxiosRequestConfig) {
     const token = this.#accessToken;
+    if (!token) return;
 
     const result = axiosInstance
       .get<T>(this.#endPoint, {
@@ -127,6 +128,8 @@ class HttpService<T> {
   getAll(requestConfig?: AxiosRequestConfig) {
     const token = this.#accessToken;
 
+    if (!token) return;
+
     const result = axiosInstance
       .get<FetchResponse<T>>(this.#endPoint, {
         ...requestConfig,
@@ -145,6 +148,7 @@ class HttpService<T> {
 
   getArtistsAlbums(requestConfig?: AxiosRequestConfig) {
     const token = this.#accessToken;
+    if (!token) return;
 
     const result = axiosInstance
       .get<SpotifyItemsResponse<T>>(this.#endPoint, {
