@@ -6,6 +6,10 @@ import { useEffect } from 'react';
 import { refreshToken } from '../services/HttpService';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from '../utils/credentials';
 
+setInterval(() => {
+  refreshToken();
+}, 3000000); // 50 minutes in ms
+
 const useAccessToken = () => {
   const redirectUri = 'http://localhost:5173/';
   // const redirectUri = 'https://la-voix.vercel.app/';
@@ -43,10 +47,6 @@ const useAccessToken = () => {
       .catch((error) => {
         if (error.name !== 'CanceledError') console.log(error);
       });
-
-    setInterval(() => {
-      refreshToken();
-    }, 3000000); // 50 minutes in ms
   }, []);
 };
 

@@ -1,9 +1,13 @@
 import { Box, Flex, Grid, GridItem, Text, Image } from '@chakra-ui/react';
 import useTrack from '../hooks/useTrack';
 import useSpotifyQueryStore from '../store';
+import { Link } from 'react-router-dom';
 
 const NowPlayingContent = () => {
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
+  const setSelectedArtistId = useSpotifyQueryStore(
+    (s) => s.setSelectedArtistId
+  );
 
   const { data: track } = useTrack(spotifyQuery.trackId);
 
@@ -38,7 +42,21 @@ const NowPlayingContent = () => {
             <Text fontWeight={'600'} fontSize={'1.6rem '}>
               {track?.name}
             </Text>
-            <Text fontSize={'1.4rem'}>{track?.artists[0].name}</Text>
+            {track?.artists[0].id && (
+              <Link
+                to={`/artist/${track.artists[0].id}`}
+                onClick={() => {
+                  setSelectedArtistId(track.artists[0].id);
+                }}
+              >
+                <Text
+                  _hover={{ textDecoration: 'underline' }}
+                  fontSize={'1.4rem'}
+                >
+                  {track.artists[0].name}
+                </Text>
+              </Link>
+            )}
           </Flex>
         </Flex>
       </GridItem>

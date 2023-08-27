@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Artist } from '../entities/Artist';
 import HttpService from '../services/HttpService';
 import staleTime from '../utils/staleTime';
-import { artists } from '../initialData/initialArtists';
+import { initialArtists } from '../initialData/initialArtists';
 
 // const mainArtist = 'Arjit Singh';
 // const arjitSinghId = `4YRxDV8wJFPHPTeXepOstw`;
@@ -62,7 +62,7 @@ const useRelatedArtists = (artistId: string) => {
     },
     staleTime: staleTime('24h'),
     retry: 3,
-    placeholderData: artists,
+    placeholderData: initialArtists,
   });
 };
 

@@ -94,7 +94,7 @@ const LoginPage = () => {
                 LOGIN USING SPOTIFY
               </Heading>
               <Text fontWeight={'500'} textAlign={'center'} fontSize={'2rem'}>
-                WE DO NOT ACCESS OR SAVE YOUR PERSONAL DATA.
+                WE DO NOT STORE YOUR PERSONAL DATA.
               </Text>
 
               <Link

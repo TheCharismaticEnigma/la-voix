@@ -669,4 +669,4 @@ const artists: Artist[] = [
   },
 ];
 
-export { artists };
+export { artists as initialArtists };
