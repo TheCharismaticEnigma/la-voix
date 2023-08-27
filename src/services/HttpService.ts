@@ -101,7 +101,7 @@ class HttpService<T> {
 
   constructor(path: string) {
     this.#endPoint = path;
-    // if (!localStorage.getItem(this.#tokenId)) window.location.assign('/login');
+
     this.#accessToken = localStorage.getItem(this.#tokenId);
   }
 

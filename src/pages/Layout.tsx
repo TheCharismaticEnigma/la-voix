@@ -6,13 +6,6 @@ import useAccessToken from '../hooks/useAccessToken';
 import MainAppContent from './MainAppContent';
 
 const Layout = () => {
-  if (
-    !localStorage.getItem('logged_in') ||
-    (localStorage.getItem('logged_in') && !localStorage.getItem('access_token'))
-  ) {
-    window.location.assign('/login');
-  }
-
   // Fetch the Access and Refresh Tokens.
   useAccessToken();
 
