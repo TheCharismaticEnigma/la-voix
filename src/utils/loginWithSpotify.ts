@@ -29,7 +29,7 @@ const loginWithSpotify = () => {
 
     // Navigate to the URL (assing saves history. Replace doesn't)
     // window.location.assign('https://accounts.spotify.com/authorize?' + args);
-    window.location.replace('https://accounts.spotify.com/authorize?' + args);
+    window.location.assign('https://accounts.spotify.com/authorize?' + args);
   });
 };
 
