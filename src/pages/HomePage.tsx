@@ -4,6 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import QueryCard from '../components/QueryCard';
 import useSearchResults from '../hooks/useSearchResults';
 import useSpotifyQueryStore from '../store';
+import HomePageSkeleton from '../skeletons/HomePageSkeleton';
 
 export type SpotifyData = Album | Artist | Playlist | Show | Track;
 
@@ -27,6 +28,7 @@ const HomePage = () => {
     }, [] as SpotifyData[]) || [];
 
   // console.log(results);
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
     <InfiniteScroll
@@ -64,10 +66,21 @@ const HomePage = () => {
         columnGap={5}
         background={'gray.700'}
       >
-        {/* {isLoading &&
+        {isLoading &&
           skeletons.map((skeleton) => {
-            return <CardSkeleton key={skeleton} />;
-          })} */}
+            return (
+              <GridItem
+                key={skeleton}
+                as={'li'}
+                minH={'30rem'}
+                width={'100%'}
+                borderRadius={'10px'}
+                background={'gray.700'}
+              >
+                <HomePageSkeleton />
+              </GridItem>
+            );
+          })}
 
         {!isLoading &&
           results.map((result) => (

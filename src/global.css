@@ -36,11 +36,11 @@ a {
 /* Custom Scrollbar for the apps */
 
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 4.5px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(34, 34, 34);
+  background: rgb(84, 84, 84);
   transition: all 100ms ease-out;
 }
 

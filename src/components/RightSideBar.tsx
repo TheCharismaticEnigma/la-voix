@@ -1,12 +1,11 @@
-import { Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { Button, Divider, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { Album } from '../entities/Album';
 import useAlbum from '../hooks/useAlbum';
 import useArtistAlbums from '../hooks/useArtistAlbums';
+import AlbumCardSkeleton from '../skeletons/AlbumCardSkeleton';
 import useSpotifyQueryStore from '../store';
 import AlbumCard from './AlbumCard';
-import AlbumCardSkeleton from './AlbumCardSkeleton';
 import Wrapper from './Wrapper';
 
 const RightSideBar = () => {
@@ -21,6 +20,7 @@ const RightSideBar = () => {
 
   const {
     data: allAlbumPages,
+    isLoading,
     fetchNextPage,
     hasNextPage,
   } = useArtistAlbums(spotifyQuery.artistId || '');
@@ -30,9 +30,12 @@ const RightSideBar = () => {
       return [...currentAlbums, ...items];
     }, [] as Album[]) || [];
 
+  const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
   return (
     <Wrapper>
       <Flex
+        width={'100%'}
         paddingRight={'5px '}
         borderRadius={'10px '}
         borderTopRightRadius={'0'}
@@ -41,7 +44,6 @@ const RightSideBar = () => {
         gap={'2rem'}
       >
         <AlbumCard album={album!} />
-
         <Flex
           background={'gray.700'}
           borderRadius={'10px'}
@@ -53,7 +55,6 @@ const RightSideBar = () => {
           <Heading fontFamily={'system'} size={'xl'} color={'whiteAlpha.600'}>
             Album Artists
           </Heading>
-
           <Divider />
           <Flex flexWrap={'wrap'} gap={'1.5rem'}>
             {album?.artists.map(({ id, name }) => {
@@ -89,30 +90,36 @@ const RightSideBar = () => {
             spacing={3}
           >
             <Heading fontFamily={'system'} size={'xl'} color={'whiteAlpha.600'}>
-              Other Albums
+              Other Related Albums
             </Heading>
             <Divider />
           </Stack>
 
-          {allAlbums?.length > 0 && (
-            <InfiniteScroll
-              dataLength={allAlbums?.length ?? 0} //This is important field to render the next data
-              next={() => {
-                // dataLength takes the value of total components fetched so far.
+          <Flex
+            direction={'column'}
+            alignItems={'center'}
+            height={'100%'}
+            gap={'1rem'}
+          >
+            {isLoading &&
+              skeletons.map((skeleton) => <AlbumCardSkeleton key={skeleton} />)}
+
+            {!isLoading &&
+              allAlbums?.map((album) => (
+                <AlbumCard key={album.id} album={album} />
+              ))}
+
+            <Button
+              m={'1rem 0'}
+              size={'lg'}
+              pointerEvents={hasNextPage ? 'auto' : 'none'}
+              onClick={() => {
                 fetchNextPage();
               }}
-              hasMore={hasNextPage ? hasNextPage : false}
-              scrollThreshold={0.8}
-              loader={<AlbumCardSkeleton />}
-              endMessage={<Divider />}
             >
-              <Flex direction={'column'} height={'fit-content'} gap={'1rem'}>
-                {allAlbums?.map((album) => (
-                  <AlbumCard key={album.id} album={album} />
-                ))}
-              </Flex>
-            </InfiniteScroll>
-          )}
+              SHOW MORE
+            </Button>
+          </Flex>
         </Flex>
       </Flex>
     </Wrapper>
