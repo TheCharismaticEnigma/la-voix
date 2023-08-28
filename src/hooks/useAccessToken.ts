@@ -11,11 +11,11 @@ setInterval(() => {
 }, 3000000); // 50 minutes in ms
 
 const useAccessToken = () => {
-  if (!localStorage.getItem('logged_in')) window.location.assign('/login');
+  if (!localStorage.getItem('logged_in')) window.location.replace('/login');
 
-  // const redirectUri = 'http://localhost:5173/';
+  const redirectUri = 'http://localhost:5173/';
   // const redirectUri = 'https://la-voix.vercel.app/';
-  const redirectUri = 'https://la-voix-cc6c6.web.app';
+  // const redirectUri = 'https://la-voix-cc6c6.web.app';
 
   const [searchParams] = useSearchParams(); // [setSearchParams]
 

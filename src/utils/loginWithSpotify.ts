@@ -4,8 +4,8 @@ import { CLIENT_ID } from './credentials';
 
 const loginWithSpotify = () => {
   // const redirectUri = 'https://la-voix.vercel.app/';
-  // const redirectUri = 'http://localhost:5173/';
-  const redirectUri = 'https://la-voix-cc6c6.web.app';
+  const redirectUri = 'http://localhost:5173/';
+  // const redirectUri = 'https://la-voix-cc6c6.web.app';
   localStorage.clear(); // clear anything that exists before.
 
   const scope =
@@ -27,9 +27,10 @@ const loginWithSpotify = () => {
       code_challenge: code_challenge,
     });
 
-    // Navigate to the URL (assing saves history. Replace doesn't)
-    // window.location.assign('https://accounts.spotify.com/authorize?' + args);
-    window.location.assign('https://accounts.spotify.com/authorize?' + args);
+    // using replace() the current page will not be saved in session History ,
+    // meaning the user won't be able to use the back button to navigate to it
+
+    window.location.replace('https://accounts.spotify.com/authorize?' + args);
   });
 };
 

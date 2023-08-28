@@ -16,7 +16,9 @@ const RightSideBar = () => {
 
   const { spotifyQuery, setSelectedArtistId } = useSpotifyQueryStore();
 
-  const { data: album } = useAlbum(spotifyQuery.albumId!);
+  const { data: album, isLoading: albumIsLoading } = useAlbum(
+    spotifyQuery.albumId!
+  );
 
   const {
     data: allAlbumPages,
@@ -43,7 +45,13 @@ const RightSideBar = () => {
         direction={'column'}
         gap={'2rem'}
       >
+        {albumIsLoading &&
+          skeletons
+            .slice(-3)
+            .map((skeleton) => <AlbumCardSkeleton key={skeleton} />)}
+
         <AlbumCard album={album!} />
+
         <Flex
           background={'gray.700'}
           borderRadius={'10px'}
