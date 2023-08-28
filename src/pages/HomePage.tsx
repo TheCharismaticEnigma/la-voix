@@ -1,6 +1,6 @@
 import { Grid, GridItem } from '@chakra-ui/react';
-import Wrapper from '../components/Wrapper';
 import { Album, Artist, Playlist, Show, Track } from '@spotify/web-api-ts-sdk';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import QueryCard from '../components/QueryCard';
 import useSearchResults from '../hooks/useSearchResults';
 import useSpotifyQueryStore from '../store';
@@ -15,7 +15,10 @@ const HomePage = () => {
   const query = searchQuery || 'Closer';
   const queryTag = searchQueryTag || 'track';
 
-  const { data } = useSearchResults(query, queryTag);
+  const { data, fetchNextPage, hasNextPage, isLoading } = useSearchResults(
+    query,
+    queryTag
+  );
 
   const results: SpotifyData[] =
     data?.pages.reduce((previousData, currentPage) => {
@@ -26,8 +29,30 @@ const HomePage = () => {
   // console.log(results);
 
   return (
-    <Wrapper>
+    <InfiniteScroll
+      height={'100vh'}
+      dataLength={results?.length ?? 0} //This is important field to render the next data
+      next={() => {
+        // dataLength takes the value of total components fetched so far.
+        fetchNextPage();
+      }}
+      hasMore={!!hasNextPage}
+      scrollThreshold={0.8}
+      loader={
+        <p
+          style={{
+            textAlign: 'center',
+            fontSize: '2rem',
+            margin: '1.5rem auto',
+            color: 'gray.500',
+          }}
+        >
+          Loading...
+        </p>
+      }
+    >
       <Grid
+        id="scrollableDiv"
         as={'ul'}
         padding={'8px '}
         gridTemplateColumns={{
@@ -39,21 +64,27 @@ const HomePage = () => {
         columnGap={5}
         background={'gray.700'}
       >
-        {results.map((result) => (
-          // Check if object implements an interface w/ TYPE PREDICATE.
-          <GridItem
-            key={result.id}
-            as={'li'}
-            minH={'30rem'}
-            width={'100%'}
-            borderRadius={'10px'}
-            background={'gray.700'}
-          >
-            <QueryCard data={result} tag={queryTag} />
-          </GridItem>
-        ))}
+        {/* {isLoading &&
+          skeletons.map((skeleton) => {
+            return <CardSkeleton key={skeleton} />;
+          })} */}
+
+        {!isLoading &&
+          results.map((result) => (
+            // Check if object implements an interface w/ TYPE PREDICATE.
+            <GridItem
+              key={result.id}
+              as={'li'}
+              minH={'30rem'}
+              width={'100%'}
+              borderRadius={'10px'}
+              background={'gray.700'}
+            >
+              <QueryCard data={result} tag={queryTag} />
+            </GridItem>
+          ))}
       </Grid>
-    </Wrapper>
+    </InfiniteScroll>
   );
 };
 
