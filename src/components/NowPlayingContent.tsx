@@ -26,7 +26,7 @@ const NowPlayingContent = () => {
       <GridItem height={'100%'}>
         <Flex
           height={'100%'}
-          padding={'5px 10px'}
+          padding={'3px 10px'}
           width={'fit-content'}
           placeItems={'center'}
           gap={'2rem '}
@@ -61,7 +61,12 @@ const NowPlayingContent = () => {
         </Flex>
       </GridItem>
 
-      <GridItem display={'flex'} placeContent={'center'}>
+      <GridItem
+        colSpan={2}
+        display={'flex'}
+        placeContent={'center'}
+        padding={'0 2rem'}
+      >
         <audio src={`${track?.preview_url}`} typeof="audio/mpeg" controls>
           This track isn't available at the moment.
         </audio>
