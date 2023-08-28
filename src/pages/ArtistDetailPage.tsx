@@ -75,7 +75,7 @@ const ArtistDetailPage = () => {
                   borderRadius={'10px'}
                   padding={'8px'}
                   gap={'2rem '}
-                  justifyContent={'space-between'}
+                  justifyContent={'space-evenly'}
                 >
                   <Heading
                     textShadow={'0px 0px 10px green '}
@@ -101,7 +101,7 @@ const ArtistDetailPage = () => {
                     />
                   </Stack>
 
-                  <PlayAllContainer />
+                  {/* <PlayAllContainer /> */}
                 </Flex>
               </GridItem>
             </Grid>
