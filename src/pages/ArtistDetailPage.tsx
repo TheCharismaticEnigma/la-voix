@@ -5,7 +5,6 @@ import {
   GridItem,
   Heading,
   Image,
-  Spinner,
   Stack,
 } from '@chakra-ui/react';
 import DetailContainer from '../components/DetailContainer';
@@ -14,6 +13,7 @@ import TrackList from '../components/TrackList';
 import Wrapper from '../components/Wrapper';
 import useArtist from '../hooks/useArtist';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
+import FullPageSkeleton from '../skeletons/FullPageSkeleton';
 import useSpotifyQueryStore from '../store';
 
 const ArtistDetailPage = () => {
@@ -30,89 +30,85 @@ const ArtistDetailPage = () => {
   return (
     <>
       <Wrapper>
-        {isLoading && (
-          <Spinner
-            size={'xl'}
-            transform={'translate(-50%,-50%)'}
-            margin={'50%'}
-          />
-        )}
-        <Flex
-          // background={'gray.700'}
-          minH={'100%'}
-          height={'fit-content'}
-          borderRadius={'10px '}
-          direction={'column'}
-          gap={'1rem'}
-          alignItems={'center'}
-          padding={'8px'}
-        >
-          <Grid
-            borderRadius={'inherit'}
-            width={'100%'}
-            gap={'1.5rem'}
-            gridTemplateRows={'repeat(1, max(fit-content, 320px))'}
-            gridTemplateColumns={'320px 1fr'}
+        {isLoading && <FullPageSkeleton />}
+        {!isLoading && (
+          <Flex
+            // background={'gray.700'}
+            minH={'100%'}
+            height={'fit-content'}
+            borderRadius={'10px '}
+            direction={'column'}
+            gap={'1rem'}
+            alignItems={'center'}
+            padding={'8px'}
           >
-            <GridItem>
-              <Box
-                borderRadius={'10px'}
-                width={artist?.images[1].width || defaultDimension}
-                height={artist?.images[1].height || defaultDimension}
-                overflow={'hidden'}
-                boxShadow={'0px 0px 5px #262626 '}
-              >
-                <Image
-                  width={'100%'}
-                  height={'100%'}
-                  objectFit={'cover'}
-                  borderRadius={'inherit'}
-                  src={artist?.images[0].url}
-                />
-              </Box>
-            </GridItem>
-
-            <GridItem>
-              <Flex
-                height={'100%'}
-                direction={'column'}
-                fontSize={'2rem '}
-                borderRadius={'10px'}
-                padding={'8px'}
-                gap={'2rem '}
-                justifyContent={'space-between'}
-              >
-                <Heading
-                  textShadow={'0px 0px 10px green '}
-                  fontSize={'5.2rem'}
-                  fontFamily={'system'}
+            <Grid
+              borderRadius={'inherit'}
+              width={'100%'}
+              gap={'1.5rem'}
+              gridTemplateRows={'repeat(1, max(fit-content, 320px))'}
+              gridTemplateColumns={'320px 1fr'}
+            >
+              <GridItem>
+                <Box
+                  borderRadius={'10px'}
+                  width={artist?.images[1].width || defaultDimension}
+                  height={artist?.images[1].height || defaultDimension}
+                  overflow={'hidden'}
+                  boxShadow={'0px 0px 5px #262626 '}
                 >
-                  {artist?.name}
-                </Heading>
-
-                <Stack gap={'0.5rem'}>
-                  <DetailContainer
-                    value={`Popularity - ${artist?.popularity} ` || '50'}
+                  <Image
+                    width={'100%'}
+                    height={'100%'}
+                    objectFit={'cover'}
+                    borderRadius={'inherit'}
+                    src={artist?.images[0].url}
                   />
+                </Box>
+              </GridItem>
 
-                  <DetailContainer
-                    value={
-                      `Followers - ${artist?.followers.total} ` || '121212'
-                    }
-                  />
+              <GridItem>
+                <Flex
+                  height={'100%'}
+                  direction={'column'}
+                  fontSize={'2rem '}
+                  borderRadius={'10px'}
+                  padding={'8px'}
+                  gap={'2rem '}
+                  justifyContent={'space-between'}
+                >
+                  <Heading
+                    textShadow={'0px 0px 10px green '}
+                    fontSize={'5.2rem'}
+                    fontFamily={'system'}
+                  >
+                    {artist?.name}
+                  </Heading>
 
-                  <DetailContainer
-                    value={` ${artist?.genres.slice(-2).join(', ')}` || '[]'}
-                  />
-                </Stack>
+                  <Stack gap={'0.5rem'}>
+                    <DetailContainer
+                      value={`Popularity - ${artist?.popularity} ` || '50'}
+                    />
 
-                <PlayAllContainer />
-              </Flex>
-            </GridItem>
-          </Grid>
+                    <DetailContainer
+                      value={
+                        `Followers - ${artist?.followers.total} ` || '121212'
+                      }
+                    />
 
-          {topTracks && <TrackList tracks={topTracks} />}
-        </Flex>
+                    <DetailContainer
+                      value={` ${artist?.genres.slice(-2).join(', ')}` || '[]'}
+                    />
+                  </Stack>
+
+                  <PlayAllContainer />
+                </Flex>
+              </GridItem>
+            </Grid>
+
+            {topTracks && <TrackList tracks={topTracks} />}
+          </Flex>
+        )}
       </Wrapper>
     </>
   );

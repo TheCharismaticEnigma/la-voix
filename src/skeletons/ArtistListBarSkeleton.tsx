@@ -7,7 +7,7 @@ const ArtistListBarSkeleton = () => {
       borderRadius={'1rem'}
       padding="6"
       boxShadow="lg"
-      bg="gray.500"
+      bg="gray.600"
       gap={'1rem'}
     >
       <SkeletonCircle size={'10'} />
