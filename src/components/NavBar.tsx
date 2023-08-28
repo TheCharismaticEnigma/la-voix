@@ -1,4 +1,4 @@
-import { Box, Flex, Icon } from '@chakra-ui/react';
+import { Box, Flex, Icon, Tag, Tooltip } from '@chakra-ui/react';
 import { BiHome, BiSearch } from 'react-icons/bi';
 import NavElement from './NavElement';
 import { HiUserCircle } from 'react-icons/hi';
@@ -18,25 +18,37 @@ const NavBar = () => {
         <Flex justifyContent={'space-between'} alignItems={'center'} as="li">
           <NavElement icon={BiHome} path={'/'} text={'Home'} />
 
-          <Box
-            borderRadius={'5px '}
-            background={'gray.700'}
-            display={'flex'}
-            placeItems={'center'}
+          <Tooltip
+            label="Logout"
+            fontSize="xl"
+            borderRadius={'5px'}
+            color={'green.200'}
+            bg={'gray.600'}
+            placement="left"
+            padding={'0.5em 0.75em '}
           >
-            <Icon
-              onClick={() => {
-                logoutFromSpotify();
-              }}
-              cursor={'pointer'}
-              as={HiUserCircle}
-              color={'green.300'}
-              boxSize={'3rem'}
-              _hover={{
-                color: 'green.200',
-              }}
-            />
-          </Box>
+            <Box
+              borderRadius={'5px '}
+              background={'gray.700'}
+              display={'flex'}
+              placeItems={'center'}
+              gap={'2px'}
+              p={'0 2px '}
+            >
+              <Icon
+                onClick={() => {
+                  logoutFromSpotify();
+                }}
+                cursor={'pointer'}
+                as={HiUserCircle}
+                color={'green.300'}
+                boxSize={'3rem'}
+                _hover={{
+                  color: 'green.200',
+                }}
+              />
+            </Box>
+          </Tooltip>
         </Flex>
 
         <li>
