@@ -13,9 +13,8 @@ import AlbumDetailBadge from '../components/AlbumDetailBadge';
 import TrackList from '../components/TrackList';
 import Wrapper from '../components/Wrapper';
 import useAlbum from '../hooks/useAlbum';
-import useSpotifyQueryStore from '../store';
-import PlayAllContainer from '../components/PlayAllContainer';
 import FullPageSkeleton from '../skeletons/FullPageSkeleton';
+import useSpotifyQueryStore from '../store';
 
 const AlbumDetailPage = () => {
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
@@ -102,7 +101,6 @@ const AlbumDetailPage = () => {
                       text={`Total Tracks : ${album.total_tracks}`}
                     />
                   </VStack>
-                  <PlayAllContainer />
                 </Flex>
 
                 <Flex gap={3} flexWrap={'wrap'}>

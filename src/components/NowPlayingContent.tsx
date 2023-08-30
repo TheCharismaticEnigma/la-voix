@@ -14,8 +14,11 @@ const NowPlayingContent = () => {
 
   useEffect(() => {
     // Set the Initial Volume of Audio Element at 40%
-    const audioEl = document.getElementById('audioElement') as HTMLAudioElement;
-    audioEl.volume = 0.4;
+    const audioEl: HTMLAudioElement | null = document.getElementById(
+      'audioElement'
+    ) as HTMLAudioElement;
+
+    if (audioEl) audioEl.volume = 0.4;
   }, []);
 
   return (
