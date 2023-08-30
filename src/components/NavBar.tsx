@@ -1,8 +1,8 @@
-import { Box, Flex, Icon, Tag, Tooltip } from '@chakra-ui/react';
+import { Box, Flex, Icon, Tooltip } from '@chakra-ui/react';
 import { BiHome, BiSearch } from 'react-icons/bi';
-import NavElement from './NavElement';
 import { HiUserCircle } from 'react-icons/hi';
 import logoutFromSpotify from '../utils/logoutFromSpotify';
+import NavElement from './NavElement';
 
 const NavBar = () => {
   return (

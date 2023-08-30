@@ -1,10 +1,10 @@
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Flex, Grid, GridItem, Tag } from '@chakra-ui/react';
 import { Album, Artist, Playlist, Show, Track } from '@spotify/web-api-ts-sdk';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import QueryCard from '../components/QueryCard';
 import useSearchResults from '../hooks/useSearchResults';
-import useSpotifyQueryStore from '../store';
 import HomePageSkeleton from '../skeletons/HomePageSkeleton';
+import useSpotifyQueryStore from '../store';
 
 export type SpotifyData = Album | Artist | Playlist | Show | Track;
 
@@ -40,6 +40,23 @@ const HomePage = () => {
       }}
       hasMore={!!hasNextPage}
       scrollThreshold={0.8}
+      endMessage={
+        <Flex width={'100%'} justifyContent={'center'}>
+          <Tag
+            pointerEvents={'none'}
+            background={'gray.700'}
+            textAlign={'center'}
+            width={'fit-content'}
+            display={'inline-block'}
+            fontSize={'2.2rem '}
+            padding={'0.5em 1em '}
+            borderRadius={'5px '}
+            margin={'1rem 0 '}
+          >
+            That's All We Have For You :)
+          </Tag>
+        </Flex>
+      }
       loader={
         <p
           style={{
