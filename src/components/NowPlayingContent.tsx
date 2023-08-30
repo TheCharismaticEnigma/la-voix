@@ -2,6 +2,7 @@ import { Box, Flex, Grid, GridItem, Text, Image } from '@chakra-ui/react';
 import useTrack from '../hooks/useTrack';
 import useSpotifyQueryStore from '../store';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const NowPlayingContent = () => {
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
@@ -10,6 +11,12 @@ const NowPlayingContent = () => {
   );
 
   const { data: track } = useTrack(spotifyQuery.trackId);
+
+  useEffect(() => {
+    // Set the Initial Volume of Audio Element at 40%
+    const audioEl = document.getElementById('audioElement') as HTMLAudioElement;
+    audioEl.volume = 0.4;
+  }, []);
 
   return (
     <Grid
@@ -67,7 +74,12 @@ const NowPlayingContent = () => {
         placeContent={'center'}
         padding={'0 2rem'}
       >
-        <audio src={`${track?.preview_url}`} typeof="audio/mpeg" controls>
+        <audio
+          id="audioElement"
+          src={`${track?.preview_url}`}
+          typeof="audio/mpeg"
+          controls
+        >
           This track isn't available at the moment.
         </audio>
       </GridItem>

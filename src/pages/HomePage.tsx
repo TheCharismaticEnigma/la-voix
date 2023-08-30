@@ -71,7 +71,6 @@ const HomePage = () => {
       }
     >
       <Grid
-        id="scrollableDiv"
         as={'ul'}
         padding={'8px '}
         gridTemplateColumns={{
