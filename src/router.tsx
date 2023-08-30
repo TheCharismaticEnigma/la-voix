@@ -1,12 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
-import ErrorPage from './pages/ErrorPage';
-import Layout from './pages/Layout';
-import ArtistDetailPage from './pages/ArtistDetailPage';
-import HomePage from './pages/HomePage';
-import QueryHomePage from './pages/QueryHomePage';
 import AlbumDetailPage from './pages/AlbumDetailPage';
-import Queue from './pages/Queue';
+import ArtistDetailPage from './pages/ArtistDetailPage';
+import ErrorPage from './pages/ErrorPage';
+import HomePage from './pages/HomePage';
+import Layout from './pages/Layout';
 import LoginPage from './pages/LoginPage';
+import PlaylistDetailPage from './pages/PlaylistDetailPage';
+import QueryHomePage from './pages/QueryHomePage';
+import ShowDetailPage from './pages/ShowDetailPage';
 
 const router = createBrowserRouter([
   {
@@ -38,8 +39,13 @@ const router = createBrowserRouter([
       },
 
       {
-        path: '/queue',
-        element: <Queue />,
+        path: '/playlist/:id',
+        element: <PlaylistDetailPage />,
+      },
+
+      {
+        path: '/show/:id',
+        element: <ShowDetailPage />,
       },
     ],
   },

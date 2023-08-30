@@ -71,6 +71,7 @@ const getRequiredData = (
           type: data.type,
           name: data.name,
           images: data.images,
+          queryCardLink: `/${data.type}/${data.id}`,
         };
 
       return null;
@@ -82,6 +83,7 @@ const getRequiredData = (
           type: data.type,
           name: data.name,
           images: data.images,
+          queryCardLink: `/${data.type}/${data.id}`,
         };
       return null;
     }

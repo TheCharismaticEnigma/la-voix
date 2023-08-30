@@ -12,6 +12,8 @@ interface SpotifyQueryObject {
   artistId: string;
   trackId: string;
   albumId: string;
+  playlistId?: string;
+  showId?: string;
   searchQuery?: string;
   searchQueryTag?: string;
 }
@@ -21,6 +23,8 @@ interface SpotifyStore {
   setSelectedArtistId: (id: string) => void; // instead of passing it as a prop, we store it here.
   setSelectedTrackId: (id: string) => void;
   setSelectedAlbumId: (id: string) => void;
+  setSelectedPlaylistId: (id: string) => void;
+  setSelectedShowId: (id: string) => void;
   setSearchQuery: (query: string) => void;
   setSearchQueryTag: (tag: string) => void;
 }
@@ -52,6 +56,20 @@ const useSpotifyQueryStore = create<SpotifyStore>((set) => {
       set((prevStore) => {
         return {
           spotifyQuery: { ...prevStore.spotifyQuery, albumId: id },
+        };
+      }),
+
+    setSelectedPlaylistId: (id: string) =>
+      set((prevStore) => {
+        return {
+          spotifyQuery: { ...prevStore.spotifyQuery, playlistId: id },
+        };
+      }),
+
+    setSelectedShowId: (id: string) =>
+      set((prevStore) => {
+        return {
+          spotifyQuery: { ...prevStore.spotifyQuery, showId: id },
         };
       }),
 

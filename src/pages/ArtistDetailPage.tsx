@@ -8,7 +8,6 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import DetailContainer from '../components/DetailContainer';
-import PlayAllContainer from '../components/PlayAllContainer';
 import TrackList from '../components/TrackList';
 import Wrapper from '../components/Wrapper';
 import useArtist from '../hooks/useArtist';

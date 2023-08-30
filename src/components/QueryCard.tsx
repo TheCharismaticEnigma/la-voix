@@ -13,8 +13,13 @@ interface Props {
 const QueryCard = ({ tag, data }: Props) => {
   // Link => /type/id
   // If Track add play now.  If artist or album, move to respective page
-  const { setSelectedAlbumId, setSelectedArtistId, setSelectedTrackId } =
-    useSpotifyQueryStore();
+  const {
+    setSelectedAlbumId,
+    setSelectedArtistId,
+    setSelectedTrackId,
+    setSelectedPlaylistId,
+    setSelectedShowId,
+  } = useSpotifyQueryStore();
 
   const cardData = getRequiredData(tag, data);
 
@@ -22,13 +27,35 @@ const QueryCard = ({ tag, data }: Props) => {
     <Link
       to={`${cardData?.queryCardLink || ''}`}
       onClick={() => {
-        if (tag === 'artist') setSelectedArtistId(data.id);
+        switch (tag) {
+          case 'artist': {
+            setSelectedArtistId(data.id);
+            break;
+          }
 
-        if (tag === 'album') setSelectedAlbumId(data.id);
+          case 'album': {
+            setSelectedAlbumId(data.id);
+            break;
+          }
 
-        if (tag === 'track' && cardData?.trackAlbumId) {
-          setSelectedTrackId(data.id);
-          setSelectedAlbumId(cardData.trackAlbumId);
+          case 'track': {
+            setSelectedTrackId(data.id);
+
+            if (cardData?.trackAlbumId)
+              setSelectedAlbumId(cardData.trackAlbumId);
+
+            break;
+          }
+
+          case 'playlist': {
+            setSelectedPlaylistId(data.id);
+            break;
+          }
+
+          case 'show': {
+            setSelectedShowId(data.id);
+            break;
+          }
         }
       }}
     >
