@@ -1,36 +1,24 @@
 import { Box, Flex, Grid, GridItem, Heading, Image } from '@chakra-ui/react';
 import useSpotifyQueryStore from '../store';
 
-import { Playlist } from '@spotify/web-api-ts-sdk';
-import { useQuery } from '@tanstack/react-query';
-import ms from 'ms';
 import placeholderImage from '../assets/no-image-placeholder.webp';
 import AlbumDetailBadge from '../components/AlbumDetailBadge';
 import PlaylistedTrackList from '../components/PlaylistedTrackList';
 import Wrapper from '../components/Wrapper';
-import HttpService from '../services/HttpService';
+import usePlaylist from '../hooks/usePlaylist';
 import FullPageSkeleton from '../skeletons/FullPageSkeleton';
 
 const PlaylistDetailPage = () => {
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
+  const {
+    data: playlist,
+    isLoading,
+    error,
+  } = usePlaylist(spotifyQuery.playlistId || '0vx0MnDaQcgxNRqXQZ9FYR');
+
+  if (error) return null;
 
   const defaultDimension = '250px';
-
-  const httpService = new HttpService<Playlist>(
-    `playlists/${spotifyQuery.playlistId}`
-  );
-
-  const { data: playlist, isLoading } = useQuery<Playlist, Error>({
-    queryKey: ['playlist', spotifyQuery.playlistId],
-    queryFn: () => {
-      return httpService.get().then((playlist) => {
-        console.log(playlist);
-        return playlist;
-      });
-    },
-    staleTime: ms('24h'),
-    retry: 3,
-  });
 
   return (
     <Wrapper>
