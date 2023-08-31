@@ -15,6 +15,7 @@ import Wrapper from '../components/Wrapper';
 import useAlbum from '../hooks/useAlbum';
 import FullPageSkeleton from '../skeletons/FullPageSkeleton';
 import useSpotifyQueryStore from '../store';
+import placeholderImage from '../assets/no-image-placeholder.webp';
 
 const AlbumDetailPage = () => {
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
@@ -63,7 +64,7 @@ const AlbumDetailPage = () => {
                   height={'100%'}
                   objectFit={'cover'}
                   borderRadius={'inherit'}
-                  src={album.images[0].url}
+                  src={album.images[0].url || placeholderImage}
                 />
               </Box>
             </GridItem>

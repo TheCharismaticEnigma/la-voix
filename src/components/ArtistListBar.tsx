@@ -2,6 +2,7 @@ import { Flex, Box, Image, Text } from '@chakra-ui/react';
 import { Artist } from '../entities/Artist';
 import { Link } from 'react-router-dom';
 import useSpotifyQueryStore from '../store';
+import placeholderImage from '../assets/no-image-placeholder.webp';
 
 interface Props {
   artist: Artist;
@@ -37,7 +38,7 @@ const ArtistListBar = ({ artist }: Props) => {
           objectFit={'cover'}
           borderRadius={'50%'}
         >
-          {images && <Image src={images[0].url} />}
+          {images && <Image src={images[0]?.url || placeholderImage} />}
         </Box>
         <Text fontWeight={'400'}> {name} </Text>
       </Flex>

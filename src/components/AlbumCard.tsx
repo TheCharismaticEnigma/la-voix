@@ -2,6 +2,7 @@ import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import { Album } from '../entities/Album';
 import { Link } from 'react-router-dom';
 import useSpotifyQueryStore from '../store';
+import placeholderImage from '../assets/no-image-placeholder.webp';
 
 interface Props {
   album: Album;
@@ -34,7 +35,7 @@ const AlbumCard = ({ album }: Props) => {
             objectFit={'cover'}
             borderRadius={'inherit'}
             width={'100%'}
-            src={album?.images[0].url}
+            src={album?.images[0].url || placeholderImage}
           />
         </Box>
         {/*  Detail Container*/}

@@ -12,7 +12,12 @@ const FullPageSkeleton = () => {
     >
       <Box borderRadius={'1rem'} padding="6" boxShadow="lg" bg="gray.600">
         <SkeletonCircle size="10rem" />
-        <SkeletonText mt="5" noOfLines={9} spacing="4" skeletonHeight="3" />
+        <SkeletonText mt="5" noOfLines={7} spacing="4" skeletonHeight="3" />
+      </Box>
+
+      <Box borderRadius={'1rem'} padding="6" boxShadow="lg" bg="gray.600">
+        <SkeletonCircle size="10rem" />
+        <SkeletonText mt="5" noOfLines={7} spacing="4" skeletonHeight="3" />
       </Box>
 
       <Flex width={'100%'} direction={'column'} as={'ul'} gap={'1.5rem'}>

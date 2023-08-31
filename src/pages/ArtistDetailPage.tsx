@@ -14,6 +14,7 @@ import useArtist from '../hooks/useArtist';
 import useTopArtistTracks from '../hooks/useTopArtistTracks';
 import FullPageSkeleton from '../skeletons/FullPageSkeleton';
 import useSpotifyQueryStore from '../store';
+import placeholderImage from '../assets/no-image-placeholder.webp';
 
 const ArtistDetailPage = () => {
   const { spotifyQuery } = useSpotifyQueryStore();
@@ -61,7 +62,7 @@ const ArtistDetailPage = () => {
                     height={'100%'}
                     objectFit={'cover'}
                     borderRadius={'inherit'}
-                    src={artist?.images[0].url}
+                    src={artist?.images[0].url || placeholderImage}
                   />
                 </Box>
               </GridItem>
