@@ -128,7 +128,7 @@ class HttpService<T> {
     const token = this.#accessToken;
 
     const result = axiosInstance
-      .get<FetchResponse<T>>(this.#endPoint, {
+      .get<SpotifyItemsResponse<T>>(this.#endPoint, {
         ...requestConfig,
         headers: {
           ...requestConfig?.headers,
