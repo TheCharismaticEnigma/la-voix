@@ -4,8 +4,9 @@ import { CLIENT_ID } from './credentials';
 
 const loginWithSpotify = () => {
   // const redirectUri = 'https://la-voix.vercel.app/';
-  const redirectUri = 'http://localhost:5173/';
-  // const redirectUri = 'https://la-voix-cc6c6.web.app';
+  // const redirectUri = 'http://localhost:5173/';
+  const redirectUri = 'https://la-voix-cc6c6.web.app';
+
   localStorage.clear(); // clear anything that exists before.
 
   const scope =
