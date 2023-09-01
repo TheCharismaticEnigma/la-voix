@@ -51,6 +51,8 @@ const RightSideBar = () => {
 
         {!albumIsLoading && <AlbumCard album={album || initialAlbum} />}
 
+        {error && <AlbumCard album={initialAlbum} />}
+
         <Flex
           background={'gray.700'}
           borderRadius={'10px'}
