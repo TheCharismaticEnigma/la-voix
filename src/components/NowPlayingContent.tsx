@@ -30,9 +30,6 @@ const NowPlayingContent = () => {
       gap={'2rem'}
       fontSize={'1.5rem'}
     >
-      {/* <Text>{track?.name}</Text>
-          <Text>{track?.id}</Text> */}
-
       <GridItem height={'100%'}>
         <Flex
           height={'100%'}

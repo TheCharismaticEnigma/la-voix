@@ -23,9 +23,6 @@ const ShowEpisode = ({ episode }: Props) => {
         borderTop: `none`,
         borderBottom: 'none',
       }}
-      onClick={() => {
-        console.log(episode);
-      }}
     >
       <GridItem alignSelf={'center'}>
         <Box borderRadius={'5px'} overflow={'hidden'} h={'125px'} w={'125px'}>
