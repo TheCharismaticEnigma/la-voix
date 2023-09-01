@@ -7,6 +7,8 @@ import AlbumCardSkeleton from '../skeletons/AlbumCardSkeleton';
 import useSpotifyQueryStore from '../store';
 import AlbumCard from './AlbumCard';
 import Wrapper from './Wrapper';
+import initialArtistAlbum from '../initialData/initialArtistAlbum';
+import initialAlbum from '../initialData/initialAlbum';
 
 const RightSideBar = () => {
   const { albumId, artistId } = useSpotifyQueryStore((s) => s.spotifyQuery);
@@ -14,7 +16,7 @@ const RightSideBar = () => {
     (s) => s.setSelectedArtistId
   );
 
-  const { data: album, isLoading: albumIsLoading } = useAlbum(albumId);
+  const { data: album, isLoading: albumIsLoading, error } = useAlbum(albumId);
 
   const {
     data: allAlbumPages,
@@ -47,7 +49,7 @@ const RightSideBar = () => {
             .slice(-3)
             .map((skeleton) => <AlbumCardSkeleton key={skeleton} />)}
 
-        {!albumIsLoading && <AlbumCard album={album!} />}
+        {!albumIsLoading && <AlbumCard album={album || initialAlbum} />}
 
         <Flex
           background={'gray.700'}
