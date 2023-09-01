@@ -9,27 +9,24 @@ import AlbumCard from './AlbumCard';
 import Wrapper from './Wrapper';
 
 const RightSideBar = () => {
-  // const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
-  // const setSelectedArtistId = useSpotifyQueryStore(
-  //   (s) => s.setSelectedArtistId
-  // );
-
-  const { spotifyQuery, setSelectedArtistId } = useSpotifyQueryStore();
-
-  const { data: album, isLoading: albumIsLoading } = useAlbum(
-    spotifyQuery.albumId!
+  const { albumId, artistId } = useSpotifyQueryStore((s) => s.spotifyQuery);
+  const setSelectedArtistId = useSpotifyQueryStore(
+    (s) => s.setSelectedArtistId
   );
+
+  const { data: album, isLoading: albumIsLoading } = useAlbum(albumId);
 
   const {
     data: allAlbumPages,
     isLoading,
     fetchNextPage,
     hasNextPage,
-  } = useArtistAlbums(spotifyQuery.artistId || '');
+  } = useArtistAlbums(artistId);
 
   const allAlbums =
     allAlbumPages?.pages.reduce((currentAlbums, { items }) => {
-      return [...currentAlbums, ...items];
+      currentAlbums.push(...items);
+      return [...currentAlbums];
     }, [] as Album[]) || [];
 
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -50,7 +47,7 @@ const RightSideBar = () => {
             .slice(-3)
             .map((skeleton) => <AlbumCardSkeleton key={skeleton} />)}
 
-        <AlbumCard album={album!} />
+        {!albumIsLoading && <AlbumCard album={album!} />}
 
         <Flex
           background={'gray.700'}
