@@ -10,60 +10,28 @@ import {
 import placeholderImage from '../assets/no-image-placeholder.webp';
 import useSpotifyQueryStore from '../store';
 
-import { Show, SimplifiedEpisode } from '@spotify/web-api-ts-sdk';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import ms from 'ms';
+import { SimplifiedEpisode } from '@spotify/web-api-ts-sdk';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import ShowEpisode from '../components/ShowEpisode';
 import ShowHideText from '../components/ShowHideText';
 import ShowTag from '../components/ShowTag';
-import Wrapper from '../components/Wrapper';
-import HttpService from '../services/HttpService';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import useShow from '../hooks/useShow';
+import useShowEpisodes from '../hooks/useShowEpisodes';
+import FullPageSkeleton from '../skeletons/FullPageSkeleton';
 
 const ShowDetailPage = () => {
   const defaultDimension = '250px';
   const spotifyQuery = useSpotifyQueryStore((s) => s.spotifyQuery);
+  const showId = spotifyQuery.showId || '4rOoJ6Egrf8K2IrywzwOMk';
 
-  const httpService = new HttpService<Show>(`/shows/${spotifyQuery.showId}`);
-
-  const { data: show } = useQuery({
-    queryKey: ['show', spotifyQuery.showId],
-    queryFn: () => {
-      return httpService.get().then((show) => {
-        return show;
-      });
-    },
-    staleTime: ms('24h'),
-    retry: 3,
-  });
-
-  const id = show?.id || '';
-  const pageSize = 20;
+  const { data: show, isLoading: showIsLoading } = useShow(showId);
 
   const {
     data: episodePages,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['showEpisodes', id],
-    queryFn: ({ pageParam = 1 }) => {
-      return new HttpService<SimplifiedEpisode>(`/shows/${id}/episodes`)
-        .getAll({
-          params: {
-            offset: (pageParam - 1) * pageSize, // start index
-            limit: pageSize,
-          },
-        })
-        .then((spotifyResponse) => {
-          return spotifyResponse;
-        });
-    },
-    getNextPageParam: (previousPage, allPages) => {
-      return previousPage.next === null ? undefined : allPages.length + 1;
-    },
-    staleTime: ms('24h'),
-    retry: 3,
-  });
+    isLoading: episodesAreLoading,
+  } = useShowEpisodes(showId);
 
   const allEpisodes =
     episodePages?.pages?.reduce((previousEpisodes, currentPage) => {
@@ -73,11 +41,13 @@ const ShowDetailPage = () => {
 
   return (
     <Box
+      id="wrapperContainer"
       width={'100%'}
       height={'100%'}
       overflow={'hidden auto'}
-      id="wrapperContainer"
     >
+      {(episodesAreLoading || showIsLoading) && <FullPageSkeleton />}
+
       <Flex
         background={'gray.700'}
         borderRadius={'10px '}

@@ -12,12 +12,7 @@ const FullPageSkeleton = () => {
     >
       <Box borderRadius={'1rem'} padding="6" boxShadow="lg" bg="gray.600">
         <SkeletonCircle size="10rem" />
-        <SkeletonText mt="5" noOfLines={7} spacing="4" skeletonHeight="3" />
-      </Box>
-
-      <Box borderRadius={'1rem'} padding="6" boxShadow="lg" bg="gray.600">
-        <SkeletonCircle size="10rem" />
-        <SkeletonText mt="5" noOfLines={7} spacing="4" skeletonHeight="3" />
+        <SkeletonText mt="5" noOfLines={3} spacing="4" skeletonHeight="3" />
       </Box>
 
       <Flex width={'100%'} direction={'column'} as={'ul'} gap={'1.5rem'}>
@@ -29,8 +24,7 @@ const FullPageSkeleton = () => {
             boxShadow="lg"
             bg="gray.600"
           >
-            <SkeletonCircle size="10" />
-            <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="2" />
+            <SkeletonText mt="4" noOfLines={6} spacing="4" skeletonHeight="2" />
           </Box>
         ))}
       </Flex>

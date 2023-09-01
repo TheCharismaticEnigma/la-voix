@@ -10,6 +10,7 @@ const useAlbumTracks = (albumId: string) => {
     queryKey: ['albumTracks', albumId], // anytime albumId changes, queryFn is called.
     queryFn: () => {
       return httpService.getAll().then((album) => {
+        console.log(album.items);
         return album.items;
       });
     },

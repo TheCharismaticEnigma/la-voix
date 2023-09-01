@@ -128,7 +128,7 @@ class HttpService<T> {
     const token = this.#accessToken;
 
     const result = axiosInstance
-      .get<SpotifyItemsResponse<T>>(this.#endPoint, {
+      .get<FetchResponse<T>>(this.#endPoint, {
         ...requestConfig,
         headers: {
           ...requestConfig?.headers,
@@ -148,6 +148,24 @@ class HttpService<T> {
 
     const result = axiosInstance
       .get<SpotifyItemsResponse<T>>(this.#endPoint, {
+        ...requestConfig,
+        headers: {
+          ...requestConfig?.headers,
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        return response.data;
+      });
+
+    return result;
+  }
+
+  getArtistTracks(requestConfig?: AxiosRequestConfig) {
+    const token = this.#accessToken;
+
+    const result = axiosInstance
+      .get<FetchResponse<T>>(this.#endPoint, {
         ...requestConfig,
         headers: {
           ...requestConfig?.headers,

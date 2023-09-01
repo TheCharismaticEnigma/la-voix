@@ -117,16 +117,17 @@ const RightSideBar = () => {
                 <AlbumCard key={album.id} album={album} />
               ))}
 
-            <Button
-              m={'1rem 0'}
-              size={'lg'}
-              pointerEvents={hasNextPage ? 'auto' : 'none'}
-              onClick={() => {
-                fetchNextPage();
-              }}
-            >
-              SHOW MORE
-            </Button>
+            {hasNextPage && (
+              <Button
+                m={'1rem 0'}
+                size={'lg'}
+                onClick={() => {
+                  fetchNextPage();
+                }}
+              >
+                SHOW MORE
+              </Button>
+            )}
           </Flex>
         </Flex>
       </Flex>

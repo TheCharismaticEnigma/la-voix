@@ -10,8 +10,8 @@ const useTopArtistTracks = (artistId: string) => {
   return useQuery<Track[], Error>({
     queryKey: ['top-tracks', artistId],
     queryFn: () => {
-      return httpService.getAll().then((tracks) => {
-        return tracks.tracks;
+      return httpService.getArtistTracks().then((artistTracks) => {
+        return artistTracks.tracks;
       });
     },
     staleTime: staleTime('24h'),
