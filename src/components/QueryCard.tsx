@@ -44,6 +44,9 @@ const QueryCard = ({ tag, data }: Props) => {
             if (cardData?.trackAlbumId)
               setSelectedAlbumId(cardData.trackAlbumId);
 
+            if (cardData?.trackArtistId)
+              setSelectedArtistId(cardData.trackArtistId);
+
             break;
           }
 

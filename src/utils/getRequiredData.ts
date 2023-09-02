@@ -19,6 +19,7 @@ interface QueryCardData {
   name: string;
   queryCardLink?: string;
   trackAlbumId?: string;
+  trackArtistId?: string;
 }
 
 // Use Type Predicate to get the data,
@@ -36,6 +37,7 @@ const getRequiredData = (
           name: data.name,
           images: data.album.images,
           trackAlbumId: data.album.id,
+          trackArtistId: data.artists[0].id,
         };
 
       return null;

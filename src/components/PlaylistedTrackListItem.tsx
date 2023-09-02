@@ -10,7 +10,8 @@ interface Props {
 }
 
 const TrackListItem = ({ playlistedTrack, serialNumber }: Props) => {
-  const { setSelectedAlbumId, setSelectedTrackId } = useSpotifyQueryStore();
+  const { setSelectedAlbumId, setSelectedTrackId, setSelectedArtistId } =
+    useSpotifyQueryStore();
   const { track } = playlistedTrack;
   const isATrack = isTrack(track);
 
@@ -23,6 +24,8 @@ const TrackListItem = ({ playlistedTrack, serialNumber }: Props) => {
         setSelectedTrackId(track.id);
 
         if (track.album) setSelectedAlbumId(track.album.id);
+
+        if (track.artists[0]) setSelectedArtistId(track.artists[0].id);
         //   console.log(track);
       }}
       padding={'8px 12px '}
