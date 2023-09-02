@@ -9,6 +9,11 @@ const Layout = () => {
   // Fetch the Access and Refresh Tokens.
   useAccessToken();
 
+  const templateAreas = `
+          "leftSideBar   mainView      rightSideBar"
+          "nowPlayingBar nowPlayingBar nowPlayingBar"
+          `;
+
   /*
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token');
@@ -34,10 +39,7 @@ const Layout = () => {
         gap={'1rem'}
         gridTemplateRows={'1fr 7.5rem'}
         gridTemplateColumns={'27rem 1fr 27rem '}
-        templateAreas={`
-          "leftSideBar   mainView      rightSideBar"
-          "nowPlayingBar nowPlayingBar nowPlayingBar"
-        `}
+        templateAreas={templateAreas}
         padding={' 1rem 0.5rem 0  '}
         overflow={'hidden'}
       >

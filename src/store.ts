@@ -16,6 +16,8 @@ interface SpotifyQueryObject {
   showId?: string;
   searchQuery?: string;
   searchQueryTag?: string;
+  trackIsEpisode: boolean;
+  episodeId?: string;
 }
 
 interface SpotifyStore {
@@ -27,6 +29,8 @@ interface SpotifyStore {
   setSelectedShowId: (id: string) => void;
   setSearchQuery: (query: string) => void;
   setSearchQueryTag: (tag: string) => void;
+  setTrackIsEpisode: () => void;
+  setSelectedEpisodeId: (id: string) => void;
 }
 
 const useSpotifyQueryStore = create<SpotifyStore>((set) => {
@@ -35,6 +39,7 @@ const useSpotifyQueryStore = create<SpotifyStore>((set) => {
       artistId,
       trackId,
       albumId,
+      trackIsEpisode: false,
     },
 
     setSelectedArtistId: (id: string) =>
@@ -42,13 +47,6 @@ const useSpotifyQueryStore = create<SpotifyStore>((set) => {
         return {
           // new store.
           spotifyQuery: { ...prevStore.spotifyQuery, artistId: id },
-        };
-      }),
-
-    setSelectedTrackId: (id: string) =>
-      set((prevStore) => {
-        return {
-          spotifyQuery: { ...prevStore.spotifyQuery, trackId: id },
         };
       }),
 
@@ -90,6 +88,40 @@ const useSpotifyQueryStore = create<SpotifyStore>((set) => {
       set((prevStore) => {
         return {
           spotifyQuery: { ...prevStore.spotifyQuery, searchQueryTag: tag },
+        };
+      }),
+
+    setSelectedTrackId: (id: string) =>
+      set((prevStore) => {
+        return {
+          spotifyQuery: {
+            ...prevStore.spotifyQuery,
+            searchQueryTag: 'track',
+            trackIsEpisode: false, // IF track is playing, episode can't be played.
+            episodeId: undefined,
+            trackId: id,
+          },
+        };
+      }),
+
+    setTrackIsEpisode: () =>
+      set((prevStore) => {
+        return {
+          spotifyQuery: {
+            ...prevStore.spotifyQuery,
+            searchQueryTag: 'show',
+            trackIsEpisode: true,
+          },
+        };
+      }),
+
+    setSelectedEpisodeId: (id: string) =>
+      set((prevStore) => {
+        return {
+          spotifyQuery: {
+            ...prevStore.spotifyQuery,
+            episodeId: id,
+          },
         };
       }),
   };

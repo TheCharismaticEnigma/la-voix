@@ -3,12 +3,18 @@ import ms from 'ms';
 import ShowTag from './ShowTag';
 import placeholderImage from '../assets/no-image-placeholder.webp';
 import { SimplifiedEpisode } from '@spotify/web-api-ts-sdk';
+import useSpotifyQueryStore from '../store';
 
 interface Props {
   episode: SimplifiedEpisode;
 }
 
 const ShowEpisode = ({ episode }: Props) => {
+  const setTrackIsEpisode = useSpotifyQueryStore((s) => s.setTrackIsEpisode);
+  const setSelectedEpisodeId = useSpotifyQueryStore(
+    (s) => s.setSelectedEpisodeId
+  );
+
   return (
     <Grid
       borderTop={`0.5px solid gray`}
@@ -22,6 +28,10 @@ const ShowEpisode = ({ episode }: Props) => {
         background: `linear-gradient(167deg, rgba(164,52,52,1) 0%, rgba(39,28,28,1) 48%, rgba(0,0,0,1) 100%)`,
         borderTop: `none`,
         borderBottom: 'none',
+      }}
+      onClick={() => {
+        setTrackIsEpisode();
+        setSelectedEpisodeId(episode.id);
       }}
     >
       <GridItem alignSelf={'center'}>
